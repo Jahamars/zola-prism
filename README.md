@@ -1,5 +1,6 @@
 # Prism
 A modern Zola theme featuring glassmorphism design and aurora-inspired animations.
+[demo](https://xpltt.vercel.app/)
 
 ![Screenshot](./screenshot.png)
 
@@ -15,7 +16,7 @@ A modern Zola theme featuring glassmorphism design and aurora-inspired animation
 
 Clone the theme into your `themes` directory:
 ```bash
-git clone https://github.com/jahongir7174/zola-prism.git themes/prism
+git clone https://github.com/jahamarsi/zola-prism.git themes/prism
 ```
 
 Enable the theme in your `config.toml`:
