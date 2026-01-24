@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% import "macros.html" as macros %}
+
 {% block htmltitle %}
-{{ page.title }}
+{{ page.title }} - {{ config.title }}
 {% endblock htmltitle %}
-{% block title %}
-{{ page.title }}
-{% endblock title %}
+
 {% block content %}
 <div id="content">
     {% if not page.extra.no_header %}
@@ -14,19 +13,33 @@
 
         <div class="hero-meta">
             {% if page.date %}
-            <span>{{ macros::format_date(date=page.date) }}</span>
+            <span>{{ page.date | date(format=config.extra.date_format | default(value="%b %d, %Y")) }}</span>
             {% endif %}
 
-            {% if config.extra.show_reading_time %}
+            {% if page.reading_time and config.extra.show_reading_time %}
             <span>·</span>
             <span>{{ page.reading_time }} min read</span>
+            {% endif %}
+            
+            {% if page.word_count and config.extra.show_word_count %}
+            <span>·</span>
+            <span>{{ page.word_count }} words</span>
             {% endif %}
         </div>
 
         {% if page.taxonomies.tags %}
-        <div class="tags" style="margin-top: 1rem;">
+        <div class="tags-cloud" style="margin-top: 1.5rem; justify-content: center;">
             {% for tag in page.taxonomies.tags %}
-            <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+            <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">#{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if page.taxonomies.authors %}
+        <div style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+            By 
+            {% for author in page.taxonomies.authors %}
+                <a href="{{ get_taxonomy_url(kind='authors', name=author) }}" style="color: var(--accent-teal);">{{ author }}</a>{% if not loop.last %}, {% endif %}
             {% endfor %}
         </div>
         {% endif %}

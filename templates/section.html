@@ -1,42 +1,70 @@
 {% extends "base.html" %}
-
 {% import "macros.html" as macros %}
 
 {% block htmltitle %}
-{{ macros::title_or_last(component=section) }} - {{ config.title }}
+{{ section.title | default(value="Posts") }} - {{ config.title }}
 {% endblock htmltitle %}
 
 {% block title %}
-{{ macros::title_or_last(component=section) }}
+{{ section.title | default(value="Posts") }}
 {% endblock title %}
 
-{% block sections %}
-{{ macros::section_menu(path=section.relative_path) }}
-{% endblock sections %}
-
 {% block content %}
-<div class="hero">
-    <h1>{{ macros::title_or_last(component=section) }}</h1>
-</div>
-
-<div class="post-grid">
-    {% for page in section.pages %}
-    <a href="{{ page.permalink }}" class="card">
-        <h3>{{ macros::title_or_last(component=page, offset=0) }}</h3>
-
-        {% if page.description %}
-        <p>{{ page.description }}</p>
-        {% elif page.summary %}
-        <p>{{ page.summary | striptags | truncate(length=150) }}</p>
+<div id="content">
+    <div class="hero">
+        <h1>{{ section.title | default(value="Posts") }}</h1>
+        {% if section.description %}
+        <p style="color: var(--text-muted); margin-top: 1rem;">{{ section.description }}</p>
         {% endif %}
+    </div>
 
-        <div class="meta">
-            {% if page.date %}
-            <span>{{ macros::format_date(date=page.date) }}</span>
+    {% if section.pages %}
+    <div class="post-grid">
+        {% for page in section.pages %}
+        <a href="{{ page.permalink }}" class="card">
+            <h3>{{ page.title }}</h3>
+
+            {% if page.description %}
+            <p>{{ page.description }}</p>
+            {% elif page.summary %}
+            <p>{{ page.summary | striptags | truncate(length=150) }}</p>
+            {% else %}
+            <p>{{ page.content | striptags | truncate(length=150) }}</p>
             {% endif %}
-            <span>Read</span>
+
+            <div class="meta">
+                {% if page.date %}
+                <span>{{ page.date | date(format="%b %d, %Y") }}</span>
+                {% endif %}
+                
+                {% if page.reading_time and config.extra.show_reading_time %}
+                <span>{{ page.reading_time }} min read</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
+        No posts yet. Start writing! ✍️
+    </p>
+    {% endif %}
+
+    {% if section.subsections %}
+    <div style="margin-top: 4rem;">
+        <h2 style="font-family: var(--font-heading); margin-bottom: 2rem;">Subsections</h2>
+        <div class="post-grid">
+            {% for subsection_path in section.subsections %}
+                {% set subsection = get_section(path=subsection_path) %}
+                <a href="{{ subsection.permalink }}" class="card">
+                    <h3>{{ subsection.title }}</h3>
+                    {% if subsection.description %}
+                    <p>{{ subsection.description }}</p>
+                    {% endif %}
+                </a>
+            {% endfor %}
         </div>
-    </a>
-    {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}

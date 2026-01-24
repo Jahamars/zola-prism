@@ -1,17 +1,31 @@
 {% extends "base.html" %}
 
 {% block htmltitle %}
-    Authors - {{ config.title }}
+Authors - {{ config.title }}
 {% endblock htmltitle %}
 
-{% block title %}
-    Authors
-{% endblock title %}
-
 {% block content %}
-<ul>
-    {% for author in terms %}
-        <li><a href="{{ author.permalink }}">{{ author.name }}</a></li>
-    {% endfor %}
-</ul>
+<div id="content">
+    <div class="hero">
+        <h1>Authors</h1>
+        <p style="color: var(--text-muted); margin-top: 1rem;">Meet the contributors</p>
+    </div>
+
+    {% if terms %}
+    <div class="post-grid" style="margin-top: 3rem;">
+        {% for author in terms %}
+        <a href="{{ author.permalink }}" class="card">
+            <h3>{{ author.name }}</h3>
+            <p style="color: var(--text-muted);">
+                {{ author.pages | length }} post{% if author.pages | length != 1 %}s{% endif %}
+            </p>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
+        No authors listed yet.
+    </p>
+    {% endif %}
+</div>
 {% endblock content %}
