@@ -264,6 +264,73 @@ header
         color: var(--text-main)
         font-weight: 400
         letter-spacing: 0.3px
+        
+        // Ссылки в тексте статьи
+        a
+            color: var(--accent-teal)
+            text-decoration: none
+            border-bottom: 1px solid rgba(79, 195, 247, 0.3)
+            transition: all 0.3s ease
+            padding-bottom: 2px
+            
+            &:hover
+                color: var(--text-highlight)
+                border-bottom-color: var(--accent-teal)
+                background: rgba(79, 195, 247, 0.05)
+                padding-left: 2px
+                padding-right: 2px
+        
+        // Ссылки в списках
+        ul a, ol a
+            font-weight: 500
+        
+        // Внешние ссылки с иконкой
+        a[target="_blank"]
+            &::after
+                content: " ↗"
+                font-size: 0.85em
+                opacity: 0.6
+        
+        // Жирный текст, курсив, выделение
+        strong, b
+            color: var(--text-highlight)
+            font-weight: 700
+        
+        em, i
+            color: var(--accent-teal)
+            font-style: italic
+        
+        mark
+            background: rgba(79, 195, 247, 0.15)
+            color: var(--text-highlight)
+            padding: 0.1rem 0.3rem
+            border-radius: 3px
+        
+        // Ссылки в тексте статьи
+        a
+            color: var(--accent-teal)
+            text-decoration: none
+            border-bottom: 1px solid rgba(79, 195, 247, 0.3)
+            transition: all 0.3s ease
+            padding-bottom: 2px
+            
+            &:hover
+                color: var(--text-highlight)
+                border-bottom-color: var(--accent-teal)
+                background: rgba(79, 195, 247, 0.05)
+                padding-left: 2px
+                padding-right: 2px
+        
+        // Ссылки в списках
+        ul a, ol a
+            font-weight: 500
+        
+        // Внешние ссылки с иконкой (опционально)
+        a[target="_blank"]
+            &::after
+                content: " ↗"
+                font-size: 0.85em
+                opacity: 0.6
     
     h1
         font-family: var(--font-heading)
@@ -433,12 +500,13 @@ footer
 // Code blocks
 pre
     background: var(--code-block)
-    border: 1px solid var(--surface-border)
+    border: none
     border-radius: var(--radius-sm)
     padding: 1.5rem
     overflow-x: auto
     margin: 2rem 0
     white-space: pre
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
     
     code
         font-family: var(--font-mono)
@@ -449,12 +517,14 @@ pre
         overflow-wrap: normal
 
 code
-    background: rgba(255, 255, 255, 0.05)
+    background: rgba(79, 195, 247, 0.08)
+    border: 1px solid rgba(79, 195, 247, 0.15)
     padding: 0.2rem 0.5rem
     border-radius: 4px
     font-family: var(--font-mono)
     font-size: 0.9em
     white-space: pre-wrap
+    color: var(--accent-teal)
 
 // Syntax highlighting specific
 #content
@@ -464,6 +534,8 @@ code
             padding: 0
             background: transparent
             border-radius: 0
+            border: none
+            color: inherit
     
     // Ensure code blocks don't wrap
     .highlight pre
@@ -474,6 +546,7 @@ code
         white-space: pre
         word-break: normal
         overflow-wrap: normal
+        color: inherit
 
 // Custom scrollbar for code blocks
 pre::-webkit-scrollbar
@@ -518,6 +591,22 @@ blockquote
     margin: 2rem 0
     color: var(--text-muted)
     font-style: italic
+
+// Text emphasis
+#content
+    strong, b
+        color: var(--text-highlight)
+        font-weight: 700
+    
+    em, i
+        color: var(--accent-teal)
+        font-style: italic
+    
+    mark
+        background: rgba(79, 195, 247, 0.15)
+        color: var(--text-highlight)
+        padding: 0.1rem 0.3rem
+        border-radius: 3px
 
 // Tables
 #content
