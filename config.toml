@@ -1,5 +1,5 @@
 base_url = "https://xpltt.vercel.app/"
-title = "Welcome dude"
+title = "Welcome"
 description = "A modern blog with glassmorphism design and aurora animations"
 
 compile_sass = true
