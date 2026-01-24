@@ -23,7 +23,7 @@ body
     position: absolute
     border-radius: 50%
     filter: blur(80px)
-    opacity: 0.4
+    opacity: 0.3
     animation: drift 20s infinite alternate ease-in-out
 
 .blob-1
@@ -48,7 +48,7 @@ body
     width: 40vw
     height: 40vw
     background: var(--accent-blue)
-    opacity: 0.2
+    opacity: 0.15
     animation-delay: -10s
 
 @keyframes drift
@@ -71,7 +71,7 @@ a
     position: relative
     z-index: 1
 
-// Navigation & Buttons
+// Navigation & Buttons - Elegant version
 header
     padding: 2rem 0
     display: flex
@@ -88,18 +88,18 @@ header
     color: var(--text-muted)
     font-family: var(--font-heading)
     font-size: 0.85rem
-    font-weight: 700
-    transition: all 0.3s ease
+    font-weight: 600
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     backdrop-filter: var(--glass-blur)
     text-transform: uppercase
     letter-spacing: 1px
     
     &:hover
-        background: rgba(255, 255, 255, 0.1)
-        border-color: var(--accent-teal)
-        color: #fff
-        transform: translateX(-4px)
-        box-shadow: 0 0 20px rgba(0, 198, 255, 0.3)
+        background: var(--surface-glass-hover)
+        border-color: rgba(255, 255, 255, 0.15)
+        color: var(--text-main)
+        transform: translateY(-2px)
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
 
 .btn
     display: inline-block
@@ -111,19 +111,19 @@ header
     -webkit-backdrop-filter: var(--glass-blur)
     color: var(--text-main)
     font-family: var(--font-heading)
-    font-weight: 700
-    transition: all 0.3s ease
+    font-weight: 600
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     text-transform: uppercase
     letter-spacing: 1px
     
     &:hover
-        background: rgba(255, 255, 255, 0.1)
-        border-color: var(--accent-teal)
+        background: var(--surface-glass-hover)
+        border-color: rgba(255, 255, 255, 0.15)
         transform: translateY(-2px)
-        box-shadow: 0 5px 15px rgba(0, 198, 255, 0.2)
-        color: #fff
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
+        color: var(--text-main)
 
-// Splash / Home (Volumetric Redesign)
+// Splash / Home - Elegant version
 #splash
     min-height: 80vh
     display: flex
@@ -140,9 +140,7 @@ header
     -webkit-background-clip: text
     -webkit-text-fill-color: transparent
     margin-bottom: 2rem
-    // Volumetric Effect
-    filter: drop-shadow(0 0 40px rgba(157, 80, 187, 0.4))
-    transform: perspective(500px) rotateX(5deg)
+    filter: drop-shadow(0 0 30px rgba(157, 80, 187, 0.2))
 
 .tile-grid
     display: grid
@@ -153,7 +151,7 @@ header
     margin: 3rem auto
 
 .tile
-    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))
+    background: var(--surface-glass)
     border: 1px solid var(--surface-border)
     border-radius: var(--radius-lg)
     padding: 3rem 2rem
@@ -163,7 +161,7 @@ header
     flex-direction: column
     align-items: center
     justify-content: center
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     position: relative
     overflow: hidden
     
@@ -171,18 +169,18 @@ header
         content: ''
         position: absolute
         inset: 0
-        background: radial-gradient(circle at center, var(--accent-teal), transparent 70%)
+        background: linear-gradient(135deg, rgba(0, 198, 255, 0.03), transparent)
         opacity: 0
-        transition: opacity 0.4s ease
+        transition: opacity 0.3s ease
         z-index: -1
 
     &:hover
-        transform: translateY(-10px) scale(1.02)
-        border-color: rgba(255,255,255,0.3)
-        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5)
+        transform: translateY(-8px)
+        border-color: rgba(255, 255, 255, 0.15)
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4)
         
         &::before
-            opacity: 0.15
+            opacity: 1
 
     .tile-title
         font-family: var(--font-heading)
@@ -196,7 +194,7 @@ header
         color: var(--text-muted)
         z-index: 1
 
-// Cards & Grid (Robust)
+// Cards & Grid - Elegant version
 .post-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
@@ -211,23 +209,23 @@ header
     padding: 2.5rem
     backdrop-filter: var(--glass-blur)
     -webkit-backdrop-filter: var(--glass-blur)
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease, border-color 0.3s ease
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     display: flex
     flex-direction: column
     height: 100%
     box-sizing: border-box
     
     &:hover
-        transform: translateY(-8px) scale(1.02)
+        transform: translateY(-8px)
         background: var(--surface-glass-hover)
-        border-color: rgba(255, 255, 255, 0.2)
-        box-shadow: var(--shadow-soft)
+        border-color: rgba(255, 255, 255, 0.15)
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4)
 
     h3
         font-family: var(--font-heading)
         font-size: 1.6rem
         margin: 0 0 1rem 0
-        font-weight: 800
+        font-weight: 700
         line-height: 1.2
     
     p
@@ -235,7 +233,7 @@ header
         font-size: 0.95rem
         line-height: 1.6
         margin-bottom: 1.5rem
-        flex-grow: 1 // Pushes meta to bottom
+        flex-grow: 1
     
     .meta
         font-size: 0.85rem
@@ -246,7 +244,7 @@ header
         justify-content: space-between
         border-top: 1px solid var(--surface-border)
         font-family: var(--font-heading)
-        font-weight: 600
+        font-weight: 500
 
 // Content Page
 #content
@@ -258,11 +256,10 @@ header
     margin-top: 2rem
     
     article
-        font-size: 1.15rem
+        font-size: 1.1rem
         line-height: 1.8
-        color: #d0d0d5
-        font-weight: 700
-
+        color: var(--text-main)
+        font-weight: 400
     
     h1
         font-family: var(--font-heading)
@@ -270,13 +267,31 @@ header
         margin-bottom: 0.5rem
         letter-spacing: -1px
         line-height: 1.1
-        font-weight: 900
+        font-weight: 800
 
-    h2, h3, h4
+    h2
         font-family: var(--font-heading)
+        font-size: 2rem
         color: var(--text-highlight)
         margin-top: 3rem
-        font-weight: 800
+        margin-bottom: 1rem
+        font-weight: 700
+    
+    h3
+        font-family: var(--font-heading)
+        font-size: 1.5rem
+        color: var(--text-highlight)
+        margin-top: 2.5rem
+        margin-bottom: 0.8rem
+        font-weight: 700
+    
+    h4
+        font-family: var(--font-heading)
+        font-size: 1.2rem
+        color: var(--text-highlight)
+        margin-top: 2rem
+        margin-bottom: 0.6rem
+        font-weight: 600
     
     .hero
         text-align: center
@@ -289,11 +304,12 @@ header
             font-size: 1rem
             margin-top: 1.5rem
             font-family: var(--font-heading)
+            font-weight: 500
             
             span
                 margin: 0 10px
 
-// Tags
+// Tags - Elegant version
 .tags-cloud
     display: flex
     flex-wrap: wrap
@@ -306,17 +322,18 @@ header
     padding: 8px 20px
     border-radius: var(--radius-pill)
     background: rgba(0, 198, 255, 0.05)
-    border: 1px solid rgba(0, 198, 255, 0.1)
+    border: 1px solid rgba(0, 198, 255, 0.15)
     color: var(--accent-teal)
     font-size: 0.9rem
-    font-weight: 700
+    font-weight: 600
     font-family: var(--font-heading)
-    transition: all 0.3s ease
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    
     &:hover
-        background: var(--accent-teal)
-        color: #000
-        box-shadow: 0 0 20px rgba(0, 198, 255, 0.4)
-        transform: scale(1.05)
+        background: rgba(0, 198, 255, 0.1)
+        border-color: rgba(0, 198, 255, 0.3)
+        transform: translateY(-2px)
+        box-shadow: 0 4px 12px rgba(0, 198, 255, 0.15)
 
 // Footer
 footer
@@ -326,6 +343,62 @@ footer
     color: var(--text-muted)
     font-size: 0.9rem
     border-top: 1px solid var(--surface-border)
+
+// Bottom menu styling
+.bottom-menu
+    p
+        display: block
+        a
+            color: var(--text-muted)
+            margin: 0 10px
+            transition: all 0.3s ease
+            &:hover
+                color: var(--accent-teal)
+
+// Code blocks
+pre
+    background: var(--code-block)
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-sm)
+    padding: 1.5rem
+    overflow-x: auto
+    margin: 2rem 0
+    
+    code
+        font-family: 'Fira Code', 'Courier New', monospace
+        font-size: 0.9rem
+        line-height: 1.6
+
+code
+    background: rgba(255, 255, 255, 0.05)
+    padding: 0.2rem 0.5rem
+    border-radius: 4px
+    font-family: 'Fira Code', 'Courier New', monospace
+    font-size: 0.9em
+
+// Lists in articles
+#content
+    ul, ol
+        margin: 1.5rem 0
+        padding-left: 2rem
+        
+    li
+        margin: 0.5rem 0
+        line-height: 1.6
+        
+    ul
+        list-style-type: disc
+        
+    ol
+        list-style-type: decimal
+
+// Blockquotes
+blockquote
+    border-left: 3px solid var(--accent-teal)
+    padding-left: 1.5rem
+    margin: 2rem 0
+    color: var(--text-muted)
+    font-style: italic
 
 // Responsive
 @media (max-width: 768px)
@@ -337,6 +410,15 @@ footer
         grid-template-columns: 1fr
         gap: 1rem
     #content
-        padding: 1.5rem
+        padding: 2rem 1.5rem
+        
+        h1
+            font-size: 2.5rem
+        
+        h2
+            font-size: 1.8rem
+        
+        article
+            font-size: 1rem
     .wrap
         padding: 0 1.5rem
