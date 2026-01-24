@@ -1,34 +1,45 @@
-// Aurora Glass Palette v4 (Volumetric)
+// Elegant Aurora Palette - Refined colors
 :root
-    --bg-color: #02040a
-    --surface-glass: rgba(255, 255, 255, 0.03)
+    --bg-color: #0a0a0f
+    --surface-glass: rgba(255, 255, 255, 0.04)
     --surface-glass-hover: rgba(255, 255, 255, 0.08)
-    --surface-border: rgba(255, 255, 255, 0.08)
+    --surface-border: rgba(255, 255, 255, 0.1)
     
-    // Aurora Accents
-    --accent-teal: #00c6ff
-    --accent-blue: #0072ff
-    --accent-violet: #9d50bb
+    // Aurora Accents - More subtle
+    --accent-teal: #4fc3f7
+    --accent-blue: #5e92f3
+    --accent-violet: #9d7fc9
     --gradient-primary: linear-gradient(135deg, var(--accent-teal), var(--accent-blue))
-    --gradient-aurora: linear-gradient(45deg, var(--accent-teal), var(--accent-violet))
+    --gradient-aurora: linear-gradient(45deg, #4fc3f7, #9d7fc9)
     
-    // Text
-    --text-main: #f0f0f5
-    --text-muted: #9494a8
+    // Text hierarchy
+    --text-main: #e8e8f0
+    --text-muted: #9090a0
     --text-highlight: #ffffff
     
-    // Config
+    // Typography
     --font-heading: 'Sora', sans-serif
     --font-body: 'Manrope', sans-serif
-    --radius-lg: 24px
+    
+    // Spacing & Radius
+    --radius-lg: 20px
     --radius-pill: 50px
-    --radius-sm: 12px
-    --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5)
-    --glass-blur: blur(20px)
+    --radius-sm: 8px
+    
+    // Effects
+    --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.4)
+    --glass-blur: blur(16px)
+    
+    // Code
+    --code-block: #0d0f16
 
 // Backward compatibility
 $white: var(--text-main)
 $black: var(--bg-color)
 $font: var(--font-body)
 $links: var(--accent-teal)
-$code-block: #0b0d14
+$links-hover: var(--text-highlight)
+$dark-grey: var(--bg-color)
+$body-text: var(--text-main)
+$body-size: 1.1rem
+$code-block: var(--code-block)
