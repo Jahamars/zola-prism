@@ -1,0 +1,20 @@
+name = "Prism"
+description = "A modern Zola theme featuring glassmorphism design and aurora-inspired animations."
+license = "AGPL-3.0"
+homepage = "https://github.com/janbaudisch/zola-prism"
+min_version = "0.4.0"
+demo = "https://jahongir.ru/zola-sam"
+
+[extra]
+show_word_count = true
+show_reading_time = true
+
+date_format = "%a %b %e, %Y"
+
+home = "home"
+
+sam_bottom_menu = true
+
+[author]
+name = "Jahongir Ahmadaliev"
+homepage = "https://jahongir.ru"

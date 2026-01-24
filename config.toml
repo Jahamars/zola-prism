@@ -1,0 +1,34 @@
+base_url = "https://jahongir.ru/zola-prism"
+title = "Welcome"
+description = "A modern blog with glassmorphism design"
+
+compile_sass = true
+build_search_index = false
+
+taxonomies = [
+    { name = "tags", rss = true },
+    { name = "authors", rss = true }
+]
+
+[markdown]
+render_emoji = true
+external_links_target_blank = true
+external_links_no_follow = true
+external_links_no_referrer = true
+smart_punctuation = true
+
+[extra]
+home = "home"  
+
+sam_menu = [
+    { text = "posts", link = "/posts" },
+    { text = "about", link = "/about" },
+    { text = "github", link = "https://github.com" }
+]
+
+sam_bottom_menu = true
+show_word_count = true
+show_reading_time = true
+
+[extra.sam_footer]
+text = "Designed with Zola & Glassmorphism"

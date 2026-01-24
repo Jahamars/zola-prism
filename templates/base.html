@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="wrap">
+    <header>
+        <a href="#" id="home-link" onclick="goBack(event)">Back</a>
+    </header>
+    {% block content %}
+    <div id="content">
+        <div id="title">
+            {% block title %}{% endblock title %}
+        </div>
+        {% block sections %}{% endblock sections %}
+    </div>
+    {% endblock content %}
+    <footer>
+        <div class="sam-footer">
+            {% if config.extra.sam_footer %}
+            {{ config.extra.sam_footer.text }}
+            {% endif %}
+        </div>
+    </footer>
+</div>
+
+<script>
+function goBack(event) {
+    event.preventDefault();
+    
+    // Проверяем, есть ли история браузера
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        // Если истории нет, переходим на главную
+        window.location.href = "{{ config.base_url }}";
+    }
+}
+</script>
+{% endblock body %}
