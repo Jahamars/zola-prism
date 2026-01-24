@@ -6,6 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block htmltitle %}{{ config.title }}{% endblock htmltitle %}</title>
     <meta name="description" content="{{ config.description }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ get_url(path='favicon/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ get_url(path='favicon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path='favicon/favicon-32x32.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ get_url(path='favicon/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ get_url(path='favicon/site.webmanifest') }}">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="{{ config.extra.keywords | default(value='') }}">
+    <meta name="author" content="Jahongir Ahmadaliev">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
+    <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock og_title %}">
+    <meta property="og:description" content="{{ config.description }}">
+    {% if config.extra.banner %}
+    <meta property="og:image" content="{{ get_url(path=config.extra.banner) }}">
+    {% else %}
+    <meta property="og:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
+    {% endif %}
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ current_url | default(value=config.base_url) }}">
+    <meta property="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
+    <meta property="twitter:description" content="{{ config.description }}">
+    {% if config.extra.banner %}
+    <meta property="twitter:image" content="{{ get_url(path=config.extra.banner) }}">
+    {% else %}
+    <meta property="twitter:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
+    {% endif %}
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 
     <!-- Google Fonts: Science Gothic + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +82,7 @@
                 {% for link in config.extra.sam_menu %}
                 <a href="{{ link.link }}" class="tile">
                     <span class="tile-title">{{ link.text }}</span>
-                    <span class="tile-desc">Explore</span>
+                    <span class="tile-desc">Explore →</span>
                 </a>
                 {% endfor %}
                 {% else %}
@@ -55,7 +92,7 @@
                     {% set section = get_section(path=section_path) %}
                     <a href="{{ section.permalink }}" class="tile">
                         <span class="tile-title">{{ section.title }}</span>
-                        <span class="tile-desc">Explore</span>
+                        <span class="tile-desc">Explore →</span>
                     </a>
                 {% endfor %}
                 {% endif %}
