@@ -1,7 +1,7 @@
 # Prism
 A modern Zola theme featuring glassmorphism design and aurora-inspired animations.
 
-![Screenshot](screenshot.png)
+![Screenshot](./screenshot.png)
 
 ## Features
 
