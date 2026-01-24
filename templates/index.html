@@ -14,6 +14,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ get_url(path='favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ get_url(path='favicon/site.webmanifest') }}">
     
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ELR5QJ5CKK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ELR5QJ5CKK');
+    </script>
+
+
     <!-- SEO Meta Tags -->
     <meta name="keywords" content="{{ config.extra.keywords | default(value='') }}">
     <meta name="author" content="Jahongir Ahmadaliev">
