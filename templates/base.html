@@ -21,17 +21,22 @@
     
     {% if config.extra.sam_bottom_menu %}
     <div class="bottom-menu">
-        <hr style="border-color: var(--surface-border); opacity: 0.3; margin: 3rem 0 2rem 0;" />
-        <p style="text-align: center; color: var(--text-muted);">
+        <p>
             {% if config.extra.sam_menu %}
                 {% for link in config.extra.sam_menu %}
-                    <a href="{{ link.link }}" style="margin: 0 10px;">{{ link.text }}</a>
-                    {% if not loop.last %}·{% endif %}
+                    <a href="{{ link.link }}">{{ link.text }}</a>
                 {% endfor %}
             {% endif %}
         </p>
     </div>
     {% endif %}
+    
+    <!-- Scroll to top button -->
+    <button id="scroll-to-top" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
     
     <footer>
         <div class="sam-footer">
@@ -43,6 +48,7 @@
 </div>
 
 <script>
+// Back navigation
 function goBack(event) {
     event.preventDefault();
     
@@ -63,5 +69,36 @@ function goBack(event) {
         window.location.href = "{{ config.base_url }}";
     }
 }
+
+// Scroll to top functionality
+(function() {
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    
+    if (!scrollToTopBtn) return;
+    
+    // Show/hide button based on scroll position
+    function toggleScrollButton() {
+        if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
+    }
+    
+    // Smooth scroll to top
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Event listeners
+    window.addEventListener('scroll', toggleScrollButton);
+    scrollToTopBtn.addEventListener('click', scrollToTop);
+    
+    // Initial check
+    toggleScrollButton();
+})();
 </script>
 {% endblock body %}
