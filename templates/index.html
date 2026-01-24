@@ -82,7 +82,7 @@
                 {% for link in config.extra.sam_menu %}
                 <a href="{{ link.link }}" class="tile">
                     <span class="tile-title">{{ link.text }}</span>
-                    <span class="tile-desc">Explore →</span>
+                    <span class="tile-desc">Explore</span>
                 </a>
                 {% endfor %}
                 {% else %}
@@ -92,7 +92,7 @@
                     {% set section = get_section(path=section_path) %}
                     <a href="{{ section.permalink }}" class="tile">
                         <span class="tile-title">{{ section.title }}</span>
-                        <span class="tile-desc">Explore →</span>
+                        <span class="tile-desc">Explore</span>
                     </a>
                 {% endfor %}
                 {% endif %}
