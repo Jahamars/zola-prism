@@ -2,20 +2,41 @@
 {% block body %}
 <div class="wrap">
     <header>
-        <a href="#" id="home-link" onclick="goBack(event)">Back</a>
+        <a href="#" id="home-link" onclick="goBack(event)">
+            {{ config.extra.home | default(value="←") }}
+        </a>
     </header>
+    
     {% block content %}
     <div id="content">
+        {% block title_block %}
         <div id="title">
             {% block title %}{% endblock title %}
         </div>
+        {% endblock title_block %}
+        
         {% block sections %}{% endblock sections %}
     </div>
     {% endblock content %}
+    
+    {% if config.extra.sam_bottom_menu %}
+    <div class="bottom-menu">
+        <hr style="border-color: var(--surface-border); opacity: 0.3; margin: 3rem 0 2rem 0;" />
+        <p style="text-align: center; color: var(--text-muted);">
+            {% if config.extra.sam_menu %}
+                {% for link in config.extra.sam_menu %}
+                    <a href="{{ link.link }}" style="margin: 0 10px;">{{ link.text }}</a>
+                    {% if not loop.last %}·{% endif %}
+                {% endfor %}
+            {% endif %}
+        </p>
+    </div>
+    {% endif %}
+    
     <footer>
         <div class="sam-footer">
             {% if config.extra.sam_footer %}
-            {{ config.extra.sam_footer.text }}
+            {{ config.extra.sam_footer.text | safe }}
             {% endif %}
         </div>
     </footer>
@@ -25,11 +46,20 @@
 function goBack(event) {
     event.preventDefault();
     
-    // Проверяем, есть ли история браузера
-    if (window.history.length > 1) {
+    // Получаем текущий путь
+    const currentPath = window.location.pathname;
+    const basePath = "{{ config.base_url | replace(from='https://', to='') | replace(from='http://', to='') }}".split('/').slice(1).join('/');
+    
+    // Если мы на главной странице или в корне сайта
+    if (currentPath === '/' || currentPath === `/${basePath}/` || currentPath === `/${basePath}`) {
+        return; // Ничего не делаем
+    }
+    
+    // Если есть история браузера, идем назад
+    if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
         window.history.back();
     } else {
-        // Если истории нет, переходим на главную
+        // Иначе идем на главную
         window.location.href = "{{ config.base_url }}";
     }
 }

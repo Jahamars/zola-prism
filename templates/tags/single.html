@@ -1,39 +1,45 @@
 {% extends "base.html" %}
-
 {% import "macros.html" as macros %}
 
 {% block htmltitle %}
-{{ term.name }} - {{ config.title }}
+#{{ term.name }} - {{ config.title }}
 {% endblock htmltitle %}
 
-{% block title %}
-{{ term.name }}
-{% endblock title %}
-
 {% block content %}
-<div class="hero">
-    <h1>#{{ term.name }}</h1>
-    <p class="hero-meta">{{ term.pages | length }} posts found</p>
-</div>
+<div id="content">
+    <div class="hero">
+        <h1>#{{ term.name }}</h1>
+        <p style="color: var(--text-muted); margin-top: 1rem;">
+            {{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}
+        </p>
+    </div>
 
-<div class="post-grid">
-    {% for page in term.pages %}
-    <a href="{{ page.permalink }}" class="card">
-        <h3>{{ macros::title_or_last(component=page, offset=0) }}</h3>
+    {% if term.pages %}
+    <div class="post-grid">
+        {% for page in term.pages %}
+        <a href="{{ page.permalink }}" class="card">
+            <h3>{{ page.title }}</h3>
 
-        {% if page.description %}
-        <p>{{ page.description }}</p>
-        {% elif page.summary %}
-        <p>{{ page.summary | striptags | truncate(length=150) }}</p>
-        {% endif %}
-
-        <div class="meta">
-            {% if page.date %}
-            <span>{{ macros::format_date(date=page.date) }}</span>
+            {% if page.description %}
+            <p>{{ page.description }}</p>
+            {% elif page.summary %}
+            <p>{{ page.summary | striptags | truncate(length=150) }}</p>
+            {% else %}
+            <p>{{ page.content | striptags | truncate(length=150) }}</p>
             {% endif %}
-            <span>Read →</span>
-        </div>
-    </a>
-    {% endfor %}
+
+            <div class="meta">
+                {% if page.date %}
+                <span>{{ page.date | date(format="%b %d, %Y") }}</span>
+                {% endif %}
+                
+                {% if page.reading_time %}
+                <span>{{ page.reading_time }} min</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}

@@ -4,23 +4,26 @@
 Tags - {{ config.title }}
 {% endblock htmltitle %}
 
-{% block title %}
-Tags
-{% endblock title %}
-
 {% block content %}
 <div id="content">
     <div class="hero">
-        <h1>Tags</h1>
-        <p class="hero-meta">Explore all topics</p>
+        <h1>All Tags</h1>
+        <p style="color: var(--text-muted); margin-top: 1rem;">Explore posts by topic</p>
     </div>
 
-    <div class="tags-cloud">
-        {% for tag in terms %}
-        <a href="{{ tag.permalink }}" class="tag" style="font-size: 1.1rem; padding: 10px 24px;">
-            {{ tag.name }} <span style="opacity: 0.6; margin-left: 5px;">({{ tag.pages | length }})</span>
+    {% if terms %}
+    <div class="tags-cloud" style="margin-top: 3rem;">
+        {% for term in terms %}
+        <a href="{{ term.permalink }}" class="tag">
+            #{{ term.name }}
+            <span style="opacity: 0.6; font-size: 0.85em;">({{ term.pages | length }})</span>
         </a>
         {% endfor %}
     </div>
+    {% else %}
+    <p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
+        No tags yet.
+    </p>
+    {% endif %}
 </div>
 {% endblock content %}

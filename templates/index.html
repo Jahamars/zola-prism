@@ -11,42 +11,54 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Sora:wght@400;500;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@400;500;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
 
-    <!-- Analytics (Optional preservation) -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ELR5QJ5CKK"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-ELR5QJ5CKK');
-    </script>
+    <!-- Favicon (optional) -->
+    <!-- <link rel="icon" type="image/png" href="{{ get_url(path='favicon.png') }}"> -->
 
     {% block head %}{% endblock head %}
 </head>
 
 <body>
+    <!-- Aurora Background -->
     <div class="aurora-container">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
+
     {% block body %}
     <div class="wrap">
         <div id="splash">
             <h1 id="title">{{ config.title }}</h1>
+            
+            {% if config.description %}
+            <p style="text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-top: -1rem; margin-bottom: 3rem;">
+                {{ config.description }}
+            </p>
+            {% endif %}
+            
             <div class="tile-grid">
                 {% if config.extra.sam_menu %}
                 {% for link in config.extra.sam_menu %}
                 <a href="{{ link.link }}" class="tile">
                     <span class="tile-title">{{ link.text }}</span>
-                    <span class="tile-desc">Explore section</span>
+                    <span class="tile-desc">Explore →</span>
                 </a>
+                {% endfor %}
+                {% else %}
+                {# Fallback: автоматически показываем все секции #}
+                {% set index = get_section(path="_index.md") %}
+                {% for section_path in index.subsections %}
+                    {% set section = get_section(path=section_path) %}
+                    <a href="{{ section.permalink }}" class="tile">
+                        <span class="tile-title">{{ section.title }}</span>
+                        <span class="tile-desc">Explore →</span>
+                    </a>
                 {% endfor %}
                 {% endif %}
             </div>
