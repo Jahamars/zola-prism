@@ -1,0 +1,342 @@
+body
+    background-color: var(--bg-color)
+    color: var(--text-main)
+    font-family: var(--font-body)
+    font-size: 17px
+    min-height: 100vh
+    display: flex
+    flex-direction: column
+    overflow-x: hidden
+
+// Aurora Backgrounds
+.aurora-container
+    position: fixed
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    z-index: -1
+    overflow: hidden
+    pointer-events: none
+
+.blob
+    position: absolute
+    border-radius: 50%
+    filter: blur(80px)
+    opacity: 0.4
+    animation: drift 20s infinite alternate ease-in-out
+
+.blob-1
+    top: -10%
+    left: -10%
+    width: 50vw
+    height: 50vw
+    background: var(--accent-violet)
+    animation-delay: 0s
+
+.blob-2
+    bottom: -10%
+    right: -10%
+    width: 60vw
+    height: 60vw
+    background: var(--accent-teal)
+    animation-delay: -5s
+
+.blob-3
+    top: 40%
+    left: 40%
+    width: 40vw
+    height: 40vw
+    background: var(--accent-blue)
+    opacity: 0.2
+    animation-delay: -10s
+
+@keyframes drift
+    0%
+        transform: translate(0, 0) scale(1)
+    100%
+        transform: translate(30px, 50px) scale(1.1)
+
+a
+    color: var(--text-main)
+    text-decoration: none
+    transition: all 0.3s ease
+    &:hover
+        color: var(--accent-teal)
+
+.wrap
+    max-width: 1100px
+    margin: 0 auto
+    padding: 0 2rem
+    position: relative
+    z-index: 1
+
+// Navigation & Buttons
+header
+    padding: 2rem 0
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+#home-link
+    display: inline-flex
+    align-items: center
+    padding: 0.6rem 1.5rem
+    background: var(--surface-glass)
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-pill)
+    color: var(--text-muted)
+    font-family: var(--font-heading)
+    font-size: 0.85rem
+    font-weight: 700
+    transition: all 0.3s ease
+    backdrop-filter: var(--glass-blur)
+    text-transform: uppercase
+    letter-spacing: 1px
+    
+    &:hover
+        background: rgba(255, 255, 255, 0.1)
+        border-color: var(--accent-teal)
+        color: #fff
+        transform: translateX(-4px)
+        box-shadow: 0 0 20px rgba(0, 198, 255, 0.3)
+
+.btn
+    display: inline-block
+    padding: 0.8rem 1.8rem
+    background: var(--surface-glass)
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-pill)
+    backdrop-filter: var(--glass-blur)
+    -webkit-backdrop-filter: var(--glass-blur)
+    color: var(--text-main)
+    font-family: var(--font-heading)
+    font-weight: 700
+    transition: all 0.3s ease
+    text-transform: uppercase
+    letter-spacing: 1px
+    
+    &:hover
+        background: rgba(255, 255, 255, 0.1)
+        border-color: var(--accent-teal)
+        transform: translateY(-2px)
+        box-shadow: 0 5px 15px rgba(0, 198, 255, 0.2)
+        color: #fff
+
+// Splash / Home (Volumetric Redesign)
+#splash
+    min-height: 80vh
+    display: flex
+    flex-direction: column
+    justify-content: center
+    text-align: center
+
+#title
+    font-family: var(--font-heading)
+    font-size: 6rem
+    font-weight: 800
+    letter-spacing: -2px
+    background: var(--gradient-aurora)
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+    margin-bottom: 2rem
+    // Volumetric Effect
+    filter: drop-shadow(0 0 40px rgba(157, 80, 187, 0.4))
+    transform: perspective(500px) rotateX(5deg)
+
+.tile-grid
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
+    gap: 1.5rem
+    width: 100%
+    max-width: 900px
+    margin: 3rem auto
+
+.tile
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-lg)
+    padding: 3rem 2rem
+    backdrop-filter: var(--glass-blur)
+    -webkit-backdrop-filter: var(--glass-blur)
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    position: relative
+    overflow: hidden
+    
+    &::before
+        content: ''
+        position: absolute
+        inset: 0
+        background: radial-gradient(circle at center, var(--accent-teal), transparent 70%)
+        opacity: 0
+        transition: opacity 0.4s ease
+        z-index: -1
+
+    &:hover
+        transform: translateY(-10px) scale(1.02)
+        border-color: rgba(255,255,255,0.3)
+        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5)
+        
+        &::before
+            opacity: 0.15
+
+    .tile-title
+        font-family: var(--font-heading)
+        font-size: 1.8rem
+        font-weight: 700
+        margin-bottom: 0.5rem
+        z-index: 1
+    
+    .tile-desc
+        font-size: 0.9rem
+        color: var(--text-muted)
+        z-index: 1
+
+// Cards & Grid (Robust)
+.post-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
+    gap: 2rem
+    margin: 3rem 0
+    align-items: stretch
+
+.card
+    background: var(--surface-glass)
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-lg)
+    padding: 2.5rem
+    backdrop-filter: var(--glass-blur)
+    -webkit-backdrop-filter: var(--glass-blur)
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease, border-color 0.3s ease
+    display: flex
+    flex-direction: column
+    height: 100%
+    box-sizing: border-box
+    
+    &:hover
+        transform: translateY(-8px) scale(1.02)
+        background: var(--surface-glass-hover)
+        border-color: rgba(255, 255, 255, 0.2)
+        box-shadow: var(--shadow-soft)
+
+    h3
+        font-family: var(--font-heading)
+        font-size: 1.6rem
+        margin: 0 0 1rem 0
+        font-weight: 800
+        line-height: 1.2
+    
+    p
+        color: var(--text-muted)
+        font-size: 0.95rem
+        line-height: 1.6
+        margin-bottom: 1.5rem
+        flex-grow: 1 // Pushes meta to bottom
+    
+    .meta
+        font-size: 0.85rem
+        color: var(--text-muted)
+        margin-top: auto
+        padding-top: 1.5rem
+        display: flex
+        justify-content: space-between
+        border-top: 1px solid var(--surface-border)
+        font-family: var(--font-heading)
+        font-weight: 600
+
+// Content Page
+#content
+    background: var(--surface-glass)
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-lg)
+    padding: 4rem
+    backdrop-filter: var(--glass-blur)
+    margin-top: 2rem
+    
+    article
+        font-size: 1.15rem
+        line-height: 1.8
+        color: #d0d0d5
+        font-weight: 700
+
+    
+    h1
+        font-family: var(--font-heading)
+        font-size: 3.5rem
+        margin-bottom: 0.5rem
+        letter-spacing: -1px
+        line-height: 1.1
+        font-weight: 900
+
+    h2, h3, h4
+        font-family: var(--font-heading)
+        color: var(--text-highlight)
+        margin-top: 3rem
+        font-weight: 800
+    
+    .hero
+        text-align: center
+        margin-bottom: 4rem
+        padding-bottom: 3rem
+        border-bottom: 1px solid var(--surface-border)
+        
+        .hero-meta
+            color: var(--text-muted)
+            font-size: 1rem
+            margin-top: 1.5rem
+            font-family: var(--font-heading)
+            
+            span
+                margin: 0 10px
+
+// Tags
+.tags-cloud
+    display: flex
+    flex-wrap: wrap
+    gap: 1rem
+    justify-content: center
+    margin: 2rem 0
+
+.tag
+    display: inline-block
+    padding: 8px 20px
+    border-radius: var(--radius-pill)
+    background: rgba(0, 198, 255, 0.05)
+    border: 1px solid rgba(0, 198, 255, 0.1)
+    color: var(--accent-teal)
+    font-size: 0.9rem
+    font-weight: 700
+    font-family: var(--font-heading)
+    transition: all 0.3s ease
+    &:hover
+        background: var(--accent-teal)
+        color: #000
+        box-shadow: 0 0 20px rgba(0, 198, 255, 0.4)
+        transform: scale(1.05)
+
+// Footer
+footer
+    margin-top: 6rem
+    padding: 3rem 0
+    text-align: center
+    color: var(--text-muted)
+    font-size: 0.9rem
+    border-top: 1px solid var(--surface-border)
+
+// Responsive
+@media (max-width: 768px)
+    #title
+        font-size: 3.5rem
+    .post-grid
+        grid-template-columns: 1fr
+    .tile-grid
+        grid-template-columns: 1fr
+        gap: 1rem
+    #content
+        padding: 1.5rem
+    .wrap
+        padding: 0 1.5rem

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+{% block htmltitle %}
+{{ page.title }}
+{% endblock htmltitle %}
+{% block title %}
+{{ page.title }}
+{% endblock title %}
+{% block content %}
+<div id="content">
+    {% if not page.extra.no_header %}
+    <div class="hero">
+        <h1>{{ page.title }}</h1>
+
+        <div class="hero-meta">
+            {% if page.date %}
+            <span>{{ macros::format_date(date=page.date) }}</span>
+            {% endif %}
+
+            {% if config.extra.show_reading_time %}
+            <span>·</span>
+            <span>{{ page.reading_time }} min read</span>
+            {% endif %}
+        </div>
+
+        {% if page.taxonomies.tags %}
+        <div class="tags" style="margin-top: 1rem;">
+            {% for tag in page.taxonomies.tags %}
+            <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <article>
+        {{ page.content | safe }}
+    </article>
+
+    {% if config.extra.comments and not page.extra.no_comments %}
+    <hr style="border-color: var(--surface-border); margin: 3rem 0;" />
+    {% include "comments.html" %}
+    {% endif %}
+</div>
+{% endblock content %}

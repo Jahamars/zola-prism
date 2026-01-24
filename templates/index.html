@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ config.default_language }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block htmltitle %}{{ config.title }}{% endblock htmltitle %}</title>
+    <meta name="description" content="{{ config.description }}">
+
+    <!-- Google Fonts: Sora & Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Sora:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
+
+    <!-- Analytics (Optional preservation) -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ELR5QJ5CKK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-ELR5QJ5CKK');
+    </script>
+
+    {% block head %}{% endblock head %}
+</head>
+
+<body>
+    <div class="aurora-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    {% block body %}
+    <div class="wrap">
+        <div id="splash">
+            <h1 id="title">{{ config.title }}</h1>
+            <div class="tile-grid">
+                {% if config.extra.sam_menu %}
+                {% for link in config.extra.sam_menu %}
+                <a href="{{ link.link }}" class="tile">
+                    <span class="tile-title">{{ link.text }}</span>
+                    <span class="tile-desc">Explore section</span>
+                </a>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endblock body %}
+</body>
+
+</html>
