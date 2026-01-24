@@ -7,6 +7,8 @@ body
     display: flex
     flex-direction: column
     overflow-x: hidden
+    font-optical-sizing: auto
+    font-variation-settings: "slnt" 0, "wdth" 100, "CTRS" 0
 
 // Aurora Backgrounds
 .aurora-container
@@ -135,12 +137,13 @@ header
     font-family: var(--font-heading)
     font-size: 6rem
     font-weight: 800
-    letter-spacing: -2px
+    letter-spacing: 2px
     background: var(--gradient-aurora)
     -webkit-background-clip: text
     -webkit-text-fill-color: transparent
     margin-bottom: 2rem
     filter: drop-shadow(0 0 30px rgba(157, 80, 187, 0.2))
+    text-transform: uppercase
 
 .tile-grid
     display: grid
@@ -256,16 +259,17 @@ header
     margin-top: 2rem
     
     article
-        font-size: 1.1rem
-        line-height: 1.8
+        font-size: 1.05rem
+        line-height: 1.75
         color: var(--text-main)
         font-weight: 400
+        letter-spacing: 0.3px
     
     h1
         font-family: var(--font-heading)
         font-size: 3.5rem
         margin-bottom: 0.5rem
-        letter-spacing: -1px
+        letter-spacing: -0.5px
         line-height: 1.1
         font-weight: 800
 
@@ -276,6 +280,7 @@ header
         margin-top: 3rem
         margin-bottom: 1rem
         font-weight: 700
+        letter-spacing: -0.3px
     
     h3
         font-family: var(--font-heading)
@@ -433,18 +438,62 @@ pre
     padding: 1.5rem
     overflow-x: auto
     margin: 2rem 0
+    white-space: pre
     
     code
-        font-family: 'Fira Code', 'Courier New', monospace
+        font-family: var(--font-mono)
         font-size: 0.9rem
         line-height: 1.6
+        white-space: pre
+        word-wrap: normal
+        overflow-wrap: normal
 
 code
     background: rgba(255, 255, 255, 0.05)
     padding: 0.2rem 0.5rem
     border-radius: 4px
-    font-family: 'Fira Code', 'Courier New', monospace
+    font-family: var(--font-mono)
     font-size: 0.9em
+    white-space: pre-wrap
+
+// Syntax highlighting specific
+#content
+    pre
+        code
+            display: block
+            padding: 0
+            background: transparent
+            border-radius: 0
+    
+    // Ensure code blocks don't wrap
+    .highlight pre
+        overflow-x: auto
+        -webkit-overflow-scrolling: touch
+        
+    .highlight code
+        white-space: pre
+        word-break: normal
+        overflow-wrap: normal
+
+// Custom scrollbar for code blocks
+pre::-webkit-scrollbar
+    height: 8px
+
+pre::-webkit-scrollbar-track
+    background: rgba(0, 0, 0, 0.2)
+    border-radius: 4px
+
+pre::-webkit-scrollbar-thumb
+    background: rgba(255, 255, 255, 0.2)
+    border-radius: 4px
+    
+    &:hover
+        background: rgba(255, 255, 255, 0.3)
+
+// Firefox scrollbar
+pre
+    scrollbar-width: thin
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2)
 
 // Lists in articles
 #content

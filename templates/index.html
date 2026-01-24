@@ -7,12 +7,10 @@
     <title>{% block htmltitle %}{{ config.title }}{% endblock htmltitle %}</title>
     <meta name="description" content="{{ config.description }}">
 
-    <!-- Google Fonts: Sora & Manrope -->
+    <!-- Google Fonts: Science Gothic + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@400;500;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
@@ -47,7 +45,7 @@
                 {% for link in config.extra.sam_menu %}
                 <a href="{{ link.link }}" class="tile">
                     <span class="tile-title">{{ link.text }}</span>
-                    <span class="tile-desc">Explore →</span>
+                    <span class="tile-desc">Explore</span>
                 </a>
                 {% endfor %}
                 {% else %}
@@ -57,7 +55,7 @@
                     {% set section = get_section(path=section_path) %}
                     <a href="{{ section.permalink }}" class="tile">
                         <span class="tile-title">{{ section.title }}</span>
-                        <span class="tile-desc">Explore →</span>
+                        <span class="tile-desc">Explore</span>
                     </a>
                 {% endfor %}
                 {% endif %}
