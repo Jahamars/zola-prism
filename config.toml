@@ -31,9 +31,9 @@ home = "back"
 sam_menu = [
     { text = "posts", link = "/posts" },
     { text = "about", link = "/about" },
-    { text = "github", link = "https://github.com/jahamars" }
-    # { text = "tags", link = "/tags" },
-    # { text = "authors", link = "/authors" },
+    { text = "github", link = "https://github.com/jahamars/zola-prism" },
+    { text = "authors", link = "/authors" },
+    { text = "tags", link = "/tags" }
 ]
 
 # Показывать меню внизу страниц
