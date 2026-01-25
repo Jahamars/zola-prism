@@ -1,3 +1,13 @@
+// === GLOBAL FIXES ===
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+html
+    overflow-x: hidden
+    max-width: 100vw
+
 body
     background-color: var(--bg-color)
     color: var(--text-main)
@@ -7,10 +17,12 @@ body
     display: flex
     flex-direction: column
     overflow-x: hidden
+    width: 100%
+    max-width: 100vw
     font-optical-sizing: auto
     font-variation-settings: "slnt" 0, "wdth" 100, "CTRS" 0
 
-// Aurora Backgrounds
+// === AURORA BACKGROUNDS ===
 .aurora-container
     position: fixed
     top: 0
@@ -59,6 +71,7 @@ body
     100%
         transform: translate(30px, 50px) scale(1.1)
 
+// === LINKS ===
 a
     color: var(--text-main)
     text-decoration: none
@@ -66,14 +79,17 @@ a
     &:hover
         color: var(--accent-teal)
 
+// === LAYOUT ===
 .wrap
     max-width: 1100px
     margin: 0 auto
     padding: 0 2rem
     position: relative
     z-index: 1
+    width: 100%
+    box-sizing: border-box
 
-// Navigation & Buttons - Elegant version
+// === HEADER & NAVIGATION ===
 header
     padding: 2rem 0
     display: flex
@@ -94,6 +110,7 @@ header
     font-weight: 600
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     backdrop-filter: var(--glass-blur)
+    -webkit-backdrop-filter: var(--glass-blur)
     text-transform: uppercase
     letter-spacing: 1px
     
@@ -112,6 +129,7 @@ header
         #back-icon
             transform: translateX(-2px)
 
+// === BUTTONS ===
 .btn
     display: inline-block
     padding: 0.8rem 1.8rem
@@ -126,6 +144,7 @@ header
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     text-transform: uppercase
     letter-spacing: 1px
+    cursor: pointer
     
     &:hover
         background: var(--surface-glass-hover)
@@ -134,7 +153,7 @@ header
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
         color: var(--text-main)
 
-// Splash / Home - Elegant version
+// === SPLASH / HOME PAGE ===
 #splash
     min-height: 80vh
     display: flex
@@ -150,10 +169,13 @@ header
     background: var(--gradient-aurora)
     -webkit-background-clip: text
     -webkit-text-fill-color: transparent
+    background-clip: text
     margin-bottom: 2rem
     filter: drop-shadow(0 0 30px rgba(157, 80, 187, 0.2))
     text-transform: uppercase
+    line-height: 1.1
 
+// === TILES GRID ===
 .tile-grid
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
@@ -206,7 +228,7 @@ header
         color: var(--text-muted)
         z-index: 1
 
-// Cards & Grid - Elegant version
+// === POST GRID & CARDS ===
 .post-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
@@ -258,14 +280,17 @@ header
         font-family: var(--font-heading)
         font-weight: 500
 
-// Content Page
+// === CONTENT PAGE ===
 #content
     background: var(--surface-glass)
     border: 1px solid var(--surface-border)
     border-radius: var(--radius-lg)
     padding: 4rem
     backdrop-filter: var(--glass-blur)
+    -webkit-backdrop-filter: var(--glass-blur)
     margin-top: 2rem
+    max-width: 100%
+    box-sizing: border-box
     
     article
         font-size: 1.05rem
@@ -273,8 +298,10 @@ header
         color: var(--text-main)
         font-weight: 400
         letter-spacing: 0.3px
+        word-break: break-word
+        overflow-wrap: break-word
         
-        // Ссылки в тексте статьи
+        // Links in article
         a
             color: var(--accent-teal)
             text-decoration: none
@@ -289,18 +316,18 @@ header
                 padding-left: 2px
                 padding-right: 2px
         
-        // Ссылки в списках
-        ul a, ol a
-            font-weight: 500
-        
-        // Внешние ссылки с иконкой
+        // External links icon
         a[target="_blank"]
             &::after
                 content: " ↗"
                 font-size: 0.85em
                 opacity: 0.6
         
-        // Жирный текст, курсив, выделение
+        // Links in lists
+        ul a, ol a
+            font-weight: 500
+        
+        // Text emphasis
         strong, b
             color: var(--text-highlight)
             font-weight: 700
@@ -314,32 +341,6 @@ header
             color: var(--text-highlight)
             padding: 0.1rem 0.3rem
             border-radius: 3px
-        
-        // Ссылки в тексте статьи
-        a
-            color: var(--accent-teal)
-            text-decoration: none
-            border-bottom: 1px solid rgba(79, 195, 247, 0.3)
-            transition: all 0.3s ease
-            padding-bottom: 2px
-            
-            &:hover
-                color: var(--text-highlight)
-                border-bottom-color: var(--accent-teal)
-                background: rgba(79, 195, 247, 0.05)
-                padding-left: 2px
-                padding-right: 2px
-        
-        // Ссылки в списках
-        ul a, ol a
-            font-weight: 500
-        
-        // Внешние ссылки с иконкой (опционально)
-        a[target="_blank"]
-            &::after
-                content: " ↗"
-                font-size: 0.85em
-                opacity: 0.6
     
     h1
         font-family: var(--font-heading)
@@ -390,7 +391,7 @@ header
             span
                 margin: 0 10px
 
-// Tags - Elegant version
+// === TAGS ===
 .tags-cloud
     display: flex
     flex-wrap: wrap
@@ -416,7 +417,7 @@ header
         transform: translateY(-2px)
         box-shadow: 0 4px 12px rgba(0, 198, 255, 0.15)
 
-// Footer
+// === FOOTER ===
 footer
     margin-top: 6rem
     padding: 3rem 0
@@ -425,7 +426,7 @@ footer
     font-size: 0.9rem
     border-top: 1px solid var(--surface-border)
 
-// Scroll to top button
+// === SCROLL TO TOP BUTTON ===
 #scroll-to-top
     position: fixed
     bottom: 2rem
@@ -469,7 +470,7 @@ footer
         stroke: var(--text-main)
         transform: translateY(-2px)
 
-// Bottom menu styling - elegant buttons
+// === BOTTOM MENU ===
 .bottom-menu
     margin-top: 4rem
     padding: 3rem 0
@@ -496,6 +497,7 @@ footer
             font-weight: 600
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
             backdrop-filter: var(--glass-blur)
+            -webkit-backdrop-filter: var(--glass-blur)
             text-transform: capitalize
             letter-spacing: 0.5px
             
@@ -506,7 +508,7 @@ footer
                 transform: translateY(-2px)
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
 
-// Code blocks
+// === CODE BLOCKS ===
 pre
     background: var(--code-block)
     border: none
@@ -516,6 +518,7 @@ pre
     margin: 2rem 0
     white-space: pre
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+    max-width: 100%
     
     code
         font-family: var(--font-mono)
@@ -546,7 +549,6 @@ code
             border: none
             color: inherit
     
-    // Ensure code blocks don't wrap
     .highlight pre
         overflow-x: auto
         -webkit-overflow-scrolling: touch
@@ -577,7 +579,7 @@ pre
     scrollbar-width: thin
     scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2)
 
-// Lists in articles
+// === LISTS ===
 #content
     ul, ol
         margin: 1.5rem 0
@@ -586,6 +588,7 @@ pre
     li
         margin: 0.5rem 0
         line-height: 1.6
+        word-break: break-word
         
     ul
         list-style-type: disc
@@ -593,7 +596,7 @@ pre
     ol
         list-style-type: decimal
 
-// Blockquotes
+// === BLOCKQUOTES ===
 blockquote
     border-left: 3px solid var(--accent-teal)
     padding-left: 1.5rem
@@ -601,23 +604,7 @@ blockquote
     color: var(--text-muted)
     font-style: italic
 
-// Text emphasis
-#content
-    strong, b
-        color: var(--text-highlight)
-        font-weight: 700
-    
-    em, i
-        color: var(--accent-teal)
-        font-style: italic
-    
-    mark
-        background: rgba(79, 195, 247, 0.15)
-        color: var(--text-highlight)
-        padding: 0.1rem 0.3rem
-        border-radius: 3px
-
-// Tables
+// === TABLES ===
 #content
     table
         width: 100%
@@ -626,6 +613,7 @@ blockquote
         background: var(--surface-glass)
         border-radius: var(--radius-sm)
         overflow: hidden
+        max-width: 100%
         
     thead
         background: rgba(255, 255, 255, 0.05)
@@ -642,6 +630,7 @@ blockquote
         padding: 0.875rem 1rem
         border-bottom: 1px solid var(--surface-border)
         color: var(--text-main)
+        word-break: break-word
         
     tbody tr
         transition: background 0.2s ease
@@ -652,107 +641,48 @@ blockquote
         &:last-child td
             border-bottom: none
     
-    // Responsive table wrapper
     .table-wrapper
         overflow-x: auto
         margin: 2rem 0
+        -webkit-overflow-scrolling: touch
         
         table
             margin: 0
 
-// Responsive
+// === IMAGES ===
+img, video, iframe
+    max-width: 100%
+    height: auto
+    border-radius: 8px
+
+// === RESPONSIVE - MOBILE ===
 @media (max-width: 768px)
     body
-        font-size: 16px
+        font-size: 15px
     
-    #title
-        font-size: 2.5rem
-        letter-spacing: 0px
-        margin-bottom: 1.5rem
-        filter: drop-shadow(0 0 20px rgba(157, 80, 187, 0.15))
+    // Aurora blobs - optimize for mobile
+    .blob
+        opacity: 0.2
+        filter: blur(60px)
     
-    .post-grid
-        grid-template-columns: 1fr
-        gap: 1.5rem
-        margin: 2rem 0
+    .blob-1
+        width: 80vw
+        height: 80vw
+        top: -20%
+        left: -30%
     
-    .tile-grid
-        grid-template-columns: 1fr
-        gap: 1rem
-        margin: 2rem auto
+    .blob-2
+        width: 90vw
+        height: 90vw
+        bottom: -30%
+        right: -30%
     
-    .tile
-        padding: 2rem 1.5rem
-        
-        .tile-title
-            font-size: 1.4rem
-        
-        .tile-desc
-            font-size: 0.85rem
+    .blob-3
+        width: 70vw
+        height: 70vw
+        opacity: 0.1
     
-    #content
-        padding: 1.5rem
-        margin-top: 1rem
-        
-        h1
-            font-size: 2rem
-            letter-spacing: -0.3px
-        
-        h2
-            font-size: 1.5rem
-            margin-top: 2rem
-            letter-spacing: -0.2px
-        
-        h3
-            font-size: 1.2rem
-            margin-top: 1.5rem
-        
-        h4
-            font-size: 1.1rem
-            margin-top: 1.2rem
-        
-        article
-            font-size: 0.95rem
-            line-height: 1.65
-        
-        .hero
-            margin-bottom: 2rem
-            padding-bottom: 2rem
-            
-            .hero-meta
-                font-size: 0.85rem
-                margin-top: 1rem
-        
-        // Mobile table scrolling
-        table
-            display: block
-            overflow-x: auto
-            white-space: nowrap
-            -webkit-overflow-scrolling: touch
-            font-size: 0.85rem
-            
-        thead
-            display: table-header-group
-            
-        tbody
-            display: table-row-group
-        
-        th, td
-            padding: 0.75rem 0.5rem
-    
-    .card
-        padding: 1.5rem
-        
-        h3
-            font-size: 1.3rem
-        
-        p
-            font-size: 0.9rem
-        
-        .meta
-            font-size: 0.8rem
-            padding-top: 1rem
-    
+    // Layout
     .wrap
         padding: 0 1rem
         max-width: 100%
@@ -761,11 +691,164 @@ blockquote
         padding: 1.5rem 0
     
     #home-link
-        padding: 0.5rem 1.2rem
-        font-size: 0.75rem
-        letter-spacing: 0.5px
+        padding: 0.5rem 1rem
+        font-size: 0.7rem
+        gap: 0.3rem
+        
+        #back-icon
+            font-size: 0.9rem
     
-    // Scroll to top button on mobile
+    // Splash
+    #splash
+        min-height: 60vh
+        padding: 1rem 0
+    
+    #title
+        font-size: 2rem
+        letter-spacing: 0
+        margin-bottom: 1rem
+        line-height: 1.1
+        word-break: break-word
+        filter: drop-shadow(0 0 15px rgba(157, 80, 187, 0.1))
+    
+    // Tiles
+    .tile-grid
+        grid-template-columns: 1fr
+        gap: 1rem
+        margin: 1.5rem auto
+    
+    .tile
+        padding: 1.5rem 1.2rem
+        border-radius: 12px
+        
+        .tile-title
+            font-size: 1.2rem
+            line-height: 1.3
+        
+        .tile-desc
+            font-size: 0.8rem
+    
+    // Post grid
+    .post-grid
+        grid-template-columns: 1fr
+        gap: 1.25rem
+        margin: 1.5rem 0
+    
+    .card
+        padding: 1.5rem
+        border-radius: 12px
+        
+        h3
+            font-size: 1.2rem
+            line-height: 1.3
+        
+        p
+            font-size: 0.85rem
+        
+        .meta
+            font-size: 0.75rem
+            flex-direction: column
+            gap: 0.5rem
+            align-items: flex-start
+    
+    // Content
+    #content
+        padding: 1.25rem
+        margin-top: 1rem
+        border-radius: 12px
+        
+        h1
+            font-size: 1.75rem
+            letter-spacing: -0.3px
+            line-height: 1.2
+            word-break: break-word
+        
+        h2
+            font-size: 1.35rem
+            margin-top: 1.75rem
+            letter-spacing: -0.2px
+        
+        h3
+            font-size: 1.15rem
+            margin-top: 1.5rem
+        
+        h4
+            font-size: 1rem
+            margin-top: 1.25rem
+        
+        article
+            font-size: 0.9rem
+            line-height: 1.6
+        
+        .hero
+            margin-bottom: 1.5rem
+            padding-bottom: 1.5rem
+            
+            .hero-meta
+                font-size: 0.75rem
+                
+                span
+                    margin: 0 0.5rem
+                    display: inline-block
+        
+        // Tables
+        table
+            display: block
+            overflow-x: auto
+            white-space: nowrap
+            -webkit-overflow-scrolling: touch
+            font-size: 0.8rem
+            margin: 1.5rem -1.25rem
+            width: calc(100% + 2.5rem)
+            border-radius: 8px
+        
+        th, td
+            padding: 0.6rem 0.5rem
+            font-size: 0.8rem
+        
+        // Lists
+        ul, ol
+            padding-left: 1.25rem
+            margin: 1rem 0
+        
+        li
+            margin: 0.4rem 0
+            font-size: 0.9rem
+    
+    // Code blocks
+    pre
+        padding: 1rem
+        margin: 1.25rem -0.5rem
+        border-radius: 8px
+        font-size: 0.75rem
+        max-width: calc(100% + 1rem)
+        
+        code
+            font-size: 0.75rem
+            line-height: 1.4
+    
+    code
+        font-size: 0.8em
+        padding: 0.15rem 0.35rem
+    
+    // Blockquotes
+    blockquote
+        padding-left: 0.75rem
+        margin: 1.25rem 0
+        font-size: 0.85rem
+        border-left-width: 2px
+    
+    // Tags
+    .tags-cloud
+        gap: 0.5rem
+        margin: 1.25rem 0
+    
+    .tag
+        padding: 0.4rem 0.75rem
+        font-size: 0.75rem
+        border-radius: 20px
+    
+    // Scroll to top
     #scroll-to-top
         bottom: 1rem
         right: 1rem
@@ -773,100 +856,90 @@ blockquote
         height: 2.5rem
         
         svg
-            width: 1.1rem
-            height: 1.1rem
+            width: 1rem
+            height: 1rem
     
-    // Bottom menu on mobile
+    // Bottom menu
     .bottom-menu
-        margin-top: 3rem
-        padding: 2rem 0
+        margin-top: 2.5rem
+        padding: 1.5rem 0
         
         p
-            gap: 0.6rem
+            gap: 0.5rem
+            flex-direction: column
             
             a
-                font-size: 0.75rem
-                padding: 0.45rem 1rem
-                letter-spacing: 0.3px
+                font-size: 0.7rem
+                padding: 0.5rem 1rem
+                border-radius: 20px
+                width: 100%
+                justify-content: center
     
-    // Tags on mobile
-    .tags-cloud
-        gap: 0.6rem
-        margin: 1.5rem 0
-    
-    .tag
-        padding: 6px 16px
-        font-size: 0.85rem
-    
-    // Footer on mobile
+    // Footer
     footer
-        margin-top: 4rem
-        padding: 2rem 0
-        font-size: 0.85rem
-    
-    // Code blocks on mobile
-    pre
-        padding: 1rem
-        font-size: 0.85rem
-        margin: 1.5rem 0
-        border-radius: var(--radius-sm)
-        
-        code
-            font-size: 0.85rem
-    
-    code
-        font-size: 0.85em
-        padding: 0.15rem 0.4rem
-    
-    // Lists on mobile
-    #content
-        ul, ol
-            padding-left: 1.5rem
-            margin: 1rem 0
-        
-        li
-            margin: 0.4rem 0
-            font-size: 0.95rem
-    
-    // Blockquotes on mobile
-    blockquote
-        padding-left: 1rem
-        margin: 1.5rem 0
-        font-size: 0.95rem
-    
-    // Splash section
-    #splash
-        min-height: 70vh
-        padding: 2rem 0
-        
-        p
-            font-size: 0.95rem !important
-            margin-top: -0.5rem !important
-            margin-bottom: 2rem !important
+        margin-top: 3rem
+        padding: 1.5rem 0
+        font-size: 0.8rem
 
-// Tablet optimization (между мобильным и десктопом)
+// === RESPONSIVE - SMALL MOBILE ===
+@media (max-width: 375px)
+    body
+        font-size: 14px
+    
+    .wrap
+        padding: 0 0.75rem
+    
+    #title
+        font-size: 1.75rem
+    
+    #content
+        padding: 1rem
+        
+        h1
+            font-size: 1.5rem
+        
+        h2
+            font-size: 1.2rem
+    
+    .tile
+        padding: 1.2rem 1rem
+    
+    .card
+        padding: 1.2rem
+
+// === RESPONSIVE - TABLET ===
 @media (min-width: 769px) and (max-width: 1024px)
     .wrap
         max-width: 90%
-        padding: 0 1.5rem
+        padding: 0 2rem
     
     #title
-        font-size: 4.5rem
+        font-size: 4rem
     
     #content
         padding: 3rem
         
         h1
-            font-size: 3rem
+            font-size: 2.75rem
         
         h2
-            font-size: 1.8rem
-        
-        article
-            font-size: 1.05rem
+            font-size: 1.75rem
     
     .tile-grid
         grid-template-columns: repeat(2, 1fr)
     
     .post-grid
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+        grid-template-columns: repeat(2, 1fr)
+
+// === RESPONSIVE - LANDSCAPE MOBILE ===
+@media (max-width: 768px) and (orientation: landscape)
+    #splash
+        min-height: 100vh
+    
+    #title
+        font-size: 1.75rem
+        margin-bottom: 0.5rem
+    
+    .tile-grid
+        grid-template-columns: repeat(2, 1fr)
+        gap: 0.75rem
