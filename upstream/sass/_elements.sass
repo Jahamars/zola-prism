@@ -83,6 +83,7 @@ header
 #home-link
     display: inline-flex
     align-items: center
+    gap: 0.4rem
     padding: 0.6rem 1.5rem
     background: var(--surface-glass)
     border: 1px solid var(--surface-border)
@@ -96,12 +97,20 @@ header
     text-transform: uppercase
     letter-spacing: 1px
     
+    #back-icon
+        font-size: 1rem
+        line-height: 1
+        transition: transform 0.3s ease
+    
     &:hover
         background: var(--surface-glass-hover)
         border-color: rgba(255, 255, 255, 0.15)
         color: var(--text-main)
         transform: translateY(-2px)
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
+        
+        #back-icon
+            transform: translateX(-2px)
 
 .btn
     display: inline-block
@@ -653,24 +662,66 @@ blockquote
 
 // Responsive
 @media (max-width: 768px)
+    body
+        font-size: 16px
+    
     #title
-        font-size: 3.5rem
+        font-size: 2.5rem
+        letter-spacing: 0px
+        margin-bottom: 1.5rem
+        filter: drop-shadow(0 0 20px rgba(157, 80, 187, 0.15))
+    
     .post-grid
         grid-template-columns: 1fr
+        gap: 1.5rem
+        margin: 2rem 0
+    
     .tile-grid
         grid-template-columns: 1fr
         gap: 1rem
-    #content
+        margin: 2rem auto
+    
+    .tile
         padding: 2rem 1.5rem
         
+        .tile-title
+            font-size: 1.4rem
+        
+        .tile-desc
+            font-size: 0.85rem
+    
+    #content
+        padding: 1.5rem
+        margin-top: 1rem
+        
         h1
-            font-size: 2.5rem
+            font-size: 2rem
+            letter-spacing: -0.3px
         
         h2
-            font-size: 1.8rem
+            font-size: 1.5rem
+            margin-top: 2rem
+            letter-spacing: -0.2px
+        
+        h3
+            font-size: 1.2rem
+            margin-top: 1.5rem
+        
+        h4
+            font-size: 1.1rem
+            margin-top: 1.2rem
         
         article
-            font-size: 1rem
+            font-size: 0.95rem
+            line-height: 1.65
+        
+        .hero
+            margin-bottom: 2rem
+            padding-bottom: 2rem
+            
+            .hero-meta
+                font-size: 0.85rem
+                margin-top: 1rem
         
         // Mobile table scrolling
         table
@@ -678,32 +729,144 @@ blockquote
             overflow-x: auto
             white-space: nowrap
             -webkit-overflow-scrolling: touch
+            font-size: 0.85rem
             
         thead
             display: table-header-group
             
         tbody
             display: table-row-group
+        
+        th, td
+            padding: 0.75rem 0.5rem
+    
+    .card
+        padding: 1.5rem
+        
+        h3
+            font-size: 1.3rem
+        
+        p
+            font-size: 0.9rem
+        
+        .meta
+            font-size: 0.8rem
+            padding-top: 1rem
     
     .wrap
-        padding: 0 1.5rem
+        padding: 0 1rem
+        max-width: 100%
+    
+    header
+        padding: 1.5rem 0
+    
+    #home-link
+        padding: 0.5rem 1.2rem
+        font-size: 0.75rem
+        letter-spacing: 0.5px
     
     // Scroll to top button on mobile
     #scroll-to-top
-        bottom: 1.5rem
-        right: 1.5rem
-        width: 2.75rem
-        height: 2.75rem
+        bottom: 1rem
+        right: 1rem
+        width: 2.5rem
+        height: 2.5rem
         
         svg
-            width: 1.25rem
-            height: 1.25rem
+            width: 1.1rem
+            height: 1.1rem
     
     // Bottom menu on mobile
     .bottom-menu
+        margin-top: 3rem
+        padding: 2rem 0
+        
         p
-            gap: 0.75rem
+            gap: 0.6rem
             
             a
-                font-size: 0.8rem
-                padding: 0.5rem 1.2rem
+                font-size: 0.75rem
+                padding: 0.45rem 1rem
+                letter-spacing: 0.3px
+    
+    // Tags on mobile
+    .tags-cloud
+        gap: 0.6rem
+        margin: 1.5rem 0
+    
+    .tag
+        padding: 6px 16px
+        font-size: 0.85rem
+    
+    // Footer on mobile
+    footer
+        margin-top: 4rem
+        padding: 2rem 0
+        font-size: 0.85rem
+    
+    // Code blocks on mobile
+    pre
+        padding: 1rem
+        font-size: 0.85rem
+        margin: 1.5rem 0
+        border-radius: var(--radius-sm)
+        
+        code
+            font-size: 0.85rem
+    
+    code
+        font-size: 0.85em
+        padding: 0.15rem 0.4rem
+    
+    // Lists on mobile
+    #content
+        ul, ol
+            padding-left: 1.5rem
+            margin: 1rem 0
+        
+        li
+            margin: 0.4rem 0
+            font-size: 0.95rem
+    
+    // Blockquotes on mobile
+    blockquote
+        padding-left: 1rem
+        margin: 1.5rem 0
+        font-size: 0.95rem
+    
+    // Splash section
+    #splash
+        min-height: 70vh
+        padding: 2rem 0
+        
+        p
+            font-size: 0.95rem !important
+            margin-top: -0.5rem !important
+            margin-bottom: 2rem !important
+
+// Tablet optimization (между мобильным и десктопом)
+@media (min-width: 769px) and (max-width: 1024px)
+    .wrap
+        max-width: 90%
+        padding: 0 1.5rem
+    
+    #title
+        font-size: 4.5rem
+    
+    #content
+        padding: 3rem
+        
+        h1
+            font-size: 3rem
+        
+        h2
+            font-size: 1.8rem
+        
+        article
+            font-size: 1.05rem
+    
+    .tile-grid
+        grid-template-columns: repeat(2, 1fr)
+    
+    .post-grid
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
