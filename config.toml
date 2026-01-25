@@ -25,7 +25,7 @@ enabled = true
 
 [extra]
 # Название кнопки "назад/home"
-home = "home"
+home = "back"
 
 # Главное меню
 sam_menu = [
