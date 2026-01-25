@@ -33,7 +33,8 @@ sam_menu = [
     { text = "about", link = "/about" },
     { text = "github", link = "https://github.com/jahamars/zola-prism" },
     { text = "authors", link = "/authors" },
-    { text = "tags", link = "/tags" }
+    { text = "tags", link = "/tags" },
+    { text = "RSS", link = "/rss.xml" }
 ]
 
 # Показывать меню внизу страниц
