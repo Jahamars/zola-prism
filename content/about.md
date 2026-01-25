@@ -26,4 +26,4 @@ This blog is built with [Zola][zola] using my custom **Prism** theme, which feat
 *Theme available at: [github.com/jahamarsi/zola-prism][prism]*
 
 [zola]: https://getzola.org
-[prism]: https://github.com/jahamarsi/zola-prism
+[prism]: https://github.com/jahamars/zola-prism
