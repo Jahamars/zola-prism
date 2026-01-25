@@ -3,7 +3,8 @@
 <div class="wrap">
     <header>
         <a href="#" id="home-link" onclick="goBack(event)">
-            {{ config.extra.home | default(value="←") }}
+            <span id="back-icon">←</span>
+            <span id="back-text">{{ config.extra.home | default(value="Back") }}</span>
         </a>
     </header>
     
@@ -48,27 +49,75 @@
 </div>
 
 <script>
-// Back navigation
+// Smart Back/Home navigation
 function goBack(event) {
     event.preventDefault();
     
-    // Получаем текущий путь
     const currentPath = window.location.pathname;
-    const basePath = "{{ config.base_url | replace(from='https://', to='') | replace(from='http://', to='') }}".split('/').slice(1).join('/');
+    const baseUrl = "{{ config.base_url }}";
+    const basePath = baseUrl.replace(/https?:\/\//, '').split('/').slice(1).join('/');
     
-    // Если мы на главной странице или в корне сайта
-    if (currentPath === '/' || currentPath === `/${basePath}/` || currentPath === `/${basePath}`) {
-        return; // Ничего не делаем
+    // Определяем является ли текущая страница главной
+    const isHomePage = currentPath === '/' || 
+                       currentPath === `/${basePath}/` || 
+                       currentPath === `/${basePath}` ||
+                       currentPath === '/index.html';
+    
+    // Если на главной - ничего не делаем
+    if (isHomePage) {
+        return;
     }
     
-    // Если есть история браузера, идем назад
-    if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
+    // Проверяем есть ли история и пришли ли мы с этого же сайта
+    const hasHistory = window.history.length > 1;
+    const cameFromSameSite = document.referrer && document.referrer.includes(window.location.host);
+    
+    // Если есть история И пришли с этого же сайта - идем назад
+    if (hasHistory && cameFromSameSite) {
         window.history.back();
     } else {
         // Иначе идем на главную
-        window.location.href = "{{ config.base_url }}";
+        window.location.href = baseUrl;
     }
 }
+
+// Обновляем текст и иконку кнопки в зависимости от страницы
+(function() {
+    const currentPath = window.location.pathname;
+    const baseUrl = "{{ config.base_url }}";
+    const basePath = baseUrl.replace(/https?:\/\//, '').split('/').slice(1).join('/');
+    
+    const isHomePage = currentPath === '/' || 
+                       currentPath === `/${basePath}/` || 
+                       currentPath === `/${basePath}` ||
+                       currentPath === '/index.html';
+    
+    const backIcon = document.getElementById('back-icon');
+    const backText = document.getElementById('back-text');
+    const homeLink = document.getElementById('home-link');
+    
+    if (isHomePage) {
+        // На главной показываем Home и делаем неактивной
+        if (backIcon) backIcon.textContent = '⌂';
+        if (backText) backText.textContent = 'Home';
+        if (homeLink) {
+            homeLink.style.opacity = '0.5';
+            homeLink.style.cursor = 'default';
+        }
+    } else {
+        // На других страницах показываем стрелку и Back
+        const hasHistory = window.history.length > 1;
+        const cameFromSameSite = document.referrer && document.referrer.includes(window.location.host);
+        
+        if (hasHistory && cameFromSameSite) {
+            if (backIcon) backIcon.textContent = '←';
+            if (backText) backText.textContent = '{{ config.extra.home | default(value="Back") }}';
+        } else {
+            if (backIcon) backIcon.textContent = '⌂';
+            if (backText) backText.textContent = 'Home';
+        }
+    }
+})();
 
 // Scroll to top functionality
 (function() {
