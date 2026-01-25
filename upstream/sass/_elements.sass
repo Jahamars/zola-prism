@@ -291,6 +291,7 @@ header
     margin-top: 2rem
     max-width: 100%
     box-sizing: border-box
+    overflow: hidden
     
     article
         font-size: 1.05rem
@@ -649,11 +650,37 @@ blockquote
         table
             margin: 0
 
-// === IMAGES ===
+// === IMAGES - ИСПРАВЛЕНО ===
 img, video, iframe
     max-width: 100%
     height: auto
     border-radius: 8px
+    display: block
+
+#content
+    img, video, iframe
+        max-width: 100%
+        width: 100%
+        height: auto
+        object-fit: contain
+        border-radius: 8px
+        margin: 1.5rem auto
+        display: block
+    
+    // Для изображений в статьях
+    article
+        img
+            max-width: 100%
+            width: auto
+            height: auto
+            display: block
+            margin: 1.5rem auto
+
+.card
+    img
+        max-width: 100%
+        height: auto
+        object-fit: cover
 
 // === RESPONSIVE - MOBILE ===
 @media (max-width: 768px)
@@ -790,6 +817,12 @@ img, video, iframe
                 span
                     margin: 0 0.5rem
                     display: inline-block
+        
+        // Images mobile
+        img, video, iframe
+            margin: 1rem auto
+            width: 100%
+            max-width: 100%
         
         // Tables
         table
