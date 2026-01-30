@@ -36,7 +36,7 @@ Installation is simple:
 3. Customize colors and settings as needed
 4. Start writing!
 
-Check out the [GitHub repository](https://github.com/jahamarsi/zola-prism) for detailed documentation.
+Check out the [GitHub repository](https://github.com/jahamars/zola-prism) for detailed documentation.
 
 ---
 
