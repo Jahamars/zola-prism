@@ -396,6 +396,67 @@ header
             span
                 margin: 0 10px
 
+
+// === TAXONOMY GRID (Categories, Tags, Authors pages) ===
+.taxonomy-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+    gap: 1.5rem
+    margin-top: 3rem
+    align-items: stretch
+
+.taxonomy-item
+    background: var(--surface-glass)
+    border: 1px solid var(--surface-border)
+    border-radius: var(--radius-lg)
+    padding: 2rem
+    backdrop-filter: var(--glass-blur)
+    -webkit-backdrop-filter: var(--glass-blur)
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    text-align: center
+    position: relative
+    overflow: hidden
+    
+    &::before
+        content: ''
+        position: absolute
+        inset: 0
+        background: linear-gradient(135deg, rgba(79, 195, 247, 0.03), transparent)
+        opacity: 0
+        transition: opacity 0.3s ease
+        z-index: -1
+    
+    &:hover
+        transform: translateY(-8px)
+        border-color: rgba(255, 255, 255, 0.15)
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4)
+        
+        &::before
+            opacity: 1
+        
+        h3
+            color: var(--accent-teal)
+    
+    h3
+        font-family: var(--font-heading)
+        font-size: 1.5rem
+        font-weight: 700
+        margin: 0 0 0.75rem 0
+        color: var(--text-main)
+        transition: color 0.3s ease
+    
+    .count
+        font-size: 0.9rem
+        color: var(--text-muted)
+        font-family: var(--font-heading)
+        font-weight: 500
+
+
+
 // === TAGS ===
 .tags-cloud
     display: flex

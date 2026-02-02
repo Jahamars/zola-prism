@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block htmltitle %}
+{{ taxonomy.name | title }} - {{ config.title }}
+{% endblock htmltitle %}
+
+{% block title %}
+{{ taxonomy.name | title }}
+{% endblock title %}
+
+{% block content %}
+<div id="content">
+    <div class="hero">
+        <h1>{{ taxonomy.name | title }}</h1>
+        <p style="color: var(--text-muted); margin-top: 1rem;">
+            {% if taxonomy.name == "tags" %}
+            All blog tags
+            {% elif taxonomy.name == "categories" %}
+            Blog categories
+            {% elif taxonomy.name == "authors" %}
+            Blog authors
+            {% else %}
+            Browse by {{ taxonomy.name }}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="taxonomy-grid">
+        {% for term in terms %}
+        <a href="{{ term.permalink }}" class="taxonomy-item">
+            <h3>{{ term.name }}</h3>
+            <span class="count">{{ term.pages | length }} {% if term.pages | length == 1 %}post{% else %}posts{% endif %}</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
