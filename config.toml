@@ -5,10 +5,10 @@ description = "A modern blog with glassmorphism design and aurora animations"
 compile_sass = true
 build_search_index = true
 
-# Обязательно для работы tags и authors
 taxonomies = [
     { name = "tags", feed = true },
-    { name = "authors", feed = true }
+    { name = "authors", feed = true },
+    { name = "categories", feed = true }
 ]
 
 [markdown]
@@ -18,36 +18,32 @@ external_links_no_follow = true
 external_links_no_referrer = true
 smart_punctuation = true
 
-# Настройки подсветки синтаксиса
 [markdown.highlighting]
 theme = "nord"
 enabled = true
 
 [extra]
-# Название кнопки "назад/home"
 home = "back"
 
-# Главное меню
+show_toc = true
+
 sam_menu = [
     { text = "posts", link = "/posts" },
     { text = "about", link = "/about" },
     { text = "github", link = "https://github.com/jahamars/zola-prism" },
     { text = "authors", link = "/authors" },
     { text = "tags", link = "/tags" },
-    { text = "RSS", link = "/rss.xml" }
+    # { text = "RSS", link = "/rss.xml" }
+    { text = "Categories", link = "/categories" }
 ]
 
-# Показывать меню внизу страниц
 sam_bottom_menu = true
 
-# Показывать счетчик слов и время чтения
 show_word_count = true
 show_reading_time = true
 
-# Формат даты
 date_format = "%b %d, %Y"
 
-# Включить комментарии (giscus)
 comments = false
 
 [extra.sam_footer]

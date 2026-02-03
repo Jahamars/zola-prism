@@ -1,0 +1,118 @@
+
+:root
+    scroll-behavior: smooth
+
+.table-of-contents
+    // Minimalist container: no background, no border
+    padding: 0
+    margin: 2rem 0
+    position: sticky
+    top: 2rem
+    max-height: calc(100vh - 4rem)
+    overflow-y: auto
+    opacity: 0
+    transform: translateY(10px)
+    transition: opacity 0.5s ease, transform 0.5s ease
+
+    // Custom scrollbar for modern browsers
+    scrollbar-width: thin
+    scrollbar-color: var(--surface-border) transparent
+
+    &::-webkit-scrollbar
+        width: 4px
+
+    &::-webkit-scrollbar-track
+        background: transparent
+
+    &::-webkit-scrollbar-thumb
+        background: var(--surface-border)
+        border-radius: 4px
+        
+        &:hover
+            background: var(--text-muted)
+
+    &.visible
+        opacity: 1
+        transform: translateY(0)
+
+.toc-header
+    margin-bottom: 0.75rem
+    padding-left: 1rem  // Align with list items
+    
+.toc-title
+    font-family: var(--font-heading)
+    font-size: 0.75rem
+    font-weight: 600
+    text-transform: uppercase
+    letter-spacing: 1.2px
+    color: var(--text-muted)
+    opacity: 0.8
+
+.toc-list
+    list-style: none
+    padding: 0
+    margin: 0
+    position: relative
+    
+    // continuous line guide (optional, can remove if too cluttered)
+    &::before
+        content: ''
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        width: 1px
+        background: var(--surface-border)
+        opacity: 0.5
+
+.toc-item
+    margin: 0
+    
+    &.toc-item--nested
+        margin-left: 0
+
+.toc-link
+    display: block
+    padding: 0.35rem 1rem
+    color: var(--text-muted)
+    font-size: 0.9rem
+    text-decoration: none
+    border-left: 2px solid transparent
+    transition: all 0.2s ease
+    margin-left: -1px // Overlap the guide line
+
+    &:hover
+        color: var(--text-main)
+        border-left-color: var(--text-muted)
+
+    &.toc-link--active
+        color: var(--accent-teal)
+        border-left-color: var(--accent-teal)
+        font-weight: 500
+
+    &.toc-link--nested
+        font-size: 0.85rem
+        padding-top: 0.25rem
+        padding-bottom: 0.25rem
+        padding-left: 1.5rem // Visual nesting without block margin
+        
+        &.toc-link--active
+            color: var(--accent-teal)
+            border-left-color: var(--accent-teal)
+
+@media (max-width: 768px)
+    .table-of-contents
+        position: static
+        top: auto
+        max-height: none
+        margin: 1.5rem 0
+        padding-left: 0
+        border-left: none
+        
+        // Remove guide line on mobile if desired, or keep it
+        .toc-list::before
+            display: none
+
+    .toc-link
+        border-left: 2px solid var(--surface-border)
+        margin-left: 0

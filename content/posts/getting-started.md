@@ -4,6 +4,7 @@ date = 2025-01-24
 [taxonomies]
 tags = ["tutorial", "zola", "theme"]
 authors = ["Jahongir Ahmadaliev"]
+categories = ["about"]
 +++
 
 Welcome to **Prism** — a modern Zola theme designed for developers who appreciate clean aesthetics and smooth animations.

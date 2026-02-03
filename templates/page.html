@@ -20,7 +20,7 @@
             <span>·</span>
             <span>{{ page.reading_time }} min read</span>
             {% endif %}
-            
+
             {% if page.word_count and config.extra.show_word_count %}
             <span>·</span>
             <span>{{ page.word_count }} words</span>
@@ -34,16 +34,71 @@
             {% endfor %}
         </div>
         {% endif %}
-        
+
         {% if page.taxonomies.authors %}
         <div style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
-            By 
+            By
             {% for author in page.taxonomies.authors %}
-                <a href="{{ get_taxonomy_url(kind='authors', name=author) }}" style="color: var(--accent-teal);">{{ author }}</a>{% if not loop.last %}, {% endif %}
+            <a href="{{ get_taxonomy_url(kind='authors', name=author) }}" style="color: var(--accent-teal);">{{ author
+                }}</a>{% if not loop.last %}, {% endif %}
             {% endfor %}
         </div>
         {% endif %}
     </div>
+    {% endif %}
+
+    {% if config.extra.show_toc and page.toc and page.extra.toc | default(value=true) %}
+    <nav class="table-of-contents" aria-label="Table of contents">
+        <div class="toc-header">
+            <span class="toc-title">Contents</span>
+        </div>
+        <ul class="toc-list">
+            {% for entry in page.toc %}
+            <li class="toc-item">
+                <a href="#{{ entry.id }}" class="toc-link">{{ entry.title }}</a>
+                {% if entry.children %}
+                <ul class="toc-list">
+                    {% for child in entry.children %}
+                    <li class="toc-item toc-item--nested">
+                        <a href="#{{ child.id }}" class="toc-link toc-link--nested">{{ child.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <script>
+        (function () {
+            const toc = document.querySelector('.table-of-contents');
+            const links = document.querySelectorAll('.toc-link');
+            if (!links.length) return;
+
+            requestAnimationFrame(() => {
+                toc.classList.add('visible');
+            });
+
+            const ids = [...links].map(a => a.getAttribute('href').slice(1));
+            const headings = ids
+                .map(id => document.getElementById(id))
+                .filter(Boolean);
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (!e.isIntersecting) return;
+                    links.forEach(a => a.classList.remove('toc-link--active'));
+                    const link = document.querySelector(`.toc-link[href="#${e.target.id}"]`);
+                    if (link) link.classList.add('toc-link--active');
+                });
+            }, {
+                rootMargin: '-40% 0px -50% 0px'
+            });
+
+            headings.forEach(h => observer.observe(h));
+        })();
+    </script>
     {% endif %}
 
     <article>

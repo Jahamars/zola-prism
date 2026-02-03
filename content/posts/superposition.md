@@ -5,6 +5,7 @@ description = "Understanding the strange world where particles exist in multiple
 
 [taxonomies]
 tags = ["quantum-physics", "science", "superposition"]
+categories = ["physics"]
 authors = ["Jahongir Ahmadaliev"]
 +++
 
