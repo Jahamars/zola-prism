@@ -4,7 +4,6 @@ title = "About"
 [extra]
 no_header = true
 toc = false
-categories = ["about"]
 +++
 
 # About Me
