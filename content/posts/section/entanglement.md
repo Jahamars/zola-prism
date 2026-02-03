@@ -6,6 +6,7 @@ description = "How particles can instantly affect each other across the universe
 [taxonomies]
 tags = ["quantum-physics", "entanglement", "einstein"]
 authors = ["Jahongir Ahmadaliev"]
+categories = ["physics"]
 +++
 
 ## Einstein's Nightmare
