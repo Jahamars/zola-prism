@@ -51,13 +51,11 @@
 <script>
 // Smart Back/Home navigation
 function goBack(event) {
-    // Предотвращаем переход по href в первую очередь
     event.preventDefault();
     
     const baseUrl = "{{ config.base_url | safe }}";
     const currentUrl = window.location.href;
     
-    // Нормализуем URLs для сравнения (убираем trailing slash и index.html)
     const normalizeUrl = (url) => {
         return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
     };
@@ -65,30 +63,25 @@ function goBack(event) {
     const normalizedCurrent = normalizeUrl(currentUrl);
     const normalizedBase = normalizeUrl(baseUrl);
     
-    // Если на главной странице - ничего не делаем
     if (normalizedCurrent === normalizedBase) {
         return;
     }
     
-    // Проверяем есть ли история и пришли ли мы с этого же сайта
     const hasHistory = window.history.length > 1;
     const cameFromSameSite = document.referrer && document.referrer.includes(window.location.host);
     
-    // Если есть история И пришли с этого же сайта - идем назад
     if (hasHistory && cameFromSameSite) {
         window.history.back();
     } else {
-        // Иначе идем на главную
         window.location.href = baseUrl;
     }
 }
 
-// Обновляем текст кнопки в зависимости от страницы
+// Update button text based on page
 (function() {
     const baseUrl = "{{ config.base_url | safe }}";
     const currentUrl = window.location.href;
     
-    // Нормализуем URLs для сравнения
     const normalizeUrl = (url) => {
         return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
     };
@@ -101,7 +94,6 @@ function goBack(event) {
     const homeLink = document.getElementById('home-link');
     
     if (normalizedCurrent === normalizedBase) {
-        // На главной показываем Home и делаем неактивной
         if (backIcon) backIcon.style.display = 'none';
         if (backText) backText.textContent = 'Home';
         if (homeLink) {
@@ -109,7 +101,6 @@ function goBack(event) {
             homeLink.style.cursor = 'default';
         }
     } else {
-        // На других страницах показываем только Back (без стрелки)
         if (backIcon) backIcon.style.display = 'none';
         if (backText) backText.textContent = '{{ config.extra.home | default(value="Back") }}';
     }
@@ -121,7 +112,6 @@ function goBack(event) {
     
     if (!scrollToTopBtn) return;
     
-    // Show/hide button based on scroll position
     function toggleScrollButton() {
         if (window.pageYOffset > 300) {
             scrollToTopBtn.classList.add('visible');
@@ -130,7 +120,6 @@ function goBack(event) {
         }
     }
     
-    // Smooth scroll to top
     function scrollToTop() {
         window.scrollTo({
             top: 0,
@@ -138,12 +127,96 @@ function goBack(event) {
         });
     }
     
-    // Event listeners
     window.addEventListener('scroll', toggleScrollButton);
     scrollToTopBtn.addEventListener('click', scrollToTop);
     
-    // Initial check
     toggleScrollButton();
 })();
+
+{% if config.extra.features.copy_code_button %}
+// Copy code button functionality
+(function() {
+    const codeBlocks = document.querySelectorAll('pre code');
+    
+    codeBlocks.forEach((codeBlock) => {
+        const pre = codeBlock.parentElement;
+        
+        // Create wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'copy-code-button';
+        copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+        copyButton.setAttribute('title', 'Copy code');
+        
+        wrapper.appendChild(copyButton);
+        
+        copyButton.addEventListener('click', async () => {
+            const code = codeBlock.textContent;
+            
+            try {
+                await navigator.clipboard.writeText(code);
+                copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                copyButton.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
+    });
+})();
+{% endif %}
+
+{% if config.extra.features.smooth_scroll %}
+// Smooth anchor scrolling with offset
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        
+        if (target) {
+            const offset = 80;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            history.pushState(null, null, href);
+        }
+    });
+});
+{% endif %}
+
+{% if config.extra.features.reading_progress_bar %}
+// Reading progress bar
+(function() {
+    const progressBar = document.getElementById('reading-progress');
+    if (!progressBar) return;
+    
+    function updateProgressBar() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+    }
+    
+    window.addEventListener('scroll', updateProgressBar);
+    updateProgressBar();
+})();
+{% endif %}
 </script>
 {% endblock body %}
