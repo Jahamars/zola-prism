@@ -23,10 +23,13 @@ theme = "nord"
 enabled = true
 
 [extra]
+# Navigation
 home = "back"
 
+# Table of contents
 show_toc = true
 
+# Menu configuration
 sam_menu = [
     { text = "posts", link = "/posts" },
     { text = "about", link = "/about" },
@@ -39,12 +42,47 @@ sam_menu = [
 
 sam_bottom_menu = true
 
+# Reading stats
 show_word_count = true
 show_reading_time = true
 
+# Date format
 date_format = "%b %d, %Y"
 
-comments = false
+# Comments (Giscus)
+comments = true
 
+# Giscus configuration (when comments = true)
+[extra.giscus]
+enabled = true
+repo = "Jahamars/zola-prism"
+repo_id = "R_kgDORAdmkg"
+category = "Announcements"
+category_id = "DIC_kwDORAdmks4C120r"
+mapping = "pathname"
+strict = "0"
+reactions_enabled = "1"
+emit_metadata = "0"
+input_position = "bottom"
+theme = "catppuccin_frappe"
+lang = "en"
+
+# Google Analytics
+# [extra.analytics]
+# google_analytics_id = "G-XXXXXXXXX"
+
+# Footer
 [extra.sam_footer]
 text = "Built using Zola & Prism theme"
+
+# Author (optional)
+[extra.author]
+name = "Jahongir Ahmadaliev"
+email = ""
+url = "https://jahongir.ru"
+
+# Features
+[extra.features]
+copy_code_button = true
+reading_progress_bar = true
+smooth_scroll = true
