@@ -199,6 +199,8 @@ header
     position: relative
     overflow: hidden
     
+    color: var(--text-main)
+    
     &::before
         content: ''
         position: absolute
@@ -209,6 +211,8 @@ header
         z-index: -1
 
     &:hover
+        text-decoration: none
+        color: var(--text-main)
         transform: translateY(-8px)
         border-color: rgba(255, 255, 255, 0.15)
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4)
@@ -469,19 +473,20 @@ header
     display: inline-block
     padding: 8px 20px
     border-radius: var(--radius-pill)
-    background: rgba(0, 198, 255, 0.05)
-    border: 1px solid rgba(0, 198, 255, 0.15)
-    color: var(--accent-teal)
-    font-size: 0.9rem
-    font-weight: 600
+    background: var(--surface-glass)
+    border: 1px solid var(--surface-border)
+    color: var(--text-muted)
+    font-size: 0.85rem
+    font-weight: 500
     font-family: var(--font-heading)
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
     
     &:hover
-        background: rgba(0, 198, 255, 0.1)
-        border-color: rgba(0, 198, 255, 0.3)
+        background: var(--surface-glass-hover)
+        border-color: rgba(255, 255, 255, 0.15)
+        color: var(--text-main)
         transform: translateY(-2px)
-        box-shadow: 0 4px 12px rgba(0, 198, 255, 0.15)
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
 
 // === FOOTER ===
 footer
