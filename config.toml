@@ -20,6 +20,8 @@ smart_punctuation = true
 
 [markdown.highlighting]
 theme = "nord"
+style = "inline"
+error_on_missing_language = false
 
 [extra]
 # Navigation
