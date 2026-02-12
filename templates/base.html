@@ -147,14 +147,6 @@ function initScrollToTop() {
     
     if (!scrollToTopBtn) return;
     
-    function toggleScrollButton() {
-        if (window.pageYOffset > 50) {
-            scrollToTopBtn.classList.add('visible');
-        } else {
-            scrollToTopBtn.classList.remove('visible');
-        }
-    }
-    
     function scrollToTop() {
         window.scrollTo({
             top: 0,
@@ -174,9 +166,6 @@ function initScrollToTop() {
     } else {
         scrollToTopBtn.addEventListener('click', scrollToTop);
     }
-    
-    window.addEventListener('scroll', toggleScrollButton, { passive: true });
-    toggleScrollButton();
 }
 
 {% if config.extra.features.copy_code_button %}

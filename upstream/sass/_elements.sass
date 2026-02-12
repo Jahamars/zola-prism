@@ -501,18 +501,13 @@ footer
     align-items: center
     justify-content: center
     cursor: pointer
-    opacity: 0
-    visibility: hidden
-    transform: translateY(100px)
+    opacity: 0.8
+    visibility: visible
+    transform: translateY(0)
     +transition(opacity, visibility, transform, background, box-shadow)
     z-index: var(--z-scroll-button)
     box-shadow: var(--shadow-medium)
     +focus-visible
-    
-    &.visible
-        opacity: 1
-        visibility: visible
-        transform: translateY(0)
     
     &:hover
         background: var(--glass-active)
@@ -769,8 +764,8 @@ img:not(.background-image), video, iframe
         transform: translateY(0) !important
         
     #content
-        border-radius: 0
-        margin-top: 0
+        border-radius: var(--radius-xl)
+        margin-top: var(--space-sm)
 
 +tablet
     .wrap
