@@ -26,7 +26,7 @@ body
     background: transparent
     color: var(--text-primary)
     font-family: var(--font-body)
-    font-size: 17px
+    font-size: 16px
     min-height: 100vh
     display: flex
     flex-direction: column
@@ -179,8 +179,8 @@ header
 
 #title
     font-family: var(--font-heading)
-    +responsive-text(2rem, 5rem)
-    font-weight: 1200
+    +responsive-text(1.6rem, 3.2rem)
+    font-weight: 900
     letter-spacing: 2px
     color: var(--text-primary)
     margin-bottom: var(--space-lg)
@@ -196,7 +196,7 @@ header
 .site-description
     text-align: center
     color: var(--text-secondary)
-    font-size: 1.1rem
+    font-size: 1rem
     margin-top: calc(var(--space-sm) * -1)
     margin-bottom: var(--space-xl)
     max-width: 600px
@@ -218,16 +218,16 @@ header
 
 .post-grid
     display: grid
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))
     gap: var(--space-lg)
     margin: var(--space-xl) 0
     align-items: stretch
 
 .taxonomy-grid
     display: grid
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))
     gap: var(--space-md)
-    margin-top: var(--space-xl)
+    margin-top: var(--space-lg)
     align-items: stretch
 
 // ============================================
@@ -249,13 +249,13 @@ header
 
 .tile
     +base-card
-    padding: var(--space-xl) var(--space-lg)
+    padding: var(--space-lg) var(--space-md)
     align-items: center
     justify-content: center
 
     .tile-title
         font-family: var(--font-heading)
-        font-size: 1.8rem
+        font-size: 1.5rem
         font-weight: 700
         margin-bottom: var(--space-xs)
     
@@ -265,12 +265,12 @@ header
 
 .card
     +base-card
-    padding: 2.5rem
+    padding: 2rem
     height: 100%
     box-sizing: border-box
 
     h3
-        +responsive-text(1.2rem, 1.6rem)
+        +responsive-text(1.1rem, 1.4rem)
         line-height: 1.2
         color: var(--text-primary)
 
@@ -294,7 +294,7 @@ header
 
 .taxonomy-item
     +base-card
-    padding: var(--space-lg)
+    padding: var(--space-md)
     align-items: center
     justify-content: center
     text-align: center
@@ -306,7 +306,7 @@ header
     
     h3
         font-family: var(--font-heading)
-        font-size: 1.5rem
+        font-size: 1.3rem
         font-weight: 700
         margin: 0 0 0.75rem 0
         color: var(--text-primary)
@@ -324,20 +324,30 @@ header
 #content
     +glass(hover)
     border-radius: var(--radius-xl)
-    padding: var(--space-2xl)
+    padding: var(--space-xl)
     margin-top: var(--space-lg)
     max-width: 100%
     box-sizing: border-box
     overflow: hidden
     
     article
-        font-size: 1.05rem
-        line-height: 1.75
+        font-size: 1rem
+        line-height: 1.7
         color: var(--text-primary)
         font-weight: 400
         letter-spacing: 0.3px
         word-break: break-word
         overflow-wrap: break-word
+        
+        p
+            margin-bottom: 0.9rem
+        
+        ul,
+        ol
+            margin: 0.5rem 0 1rem 1.2rem
+        
+        li
+            margin-bottom: 0.3rem
         
         a
             color: var(--text-primary)
@@ -375,7 +385,7 @@ header
     
     h1
         font-family: var(--font-heading)
-        font-size: 3.5rem
+        font-size: 2.6rem
         margin-bottom: var(--space-xs)
         letter-spacing: -0.5px
         line-height: 1.1
@@ -384,7 +394,7 @@ header
 
     h2
         font-family: var(--font-heading)
-        font-size: 2rem
+        font-size: 1.7rem
         color: var(--text-primary)
         margin-top: var(--space-xl)
         margin-bottom: var(--space-sm)
@@ -393,7 +403,7 @@ header
     
     h3
         font-family: var(--font-heading)
-        font-size: 1.5rem
+        font-size: 1.3rem
         color: var(--text-primary)
         margin-top: 2.5rem
         margin-bottom: 0.8rem
@@ -448,9 +458,9 @@ header
 .tags-cloud
     display: flex
     flex-wrap: wrap
-    gap: var(--space-sm)
+    gap: var(--space-xs)
     justify-content: center
-    margin: var(--space-lg) 0
+    margin: var(--space-md) 0
 
 .tag
     display: inline-block
@@ -479,10 +489,10 @@ header
 
 footer
     margin-top: var(--space-3xl)
-    padding: var(--space-xl) 0
+    padding: var(--space-lg) 0
     text-align: center
     color: var(--text-secondary)
-    font-size: 0.9rem
+    font-size: 0.85rem
     border-top: 1px solid var(--glass-border)
 
 // ============================================
@@ -528,8 +538,8 @@ footer
 // ============================================
 
 .bottom-menu
-    margin-top: var(--space-2xl)
-    padding: var(--space-xl) 0
+    margin-top: var(--space-xl)
+    padding: var(--space-lg) 0
     border-top: 1px solid var(--glass-border)
     
     p
@@ -706,7 +716,7 @@ img:not(.background-image), video, iframe
 
 +mobile
     body
-        font-size: 15px
+        font-size: 14px
     
     .wrap
         padding: 0 var(--space-sm)
@@ -730,6 +740,10 @@ img:not(.background-image), video, iframe
     
     #content
         padding: var(--space-md) var(--space-sm)
+        
+        article
+            font-size: 0.95rem
+            line-height: 1.75
         
         h1
             font-size: 1.6rem
