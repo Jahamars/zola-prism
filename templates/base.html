@@ -147,13 +147,13 @@ function initScrollToTop() {
     
     if (!scrollToTopBtn) return;
     
-    const toggleScrollButton = debounce(() => {
-        if (window.pageYOffset > 300) {
+    function toggleScrollButton() {
+        if (window.pageYOffset > 50) {
             scrollToTopBtn.classList.add('visible');
         } else {
             scrollToTopBtn.classList.remove('visible');
         }
-    }, 100);
+    }
     
     function scrollToTop() {
         window.scrollTo({

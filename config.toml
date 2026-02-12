@@ -27,8 +27,7 @@ home = "back"
 
 
 # Background
-# background_image = "https://i.ibb.co/LhtbGGMV/starry-sky.png"
-background_image = "https://i.ibb.co/GQtwt7Qd/night-sky-aurora-3840x2160-9747.jpg"
+background_image = "https://i.ibb.co/LhtbGGMV/starry-sky.png"
 # background_gradient = "linear-gradient(to bottom, #0a0a0f, #13131f)"
 # background_gradient = "#2C2C2C"
 # background_gradient = "linear-gradient(45deg, #0a0a0f 20%, #1a1b26 50%, #151520 80%), linear-gradient(45deg, rgba(79, 195, 247, 0.05) 0%, rgba(157, 127, 201, 0.05) 100%)"

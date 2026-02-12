@@ -697,8 +697,13 @@ blockquote
 img, video, iframe
     max-width: 100%
     height: auto
-    border-radius: 8px
     display: block
+
+.background-image
+    border-radius: 0
+
+img:not(.background-image), video, iframe
+    border-radius: 8px
 
 // ============================================
 // Responsive Design
