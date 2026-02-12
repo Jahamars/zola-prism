@@ -1,47 +1,70 @@
-// Elegant Aurora Palette - Refined colors
+// ============================================
+// CSS Variables - Design System
+// ============================================
 
 :root
-    --bg-color: #0a0a0f
-    --surface-glass: rgba(255, 255, 255, 0.04)
-    --surface-glass-hover: rgba(255, 255, 255, 0.08)
-    --surface-border: rgba(255, 255, 255, 0.1)
+    // Glass Morphism
+    --glass-base: rgba(255, 255, 255, 0.03)
+    --glass-hover: rgba(255, 255, 255, 0.06)
+    --glass-active: rgba(255, 255, 255, 0.09)
+    --glass-border: rgba(255, 255, 255, 0.1)
     
-    // Aurora Accents - More subtle
-    --accent-teal: #4fc3f7
-    --accent-blue: #5e92f3
-    --accent-violet: #9d7fc9
-    --gradient-primary: linear-gradient(135deg, var(--accent-teal), var(--accent-blue))
-    --gradient-aurora: linear-gradient(45deg, #4fc3f7, #9d7fc9)
+    // Blur Effects
+    --blur-light: blur(10px)
+    --blur-strength: blur(20px)
+    --blur-heavy: blur(30px)
     
-    // Text hierarchy
-    --text-main: #e8e8f0
-    --text-muted: #9090a0
-    --text-highlight: #ffffff
+    // Text Colors
+    --text-primary: rgba(255, 255, 255, 0.95)
+    --text-secondary: rgba(255, 255, 255, 0.7)
+    --text-tertiary: rgba(255, 255, 255, 0.5)
     
-    // Typography - Science Gothic (futuristic, tech style)
+    // Shadows
+    --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.1)
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.15)
+    --shadow-strong: 0 12px 28px rgba(0, 0, 0, 0.18)
+    
+    // Border Radius
+    --radius-sm: 8px
+    --radius-md: 12px
+    --radius-lg: 16px
+    --radius-xl: 20px
+    --radius-pill: 50px
+    
+    // Typography
     --font-heading: 'Science Gothic', 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif
     --font-body: 'Science Gothic', -apple-system, BlinkMacSystemFont, sans-serif
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace
     
-    // Spacing & Radius
-    --radius-lg: 20px
-    --radius-pill: 50px
-    --radius-sm: 8px
+    // Spacing System
+    --space-xs: 0.5rem
+    --space-sm: 1rem
+    --space-md: 1.5rem
+    --space-lg: 2rem
+    --space-xl: 3rem
+    --space-2xl: 4rem
+    --space-3xl: 6rem
     
-    // Effects
-    --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.4)
-    --glass-blur: blur(16px)
+    // Z-index Layers
+    --z-background: -2
+    --z-base: 1
+    --z-header: 100
+    --z-scroll-button: 1000
+    --z-progress: 9999
     
-    // Code
-    --code-block: #0d0f16
+    // Breakpoints (for JS usage)
+    --breakpoint-mobile: 375px
+    --breakpoint-tablet: 768px
+    --breakpoint-desktop: 1024px
+    --breakpoint-wide: 1440px
 
-// Backward compatibility
-$white: var(--text-main)
-$black: var(--bg-color)
+// SASS Variables (for backward compatibility)
+$white: var(--text-primary)
+$black: transparent
 $font: var(--font-body)
-$links: var(--accent-teal)
-$links-hover: var(--text-highlight)
-$dark-grey: var(--bg-color)
-$body-text: var(--text-main)
+$links: var(--text-primary)
+$links-hover: var(--text-primary)
+$dark-grey: transparent
+$body-text: var(--text-primary)
 $body-size: 1.1rem
-$code-block: var(--code-block)
+$code-block: var(--glass-active)

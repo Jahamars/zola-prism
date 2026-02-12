@@ -2,8 +2,8 @@
 {% block body %}
 <div class="wrap">
     <header>
-        <a href="{{ config.base_url }}" id="home-link" onclick="goBack(event); return false;">
-            <span id="back-icon"></span>
+        <a href="{{ config.base_url }}" id="home-link" aria-label="Navigate back or to home">
+            <span id="back-icon" aria-hidden="true"></span>
             <span id="back-text">{{ config.extra.home | default(value="Back") }}</span>
         </a>
     </header>
@@ -34,7 +34,7 @@
     
     <!-- Scroll to top button -->
     <button id="scroll-to-top" aria-label="Scroll to top">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
@@ -49,26 +49,58 @@
 </div>
 
 <script>
-// Smart Back/Home navigation
+'use strict';
+
+// ============================================
+// Utility Functions
+// ============================================
+
+/**
+ * Debounce function to limit execution rate
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+/**
+ * Normalize URL for comparison
+ */
+function normalizeUrl(url) {
+    return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
+}
+
+// ============================================
+// Navigation System
+// ============================================
+
+/**
+ * Smart Back/Home navigation
+ */
 function goBack(event) {
     event.preventDefault();
     
     const baseUrl = "{{ config.base_url | safe }}";
     const currentUrl = window.location.href;
     
-    const normalizeUrl = (url) => {
-        return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
-    };
-    
     const normalizedCurrent = normalizeUrl(currentUrl);
     const normalizedBase = normalizeUrl(baseUrl);
     
+    // Don't navigate if already on home
     if (normalizedCurrent === normalizedBase) {
         return;
     }
     
     const hasHistory = window.history.length > 1;
-    const cameFromSameSite = document.referrer && document.referrer.includes(window.location.host);
+    const cameFromSameSite = document.referrer && 
+                            document.referrer.includes(window.location.host);
     
     if (hasHistory && cameFromSameSite) {
         window.history.back();
@@ -77,14 +109,12 @@ function goBack(event) {
     }
 }
 
-// Update button text based on page
-(function() {
+/**
+ * Initialize navigation button state
+ */
+function initNavigation() {
     const baseUrl = "{{ config.base_url | safe }}";
     const currentUrl = window.location.href;
-    
-    const normalizeUrl = (url) => {
-        return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
-    };
     
     const normalizedCurrent = normalizeUrl(currentUrl);
     const normalizedBase = normalizeUrl(baseUrl);
@@ -93,32 +123,37 @@ function goBack(event) {
     const backText = document.getElementById('back-text');
     const homeLink = document.getElementById('home-link');
     
+    if (!homeLink) return;
+    
     if (normalizedCurrent === normalizedBase) {
         if (backIcon) backIcon.style.display = 'none';
         if (backText) backText.textContent = 'Home';
-        if (homeLink) {
-            homeLink.style.opacity = '0.5';
-            homeLink.style.cursor = 'default';
-        }
+        homeLink.style.opacity = '0.5';
+        homeLink.style.cursor = 'default';
+        homeLink.setAttribute('aria-disabled', 'true');
     } else {
         if (backIcon) backIcon.style.display = 'none';
         if (backText) backText.textContent = '{{ config.extra.home | default(value="Back") }}';
+        homeLink.addEventListener('click', goBack);
     }
-})();
+}
 
-// Scroll to top functionality
-(function() {
+// ============================================
+// Scroll to Top
+// ============================================
+
+function initScrollToTop() {
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     
     if (!scrollToTopBtn) return;
     
-    function toggleScrollButton() {
+    const toggleScrollButton = debounce(() => {
         if (window.pageYOffset > 300) {
             scrollToTopBtn.classList.add('visible');
         } else {
             scrollToTopBtn.classList.remove('visible');
         }
-    }
+    }, 100);
     
     function scrollToTop() {
         window.scrollTo({
@@ -127,15 +162,29 @@ function goBack(event) {
         });
     }
     
-    window.addEventListener('scroll', toggleScrollButton);
-    scrollToTopBtn.addEventListener('click', scrollToTop);
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'auto'
+            });
+        });
+    } else {
+        scrollToTopBtn.addEventListener('click', scrollToTop);
+    }
     
+    window.addEventListener('scroll', toggleScrollButton, { passive: true });
     toggleScrollButton();
-})();
+}
 
 {% if config.extra.features.copy_code_button %}
-// Copy code button functionality
-(function() {
+// ============================================
+// Copy Code Button
+// ============================================
+
+function initCopyCodeButtons() {
     const codeBlocks = document.querySelectorAll('pre code');
     
     codeBlocks.forEach((codeBlock) => {
@@ -150,7 +199,7 @@ function goBack(event) {
         // Create copy button
         const copyButton = document.createElement('button');
         copyButton.className = 'copy-code-button';
-        copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
         copyButton.setAttribute('aria-label', 'Copy code to clipboard');
         copyButton.setAttribute('title', 'Copy code');
         
@@ -160,63 +209,126 @@ function goBack(event) {
             const code = codeBlock.textContent;
             
             try {
-                await navigator.clipboard.writeText(code);
-                copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                // Modern clipboard API
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(code);
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = code;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+                
+                copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
                 copyButton.classList.add('copied');
+                copyButton.setAttribute('aria-label', 'Code copied');
                 
                 setTimeout(() => {
-                    copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                    copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
                     copyButton.classList.remove('copied');
+                    copyButton.setAttribute('aria-label', 'Copy code to clipboard');
                 }, 2000);
             } catch (err) {
-                console.error('Failed to copy:', err);
+                console.error('Failed to copy code:', err);
+                copyButton.setAttribute('aria-label', 'Failed to copy');
             }
         });
     });
-})();
+}
 {% endif %}
 
 {% if config.extra.features.smooth_scroll %}
-// Smooth anchor scrolling with offset
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href === '#') return;
-        
-        e.preventDefault();
-        const target = document.querySelector(href);
-        
-        if (target) {
-            const offset = 80;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+// ============================================
+// Smooth Anchor Scrolling
+// ============================================
+
+function initSmoothScroll() {
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
             
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+            e.preventDefault();
+            const target = document.querySelector(href);
             
-            history.pushState(null, null, href);
-        }
+            if (target) {
+                const offset = 80;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
+                });
+                
+                // Update URL without triggering navigation
+                if (window.history.pushState) {
+                    window.history.pushState(null, null, href);
+                }
+                
+                // Set focus for accessibility
+                target.setAttribute('tabindex', '-1');
+                target.focus();
+            }
+        });
     });
-});
+}
 {% endif %}
 
 {% if config.extra.features.reading_progress_bar %}
-// Reading progress bar
-(function() {
+// ============================================
+// Reading Progress Bar
+// ============================================
+
+function initReadingProgress() {
     const progressBar = document.getElementById('reading-progress');
     if (!progressBar) return;
     
-    function updateProgressBar() {
+    const updateProgressBar = debounce(() => {
         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
+        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
         progressBar.style.width = scrolled + '%';
-    }
+    }, 10);
     
-    window.addEventListener('scroll', updateProgressBar);
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
     updateProgressBar();
-})();
+}
 {% endif %}
+
+// ============================================
+// Initialize All Features
+// ============================================
+
+function init() {
+    initNavigation();
+    initScrollToTop();
+    
+    {% if config.extra.features.copy_code_button %}
+    initCopyCodeButtons();
+    {% endif %}
+    
+    {% if config.extra.features.smooth_scroll %}
+    initSmoothScroll();
+    {% endif %}
+    
+    {% if config.extra.features.reading_progress_bar %}
+    initReadingProgress();
+    {% endif %}
+}
+
+// Run initialization when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
 </script>
 {% endblock body %}

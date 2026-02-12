@@ -7,15 +7,23 @@
     <title>{% block htmltitle %}{{ config.title }}{% endblock htmltitle %}</title>
     <meta name="description" content="{{ config.description }}">
     
-    <!-- Favicon -->
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="{{ get_url(path='favicon/favicon.ico') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ get_url(path='favicon/favicon-16x16.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path='favicon/favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ get_url(path='favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ get_url(path='favicon/site.webmanifest') }}">
     
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{{ get_url(path='style.css') }}" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
     {% if config.extra.analytics.google_analytics_id %}
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.extra.analytics.google_analytics_id }}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -32,7 +40,7 @@
     {% endif %}
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
     <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock og_title %}">
@@ -43,32 +51,35 @@
     <meta property="og:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
     {% endif %}
     
-    
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 
-    <!-- Google Fonts: Science Gothic + JetBrains Mono -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
 
     {% block head %}{% endblock head %}
 </head>
 
 <body>
-    <!-- Aurora Background -->
-    <div class="aurora-container">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <!-- Background Container -->
+    <div class="background-container">
+        {% if config.extra.background_image %}
+        <img src="{{ config.extra.background_image }}" alt="" class="background-image">
+        {% elif config.extra.background_gradient %}
+        <div class="background-gradient" style="background: {{ config.extra.background_gradient }};"></div>
+        {% else %}
+        <div class="background-gradient" style="background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #ec4899 100%);"></div>
+        {% endif %}
     </div>
 
-    <!-- Reading Progress Bar -->
     {% if config.extra.features.reading_progress_bar %}
-    <div class="reading-progress" id="reading-progress"></div>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     {% endif %}
 
     {% block body %}
@@ -77,7 +88,7 @@
             <h1 id="title">{{ config.title }}</h1>
             
             {% if config.description %}
-            <p style="text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-top: -1rem; margin-bottom: 3rem;">
+            <p class="site-description">
                 {{ config.description }}
             </p>
             {% endif %}

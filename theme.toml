@@ -1,8 +1,7 @@
 name = "Prism"
-description = "A modern Zola theme featuring glassmorphism design and aurora-inspired animations."
+description = "A modern Zola theme featuring glassmorphism design"
 license = "AGPL-3.0"
 homepage = "https://github.com/jahamars/zola-prism"
-min_version = "0.4.0"
 demo = "https://xpltt.vercel.app/"
 
 [extra]

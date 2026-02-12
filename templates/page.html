@@ -29,7 +29,7 @@
         </div>
 
         {% if page.taxonomies.tags %}
-        <div class="tags-cloud" style="margin-top: 1.5rem; justify-content: center;">
+        <div class="tags-cloud">
             {% for tag in page.taxonomies.tags %}
             <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">#{{ tag }}</a>
             {% endfor %}
@@ -37,11 +37,10 @@
         {% endif %}
 
         {% if page.taxonomies.authors %}
-        <div style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+        <div class="authors-list">
             By
             {% for author in page.taxonomies.authors %}
-            <a href="{{ get_taxonomy_url(kind='authors', name=author) }}" style="color: var(--accent-teal);">{{ author
-                }}</a>{% if not loop.last %}, {% endif %}
+            <a href="{{ get_taxonomy_url(kind='authors', name=author) }}" class="author-link">{{ author }}</a>{% if not loop.last %}, {% endif %}
             {% endfor %}
         </div>
         {% endif %}
@@ -56,12 +55,12 @@
         <ul class="toc-list">
             {% for entry in page.toc %}
             <li class="toc-item">
-                <a href="#{{ entry.id }}" class="toc-link">{{ entry.title }}</a>
+                <a href="#{{ entry.id }}" class="toc-link" data-target="{{ entry.id }}">{{ entry.title }}</a>
                 {% if entry.children %}
                 <ul class="toc-list">
                     {% for child in entry.children %}
                     <li class="toc-item toc-item--nested">
-                        <a href="#{{ child.id }}" class="toc-link toc-link--nested">{{ child.title }}</a>
+                        <a href="#{{ child.id }}" class="toc-link toc-link--nested" data-target="{{ child.id }}">{{ child.title }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -72,33 +71,61 @@
     </nav>
 
     <script>
-        (function () {
-            const toc = document.querySelector('.table-of-contents');
-            const links = document.querySelectorAll('.toc-link');
-            if (!links.length) return;
+    'use strict';
+    
+    (function initTableOfContents() {
+        const toc = document.querySelector('.table-of-contents');
+        const links = document.querySelectorAll('.toc-link');
+        
+        if (!links.length) return;
 
-            requestAnimationFrame(() => {
-                toc.classList.add('visible');
+        // Show TOC with animation
+        requestAnimationFrame(() => {
+            toc.classList.add('visible');
+        });
+
+        // Cache heading elements
+        const headingMap = new Map();
+        links.forEach(link => {
+            const targetId = link.dataset.target;
+            const heading = document.getElementById(targetId);
+            if (heading) {
+                headingMap.set(targetId, { link, heading });
+            }
+        });
+
+        // Intersection Observer for active link tracking
+        const observerOptions = {
+            rootMargin: '-40% 0px -50% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove active class from all links
+                    links.forEach(link => link.classList.remove('toc-link--active'));
+                    
+                    // Add active class to current link
+                    const targetId = entry.target.id;
+                    const item = headingMap.get(targetId);
+                    if (item) {
+                        item.link.classList.add('toc-link--active');
+                    }
+                }
             });
+        }, observerOptions);
 
-            const ids = [...links].map(a => a.getAttribute('href').slice(1));
-            const headings = ids
-                .map(id => document.getElementById(id))
-                .filter(Boolean);
+        // Observe all headings
+        headingMap.forEach(({ heading }) => {
+            observer.observe(heading);
+        });
 
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (!e.isIntersecting) return;
-                    links.forEach(a => a.classList.remove('toc-link--active'));
-                    const link = document.querySelector(`.toc-link[href="#${e.target.id}"]`);
-                    if (link) link.classList.add('toc-link--active');
-                });
-            }, {
-                rootMargin: '-40% 0px -50% 0px'
-            });
-
-            headings.forEach(h => observer.observe(h));
-        })();
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            observer.disconnect();
+        });
+    })();
     </script>
     {% endif %}
 
@@ -107,7 +134,7 @@
     </article>
 
     {% if config.extra.comments and not page.extra.no_comments %}
-    <hr style="border-color: var(--surface-border); margin: 3rem 0;" />
+    <hr class="comments-divider" />
     {% include "comments.html" %}
     {% endif %}
 </div>
