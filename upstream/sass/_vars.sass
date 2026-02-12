@@ -1,42 +1,31 @@
-// ============================================
-// CSS Variables - Design System
-// ============================================
-
 :root
-    // Glass Morphism
     --glass-base: rgba(255, 255, 255, 0.03)
     --glass-hover: rgba(255, 255, 255, 0.06)
     --glass-active: rgba(255, 255, 255, 0.09)
     --glass-border: rgba(255, 255, 255, 0.1)
     
-    // Blur Effects
     --blur-light: blur(10px)
     --blur-strength: blur(20px)
     --blur-heavy: blur(30px)
     
-    // Text Colors
     --text-primary: rgba(255, 255, 255, 0.95)
     --text-secondary: rgba(255, 255, 255, 0.7)
     --text-tertiary: rgba(255, 255, 255, 0.5)
     
-    // Shadows
     --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.1)
     --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.15)
     --shadow-strong: 0 12px 28px rgba(0, 0, 0, 0.18)
     
-    // Border Radius
     --radius-sm: 8px
     --radius-md: 12px
     --radius-lg: 16px
     --radius-xl: 20px
     --radius-pill: 50px
     
-    // Typography
     --font-heading: 'Science Gothic', 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif
     --font-body: 'Science Gothic', -apple-system, BlinkMacSystemFont, sans-serif
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace
     
-    // Spacing System
     --space-xs: 0.5rem
     --space-sm: 1rem
     --space-md: 1.5rem
@@ -45,20 +34,19 @@
     --space-2xl: 4rem
     --space-3xl: 6rem
     
-    // Z-index Layers
-    --z-background: -2
+    --z-background: -1
     --z-base: 1
-    --z-header: 100
-    --z-scroll-button: 1000
-    --z-progress: 9999
+    --z-header: 10
+    --z-scroll-button: 20
+    --z-progress: 30
+    --z-modal: 100
+    --z-tooltip: 200
     
-    // Breakpoints (for JS usage)
     --breakpoint-mobile: 375px
     --breakpoint-tablet: 768px
     --breakpoint-desktop: 1024px
     --breakpoint-wide: 1440px
 
-// SASS Variables (for backward compatibility)
 $white: var(--text-primary)
 $black: transparent
 $font: var(--font-body)

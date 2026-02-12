@@ -7,23 +7,20 @@
     <title>{% block htmltitle %}{{ config.title }}{% endblock htmltitle %}</title>
     <meta name="description" content="{{ config.description }}">
     
-    <!-- Favicons -->
+    <link rel="canonical" href="{{ current_url | default(value=config.base_url) }}">
+    
     <link rel="icon" type="image/x-icon" href="{{ get_url(path='favicon/favicon.ico') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ get_url(path='favicon/favicon-16x16.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path='favicon/favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ get_url(path='favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ get_url(path='favicon/site.webmanifest') }}">
     
-    <!-- Preload critical resources -->
     <link rel="preload" href="{{ get_url(path='style.css') }}" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
     
-    <!-- DNS Prefetch -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
     {% if config.extra.analytics.google_analytics_id %}
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.extra.analytics.google_analytics_id }}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -33,40 +30,64 @@
     </script>
     {% endif %}
 
-    <!-- SEO Meta Tags -->
     <meta name="keywords" content="{{ config.extra.keywords | default(value='') }}">
     {% if config.extra.author.name %}
     <meta name="author" content="{{ config.extra.author.name }}">
     {% endif %}
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1e3a8a">
     
-    <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
     <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock og_title %}">
     <meta property="og:description" content="{{ config.description }}">
+    <meta property="og:site_name" content="{{ config.title }}">
     {% if config.extra.banner %}
     <meta property="og:image" content="{{ get_url(path=config.extra.banner) }}">
     {% else %}
     <meta property="og:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
     {% endif %}
     
-    <!-- RSS Feed -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
+    <meta name="twitter:description" content="{{ config.description }}">
+    {% if config.extra.banner %}
+    <meta name="twitter:image" content="{{ get_url(path=config.extra.banner) }}">
+    {% else %}
+    <meta name="twitter:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
+    {% endif %}
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ config.title }}",
+      "url": "{{ config.base_url }}",
+      "description": "{{ config.description }}"
+      {% if config.extra.author.name %}
+      ,"author": {
+        "@type": "Person",
+        "name": "{{ config.extra.author.name }}"
+        {% if config.extra.author.url %}
+        ,"url": "{{ config.extra.author.url }}"
+        {% endif %}
+      }
+      {% endif %}
+    }
+    </script>
+    
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
 
     {% block head %}{% endblock head %}
 </head>
 
 <body>
-    <!-- Background Container -->
     <div class="background-container">
         {% if config.extra.background_image %}
         <img src="{{ config.extra.background_image }}" alt="" class="background-image">
@@ -78,7 +99,6 @@
     </div>
 
     {% if config.extra.features.reading_progress_bar %}
-    <!-- Reading Progress Bar -->
     <div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
     {% endif %}
 

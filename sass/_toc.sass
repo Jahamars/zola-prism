@@ -1,7 +1,3 @@
-// ============================================
-// Table of Contents
-// ============================================
-
 @import "vars"
 @import "mixins"
 
@@ -15,8 +11,8 @@
     opacity: 0
     transform: translateY(10px)
     +transition(opacity, transform)
+    scroll-behavior: smooth
 
-    // Custom scrollbar
     scrollbar-width: thin
     scrollbar-color: var(--glass-border) transparent
 
@@ -79,18 +75,20 @@
     font-size: clamp(0.78rem, 0.5rem + 0.4vw, 0.9rem)
     text-decoration: none
     border-left: 2px solid transparent
-    +transition(color, border-left-color)
+    +transition(color, border-left-color, background)
     margin-left: -1px
     +focus-visible
 
     &:hover
         color: var(--text-primary)
         border-left-color: var(--text-secondary)
+        background: var(--glass-hover)
 
     &.toc-link--active
         color: var(--text-primary)
         border-left-color: var(--text-primary)
         font-weight: 500
+        background: var(--glass-hover)
 
     &.toc-link--nested
         font-size: clamp(0.76rem, 0.52rem + 0.3vw, 0.85rem)

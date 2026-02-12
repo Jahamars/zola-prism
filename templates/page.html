@@ -79,12 +79,10 @@
         
         if (!links.length) return;
 
-        // Show TOC with animation
         requestAnimationFrame(() => {
             toc.classList.add('visible');
         });
 
-        // Cache heading elements
         const headingMap = new Map();
         links.forEach(link => {
             const targetId = link.dataset.target;
@@ -94,7 +92,6 @@
             }
         });
 
-        // Intersection Observer for active link tracking
         const observerOptions = {
             rootMargin: '-40% 0px -50% 0px',
             threshold: 0
@@ -103,25 +100,28 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Remove active class from all links
                     links.forEach(link => link.classList.remove('toc-link--active'));
                     
-                    // Add active class to current link
                     const targetId = entry.target.id;
                     const item = headingMap.get(targetId);
                     if (item) {
                         item.link.classList.add('toc-link--active');
+                        
+                        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        item.link.scrollIntoView({ 
+                            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                            block: 'nearest',
+                            inline: 'nearest'
+                        });
                     }
                 }
             });
         }, observerOptions);
 
-        // Observe all headings
         headingMap.forEach(({ heading }) => {
             observer.observe(heading);
         });
 
-        // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
             observer.disconnect();
         });

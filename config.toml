@@ -22,42 +22,30 @@ smart_punctuation = true
 highlighting = { theme = "github-dark" }
 
 [extra]
-# Navigation
 home = "back"
 
-
-# Background
 background_image = "https://raw.githubusercontent.com/Jahamars/zola-prism/refs/heads/main/static/bg.jpg"
-# background_gradient = "linear-gradient(to bottom, #0a0a0f, #13131f)"
-# background_gradient = "#2C2C2C"
-# background_gradient = "linear-gradient(45deg, #0a0a0f 20%, #1a1b26 50%, #151520 80%), linear-gradient(45deg, rgba(79, 195, 247, 0.05) 0%, rgba(157, 127, 201, 0.05) 100%)"
 
 show_toc = true
 
-# Menu configuration
 sam_menu = [
     { text = "posts", link = "/posts" },
     { text = "about", link = "/about" },
     { text = "github", link = "https://github.com/jahamars/zola-prism" },
     { text = "authors", link = "/authors" },
     { text = "tags", link = "/tags" },
-    # { text = "RSS", link = "/rss.xml" }
     { text = "Categories", link = "/categories" }
 ]
 
 sam_bottom_menu = true
 
-# Reading stats
 show_word_count = true
 show_reading_time = true
 
-# Date format
 date_format = "%b %d, %Y"
 
-# Comments (Giscus)
 comments = true
 
-# Giscus configuration (when comments = true)
 [extra.giscus]
 enabled = true
 repo = "Jahamars/zola-prism"
@@ -72,21 +60,14 @@ input_position = "bottom"
 theme = "catppuccin_frappe"
 lang = "en"
 
-# Google Analytics
-# [extra.analytics]
-# google_analytics_id = "G-XXXXXXXXX"
-
-# Footer
 [extra.sam_footer]
 text = "Built using Zola & Prism theme"
 
-# Author (optional)
 [extra.author]
 name = "Jahongir Ahmadaliev"
 email = ""
 url = "https://jahongir.ru"
 
-# Features
 [extra.features]
 copy_code_button = true
 reading_progress_bar = true

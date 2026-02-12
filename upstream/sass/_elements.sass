@@ -1,7 +1,3 @@
-// ============================================
-// Elements - Main Styling
-// ============================================
-
 @import "vars"
 @import "mixins"
 
@@ -32,6 +28,42 @@ body
     position: relative
     overflow-wrap: break-word
     word-wrap: break-word
+    
+    &.page-loading
+        cursor: wait
+        
+        &::after
+            content: ''
+            position: fixed
+            top: 0
+            left: 0
+            width: 100%
+            height: 3px
+            background: var(--text-primary)
+            animation: loading 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite
+            z-index: var(--z-progress)
+
+@keyframes loading
+    0%
+        transform: translateX(-100%)
+    50%
+        transform: translateX(100%)
+    100%
+        transform: translateX(100%)
+
+.skip-to-content
+    position: absolute
+    top: -100px
+    left: 0
+    background: var(--glass-active)
+    color: var(--text-primary)
+    padding: 1rem 2rem
+    border-radius: 0 0 var(--radius-md) 0
+    z-index: var(--z-progress)
+    +transition(top)
+    
+    &:focus
+        top: 0
 
 .background-container
     position: fixed
@@ -112,7 +144,7 @@ header
         line-height: 1
         +transition(transform)
     
-    &:hover
+    &:hover:not([aria-disabled="true"])
         background: var(--glass-active)
         border-color: var(--glass-border)
         color: var(--text-primary)
@@ -121,6 +153,10 @@ header
         
         #back-icon
             transform: translateX(-2px)
+    
+    &[aria-disabled="true"]
+        cursor: default
+        opacity: 0.5
 
 .btn
     display: inline-block
@@ -134,6 +170,7 @@ header
     letter-spacing: 1px
     cursor: pointer
     +focus-visible
+    min-height: 44px
     
     &:hover
         background: var(--glass-active)
@@ -209,6 +246,7 @@ header
     padding: var(--space-lg) var(--space-md)
     align-items: center
     justify-content: center
+    min-height: 44px
 
     .tile-title
         font-family: var(--font-heading)
@@ -261,6 +299,7 @@ header
     align-items: center
     justify-content: center
     text-align: center
+    min-height: 44px
     
     &:hover
         transform: translateY(-4px)
@@ -283,14 +322,19 @@ header
 #content
     background: var(--glass-hover)
     border: 1px solid var(--glass-border)
-    backdrop-filter: var(--blur-strength)
-    -webkit-backdrop-filter: var(--blur-strength)
     border-radius: var(--radius-xl)
     padding: var(--space-xl)
     margin-top: var(--space-lg)
     max-width: 100%
     box-sizing: border-box
     overflow: hidden
+    
+    @supports (backdrop-filter: blur(20px))
+        backdrop-filter: var(--blur-strength)
+        -webkit-backdrop-filter: var(--blur-strength)
+    
+    @supports not (backdrop-filter: blur(20px))
+        background: rgba(255, 255, 255, 0.12)
     
     article
         font-size: clamp(0.96rem, 0.4rem + 0.8vw, 1.06rem)
@@ -445,6 +489,9 @@ header
     backdrop-filter: var(--blur-light)
     -webkit-backdrop-filter: var(--blur-light)
     +focus-visible
+    min-height: 44px
+    display: inline-flex
+    align-items: center
     
     &:hover
         background: var(--glass-active)
@@ -472,13 +519,18 @@ footer
     align-items: center
     justify-content: center
     cursor: pointer
-    opacity: 0.8
-    visibility: visible
-    transform: translateY(0)
+    opacity: 0
+    visibility: hidden
+    transform: translateY(100px)
     +transition(opacity, visibility, transform, background, box-shadow)
     z-index: var(--z-scroll-button)
     box-shadow: var(--shadow-medium)
     +focus-visible
+    
+    &.visible
+        opacity: 0.8
+        visibility: visible
+        transform: translateY(0)
     
     &:hover
         background: var(--glass-active)
@@ -520,6 +572,7 @@ footer
             +transition(background, color, transform, box-shadow)
             letter-spacing: 0.5px
             +focus-visible
+            min-height: 44px
             
             &:hover
                 background: var(--glass-active)
@@ -551,6 +604,8 @@ footer
     justify-content: center
     z-index: 10
     +focus-visible
+    min-width: 44px
+    min-height: 44px
     
     svg
         width: 1rem
@@ -564,6 +619,9 @@ footer
     
     &.copied
         color: var(--text-primary)
+    
+    &.error
+        color: #ff6b6b
 
 pre
     background: var(--glass-active)
@@ -575,8 +633,10 @@ pre
     white-space: pre
     box-shadow: var(--shadow-subtle)
     max-width: 100%
-    backdrop-filter: var(--blur-strength)
-    -webkit-backdrop-filter: var(--blur-strength)
+    
+    @supports (backdrop-filter: blur(20px))
+        backdrop-filter: var(--blur-strength)
+        -webkit-backdrop-filter: var(--blur-strength)
     
     code
         font-family: var(--font-mono)
@@ -616,9 +676,11 @@ blockquote
         background: var(--glass-hover)
         border-radius: var(--radius-md)
         overflow: hidden
-        backdrop-filter: var(--blur-strength)
-        -webkit-backdrop-filter: var(--blur-strength)
         border: 1px solid var(--glass-border)
+        
+        @supports (backdrop-filter: blur(20px))
+            backdrop-filter: var(--blur-strength)
+            -webkit-backdrop-filter: var(--blur-strength)
         
     th
         padding: var(--space-sm)
@@ -653,7 +715,7 @@ img:not(.background-image), video, iframe
 
 +mobile
     .wrap
-        padding: 0 var(--space-sm)
+        padding: 0 var(--space-md)
     
     header
         padding: var(--space-sm) 0
@@ -672,7 +734,7 @@ img:not(.background-image), video, iframe
             font-size: 1.4rem
     
     #content
-        padding: var(--space-md) var(--space-sm)
+        padding: var(--space-md)
         
         h1
             font-size: 1.6rem
@@ -702,11 +764,6 @@ img:not(.background-image), video, iframe
         right: var(--space-md)
         width: 2.5rem
         height: 2.5rem
-        
-        &.visible
-            opacity: 0.8
-            visibility: visible
-            transform: translateY(0)
 
 +tablet
     .wrap

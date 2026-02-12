@@ -1,5 +1,7 @@
 {% extends "index.html" %}
 {% block body %}
+<a href="#content" class="skip-to-content">Skip to content</a>
+
 <div class="wrap">
     <header>
         <a href="{{ config.base_url }}" id="home-link" aria-label="Navigate back or to home">
@@ -32,7 +34,6 @@
     </div>
     {% endif %}
     
-    <!-- Scroll to top button -->
     <button id="scroll-to-top" aria-label="Scroll to top">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="18 15 12 9 6 15"></polyline>
@@ -51,13 +52,6 @@
 <script>
 'use strict';
 
-// ============================================
-// Utility Functions
-// ============================================
-
-/**
- * Debounce function to limit execution rate
- */
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -70,20 +64,10 @@ function debounce(func, wait) {
     };
 }
 
-/**
- * Normalize URL for comparison
- */
 function normalizeUrl(url) {
     return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
 }
 
-// ============================================
-// Navigation System
-// ============================================
-
-/**
- * Smart Back/Home navigation
- */
 function goBack(event) {
     event.preventDefault();
     
@@ -93,25 +77,21 @@ function goBack(event) {
     const normalizedCurrent = normalizeUrl(currentUrl);
     const normalizedBase = normalizeUrl(baseUrl);
     
-    // Don't navigate if already on home
     if (normalizedCurrent === normalizedBase) {
         return;
     }
     
-    const hasHistory = window.history.length > 1;
-    const cameFromSameSite = document.referrer && 
-                            document.referrer.includes(window.location.host);
+    const hasRealHistory = window.history.state !== null || 
+                          (document.referrer && 
+                           new URL(document.referrer).hostname === window.location.hostname);
     
-    if (hasHistory && cameFromSameSite) {
+    if (hasRealHistory) {
         window.history.back();
     } else {
         window.location.href = baseUrl;
     }
 }
 
-/**
- * Initialize navigation button state
- */
 function initNavigation() {
     const baseUrl = "{{ config.base_url | safe }}";
     const currentUrl = window.location.href;
@@ -128,8 +108,6 @@ function initNavigation() {
     if (normalizedCurrent === normalizedBase) {
         if (backIcon) backIcon.style.display = 'none';
         if (backText) backText.textContent = 'Home';
-        homeLink.style.opacity = '0.5';
-        homeLink.style.cursor = 'default';
         homeLink.setAttribute('aria-disabled', 'true');
     } else {
         if (backIcon) backIcon.style.display = 'none';
@@ -138,54 +116,43 @@ function initNavigation() {
     }
 }
 
-// ============================================
-// Scroll to Top
-// ============================================
-
 function initScrollToTop() {
     const scrollToTopBtn = document.getElementById('scroll-to-top');
-    
     if (!scrollToTopBtn) return;
     
-    function scrollToTop() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    const toggleVisibility = debounce(() => {
+        if (window.scrollY > 300) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
+    }, 100);
+    
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    toggleVisibility();
+    
+    scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
-    }
-    
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'auto'
-            });
-        });
-    } else {
-        scrollToTopBtn.addEventListener('click', scrollToTop);
-    }
+    });
 }
 
 {% if config.extra.features.copy_code_button %}
-// ============================================
-// Copy Code Button
-// ============================================
-
 function initCopyCodeButtons() {
     const codeBlocks = document.querySelectorAll('pre code');
     
     codeBlocks.forEach((codeBlock) => {
         const pre = codeBlock.parentElement;
         
-        // Create wrapper
         const wrapper = document.createElement('div');
         wrapper.className = 'code-block-wrapper';
         pre.parentNode.insertBefore(wrapper, pre);
         wrapper.appendChild(pre);
         
-        // Create copy button
         const copyButton = document.createElement('button');
         copyButton.className = 'copy-code-button';
         copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
@@ -198,11 +165,9 @@ function initCopyCodeButtons() {
             const code = codeBlock.textContent;
             
             try {
-                // Modern clipboard API
                 if (navigator.clipboard && window.isSecureContext) {
                     await navigator.clipboard.writeText(code);
                 } else {
-                    // Fallback for older browsers
                     const textArea = document.createElement('textarea');
                     textArea.value = code;
                     textArea.style.position = 'fixed';
@@ -224,7 +189,16 @@ function initCopyCodeButtons() {
                 }, 2000);
             } catch (err) {
                 console.error('Failed to copy code:', err);
-                copyButton.setAttribute('aria-label', 'Failed to copy');
+                
+                copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+                copyButton.classList.add('error');
+                copyButton.setAttribute('aria-label', 'Copy failed');
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                    copyButton.classList.remove('error');
+                    copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+                }, 2000);
             }
         });
     });
@@ -232,12 +206,7 @@ function initCopyCodeButtons() {
 {% endif %}
 
 {% if config.extra.features.smooth_scroll %}
-// ============================================
-// Smooth Anchor Scrolling
-// ============================================
-
 function initSmoothScroll() {
-    // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -257,12 +226,10 @@ function initSmoothScroll() {
                     behavior: prefersReducedMotion ? 'auto' : 'smooth'
                 });
                 
-                // Update URL without triggering navigation
                 if (window.history.pushState) {
                     window.history.pushState(null, null, href);
                 }
                 
-                // Set focus for accessibility
                 target.setAttribute('tabindex', '-1');
                 target.focus();
             }
@@ -272,10 +239,6 @@ function initSmoothScroll() {
 {% endif %}
 
 {% if config.extra.features.reading_progress_bar %}
-// ============================================
-// Reading Progress Bar
-// ============================================
-
 function initReadingProgress() {
     const progressBar = document.getElementById('reading-progress');
     if (!progressBar) return;
@@ -285,20 +248,30 @@ function initReadingProgress() {
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
         progressBar.style.width = scrolled + '%';
-    }, 10);
+    }, 16);
     
     window.addEventListener('scroll', updateProgressBar, { passive: true });
     updateProgressBar();
 }
 {% endif %}
 
-// ============================================
-// Initialize All Features
-// ============================================
+function initPageLoadingState() {
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href^="/"], a[href^="{{ config.base_url }}"]');
+        if (link && !link.target && !link.getAttribute('download')) {
+            document.body.classList.add('page-loading');
+        }
+    });
+    
+    window.addEventListener('pageshow', () => {
+        document.body.classList.remove('page-loading');
+    });
+}
 
 function init() {
     initNavigation();
     initScrollToTop();
+    initPageLoadingState();
     
     {% if config.extra.features.copy_code_button %}
     initCopyCodeButtons();
@@ -313,7 +286,6 @@ function init() {
     {% endif %}
 }
 
-// Run initialization when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
