@@ -4,6 +4,7 @@ description = "A modern blog with glassmorphism design and aurora animations"
 
 compile_sass = true
 build_search_index = true
+minify_html = true
 
 taxonomies = [
     { name = "tags", feed = true },
