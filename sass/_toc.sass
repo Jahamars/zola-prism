@@ -76,7 +76,7 @@
     display: block
     padding: 0.35rem var(--space-sm)
     color: var(--text-secondary)
-    font-size: 0.9rem
+    font-size: clamp(0.78rem, 0.5rem + 0.4vw, 0.9rem)
     text-decoration: none
     border-left: 2px solid transparent
     +transition(color, border-left-color)
@@ -93,7 +93,7 @@
         font-weight: 500
 
     &.toc-link--nested
-        font-size: 0.85rem
+        font-size: clamp(0.76rem, 0.52rem + 0.3vw, 0.85rem)
         padding-top: 0.25rem
         padding-bottom: 0.25rem
         padding-left: var(--space-md)

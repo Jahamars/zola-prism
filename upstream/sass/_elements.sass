@@ -173,13 +173,13 @@ header
     min-height: 100vh
     display: flex
     flex-direction: column
-    justify-content: flex-end  // Вместо center - прижимает контент вниз
-    padding-bottom: var(--space-2xl)  // Добавьте отступ снизу
+    justify-content: flex-end
+    padding-bottom: var(--space-2xl)
     text-align: center
 
 #title
     font-family: var(--font-heading)
-    +responsive-text(1.6rem, 3.2rem)
+    +responsive-text(1.8rem, 3.5rem)
     font-weight: 900
     letter-spacing: 2px
     color: var(--text-primary)
@@ -196,7 +196,7 @@ header
 .site-description
     text-align: center
     color: var(--text-secondary)
-    font-size: 1rem
+    font-size: clamp(0.9rem, 0.4rem + 1.4vw, 1.05rem)
     margin-top: calc(var(--space-sm) * -1)
     margin-bottom: var(--space-xl)
     max-width: 600px
@@ -337,7 +337,7 @@ header
     overflow: hidden
     
     article
-        font-size: 1rem
+        font-size: clamp(0.96rem, 0.4rem + 0.8vw, 1.06rem)
         line-height: 1.7
         color: var(--text-primary)
         font-weight: 400
@@ -391,7 +391,7 @@ header
     
     h1
         font-family: var(--font-heading)
-        font-size: 2.6rem
+        +responsive-text(1.9rem, 2.6rem)
         margin-bottom: var(--space-xs)
         letter-spacing: -0.5px
         line-height: 1.1
@@ -403,7 +403,7 @@ header
 
     h2
         font-family: var(--font-heading)
-        font-size: 1.7rem
+        +responsive-text(1.4rem, 1.9rem)
         color: var(--text-primary)
         margin-top: var(--space-xl)
         margin-bottom: var(--space-sm)
@@ -415,7 +415,7 @@ header
     
     h3
         font-family: var(--font-heading)
-        font-size: 1.3rem
+        +responsive-text(1.15rem, 1.5rem)
         color: var(--text-primary)
         margin-top: 2.5rem
         margin-bottom: 0.8rem
@@ -426,7 +426,7 @@ header
     
     h4
         font-family: var(--font-heading)
-        font-size: 1.2rem
+        +responsive-text(1.05rem, 1.3rem)
         color: var(--text-primary)
         margin-top: var(--space-lg)
         margin-bottom: 0.6rem
@@ -733,9 +733,6 @@ img:not(.background-image), video, iframe
 // ============================================
 
 +mobile
-    body
-        font-size: 14px
-    
     .wrap
         padding: 0 var(--space-sm)
     
@@ -743,7 +740,6 @@ img:not(.background-image), video, iframe
         padding: var(--space-sm) 0
     
     #title
-        font-size: 2rem
         margin-bottom: var(--space-sm)
     
     .tile-grid
@@ -758,10 +754,6 @@ img:not(.background-image), video, iframe
     
     #content
         padding: var(--space-md) var(--space-sm)
-        
-        article
-            font-size: 0.95rem
-            line-height: 1.75
         
         h1
             font-size: 1.6rem
