@@ -21,7 +21,6 @@ body
     font-optical-sizing: auto
     font-variation-settings: "slnt" 0, "wdth" 100, "CTRS" 0
 
-// === AURORA BACKGROUNDS ===
 .aurora-container
     position: fixed
     top: 0
@@ -70,7 +69,6 @@ body
     100%
         transform: translate(30px, 50px) scale(1.1)
 
-// === READING PROGRESS BAR ===
 .reading-progress
     position: fixed
     top: 0
@@ -82,7 +80,6 @@ body
     transition: width 0.1s ease
     pointer-events: none
 
-// === LINKS ===
 a
     color: var(--text-main)
     text-decoration: none
@@ -90,7 +87,6 @@ a
     &:hover
         color: var(--accent-teal)
 
-// === LAYOUT ===
 .wrap
     max-width: 1100px
     margin: 0 auto
@@ -100,7 +96,6 @@ a
     width: 100%
     box-sizing: border-box
 
-// === HEADER & NAVIGATION ===
 header
     padding: 2rem 0
     display: flex
@@ -140,7 +135,6 @@ header
         #back-icon
             transform: translateX(-2px)
 
-// === BUTTONS ===
 .btn
     display: inline-block
     padding: 0.8rem 1.8rem
@@ -164,7 +158,6 @@ header
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
         color: var(--text-main)
 
-// === SPLASH / HOME PAGE ===
 #splash
     min-height: 80vh
     display: flex
@@ -186,7 +179,6 @@ header
     text-transform: none
     line-height: 1.1
 
-// === TILES GRID ===
 .tile-grid
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
@@ -243,7 +235,6 @@ header
         color: var(--text-muted)
         z-index: 1
 
-// === POST GRID & CARDS ===
 .post-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
@@ -299,7 +290,6 @@ header
         font-family: var(--font-heading)
         font-weight: 500
 
-// === CONTENT PAGE ===
 #content
     background: var(--surface-glass)
     border: 1px solid var(--surface-border)
@@ -321,7 +311,6 @@ header
         word-break: break-word
         overflow-wrap: break-word
         
-        // Links in article
         a
             color: var(--accent-teal)
             text-decoration: none
@@ -336,18 +325,15 @@ header
                 padding-left: 2px
                 padding-right: 2px
         
-        // External links icon
         a[target="_blank"]
             &::after
                 content: " ↗"
                 font-size: 0.85em
                 opacity: 0.6
         
-        // Links in lists
         ul a, ol a
             font-weight: 500
         
-        // Text emphasis
         strong, b
             color: var(--text-highlight)
             font-weight: 700
@@ -411,7 +397,6 @@ header
             span
                 margin: 0 10px
 
-// === TAXONOMY GRID ===
 .taxonomy-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
@@ -469,7 +454,6 @@ header
         font-family: var(--font-heading)
         font-weight: 500
 
-// === TAGS ===
 .tags-cloud
     display: flex
     flex-wrap: wrap
@@ -496,7 +480,6 @@ header
         transform: translateY(-2px)
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
 
-// === FOOTER ===
 footer
     margin-top: 6rem
     padding: 3rem 0
@@ -505,7 +488,6 @@ footer
     font-size: 0.9rem
     border-top: 1px solid var(--surface-border)
 
-// === SCROLL TO TOP BUTTON ===
 #scroll-to-top
     position: fixed
     bottom: 2rem
@@ -549,7 +531,6 @@ footer
         stroke: var(--text-main)
         transform: translateY(-2px)
 
-// === BOTTOM MENU ===
 .bottom-menu
     margin-top: 4rem
     padding: 3rem 0
@@ -587,7 +568,6 @@ footer
                 transform: translateY(-2px)
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
 
-// === CODE BLOCKS WITH COPY BUTTON ===
 .code-block-wrapper
     position: relative
     margin: 2rem 0
@@ -658,7 +638,6 @@ code
     white-space: pre-wrap
     color: var(--accent-teal)
 
-// Syntax highlighting specific
 #content
     pre
         code
@@ -679,7 +658,6 @@ code
         overflow-wrap: normal
         color: inherit
 
-// Custom scrollbar for code blocks
 pre::-webkit-scrollbar
     height: 8px
 
@@ -694,12 +672,10 @@ pre::-webkit-scrollbar-thumb
     &:hover
         background: rgba(255, 255, 255, 0.3)
 
-// Firefox scrollbar
 pre
     scrollbar-width: thin
     scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2)
 
-// === LISTS ===
 #content
     ul, ol
         margin: 1.5rem 0
@@ -716,7 +692,6 @@ pre
     ol
         list-style-type: decimal
 
-// === BLOCKQUOTES ===
 blockquote
     border-left: 3px solid var(--accent-teal)
     padding-left: 1.5rem
@@ -724,7 +699,6 @@ blockquote
     color: var(--text-muted)
     font-style: italic
 
-// === TABLES ===
 #content
     table
         width: 100%
@@ -769,7 +743,6 @@ blockquote
         table
             margin: 0
 
-// === IMAGES ===
 img, video, iframe
     max-width: 100%
     height: auto
@@ -800,7 +773,6 @@ img, video, iframe
         height: auto
         object-fit: cover
 
-// === RESPONSIVE - MOBILE ===
 @media (max-width: 768px)
     body
         font-size: 15px
@@ -1024,7 +996,6 @@ img, video, iframe
         padding: 1.5rem 0
         font-size: 0.8rem
 
-// === RESPONSIVE - SMALL MOBILE ===
 @media (max-width: 375px)
     body
         font-size: 14px
@@ -1050,7 +1021,6 @@ img, video, iframe
     .card
         padding: 1.2rem
 
-// === RESPONSIVE - TABLET ===
 @media (min-width: 769px) and (max-width: 1024px)
     .wrap
         max-width: 90%
@@ -1074,7 +1044,6 @@ img, video, iframe
     .post-grid
         grid-template-columns: repeat(2, 1fr)
 
-// === RESPONSIVE - LANDSCAPE MOBILE ===
 @media (max-width: 768px) and (orientation: landscape)
     #splash
         min-height: 100vh

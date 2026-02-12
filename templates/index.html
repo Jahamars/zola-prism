@@ -43,16 +43,6 @@
     <meta property="og:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
     {% endif %}
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ current_url | default(value=config.base_url) }}">
-    <meta property="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
-    <meta property="twitter:description" content="{{ config.description }}">
-    {% if config.extra.banner %}
-    <meta property="twitter:image" content="{{ get_url(path=config.extra.banner) }}">
-    {% else %}
-    <meta property="twitter:image" content="{{ config.base_url }}/favicon/android-chrome-512x512.png">
-    {% endif %}
     
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
@@ -101,7 +91,6 @@
                 </a>
                 {% endfor %}
                 {% else %}
-                {# Fallback: автоматически показываем все секции #}
                 {% set index = get_section(path="_index.md") %}
                 {% for section_path in index.subsections %}
                     {% set section = get_section(path=section_path) %}
