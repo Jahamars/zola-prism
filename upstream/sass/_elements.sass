@@ -741,20 +741,22 @@ img:not(.background-image), video, iframe
         padding: 0 0.5rem
     
     .tile-grid
-        grid-template-columns: 1fr
+        grid-template-columns: repeat(2, 1fr)
         gap: 0.75rem
         max-width: 100%
     
     .tile
-        padding: 1rem
+        padding: 0.75rem 0.5rem
         min-height: auto
         
         .tile-title
-            font-size: 1.1rem
+            font-size: 0.95rem
             margin-bottom: 0.25rem
+            word-break: break-word
+            hyphens: auto
         
         .tile-desc
-            font-size: 0.8rem
+            font-size: 0.75rem
     
     #content
         padding: 1rem
