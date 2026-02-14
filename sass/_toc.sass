@@ -10,8 +10,8 @@
     overflow-y: auto
     opacity: 0
     transform: translateY(10px)
-    +transition(opacity, transform)
-    scroll-behavior: smooth
+    +transition-fast(opacity, transform)
+    will-change: opacity, transform
 
     scrollbar-width: thin
     scrollbar-color: var(--glass-border) transparent
@@ -44,7 +44,7 @@
     text-transform: uppercase
     letter-spacing: 1.2px
     color: var(--text-secondary)
-    opacity: 0.8
+    opacity: 0.9
 
 .toc-list
     list-style: none
@@ -75,7 +75,7 @@
     font-size: clamp(0.78rem, 0.5rem + 0.4vw, 0.9rem)
     text-decoration: none
     border-left: 2px solid transparent
-    +transition(color, border-left-color, background)
+    +transition-fast(color, border-left-color, background)
     margin-left: -1px
     +focus-visible
 
@@ -115,3 +115,9 @@
     .toc-link
         border-left: 2px solid var(--glass-border)
         margin-left: 0
+        font-size: 0.9rem
+        padding: 0.4rem 0.75rem
+        
+        &.toc-link--nested
+            font-size: 0.85rem
+            padding-left: 1.2rem

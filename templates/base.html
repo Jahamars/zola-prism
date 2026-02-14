@@ -4,8 +4,12 @@
 
 <div class="wrap">
     <header>
-        <a href="{{ config.base_url }}" id="home-link" aria-label="Navigate back or to home">
-            <span id="back-icon" aria-hidden="true"></span>
+        <a href="{{ config.base_url }}" id="home-link">
+            <span id="back-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </span>
             <span id="back-text">{{ config.extra.home | default(value="Back") }}</span>
         </a>
     </header>
@@ -64,56 +68,17 @@ function debounce(func, wait) {
     };
 }
 
-function normalizeUrl(url) {
-    return url.replace(/\/+$/, '').replace(/\/index\.html$/, '');
-}
-
-function goBack(event) {
-    event.preventDefault();
-    
-    const baseUrl = "{{ config.base_url | safe }}";
-    const currentUrl = window.location.href;
-    
-    const normalizedCurrent = normalizeUrl(currentUrl);
-    const normalizedBase = normalizeUrl(baseUrl);
-    
-    if (normalizedCurrent === normalizedBase) {
-        return;
-    }
-    
-    const hasRealHistory = window.history.state !== null || 
-                          (document.referrer && 
-                           new URL(document.referrer).hostname === window.location.hostname);
-    
-    if (hasRealHistory) {
-        window.history.back();
-    } else {
-        window.location.href = baseUrl;
-    }
-}
-
 function initNavigation() {
-    const baseUrl = "{{ config.base_url | safe }}";
-    const currentUrl = window.location.href;
-    
-    const normalizedCurrent = normalizeUrl(currentUrl);
-    const normalizedBase = normalizeUrl(baseUrl);
-    
+    const homeLink = document.getElementById('home-link');
     const backIcon = document.getElementById('back-icon');
     const backText = document.getElementById('back-text');
-    const homeLink = document.getElementById('home-link');
     
     if (!homeLink) return;
     
-    if (normalizedCurrent === normalizedBase) {
-        if (backIcon) backIcon.style.display = 'none';
-        if (backText) backText.textContent = 'Home';
-        homeLink.setAttribute('aria-disabled', 'true');
-    } else {
-        if (backIcon) backIcon.style.display = 'none';
-        if (backText) backText.textContent = '{{ config.extra.home | default(value="Back") }}';
-        homeLink.addEventListener('click', goBack);
-    }
+    // Всегда показываем как Home, всегда ведёт на главную
+    if (backIcon) backIcon.style.display = 'none';
+    if (backText) backText.textContent = 'Home';
+    homeLink.setAttribute('aria-label', 'Go to home page');
 }
 
 function initScrollToTop() {
@@ -208,11 +173,12 @@ function initCopyCodeButtons() {
 {% if config.extra.features.smooth_scroll %}
 function initSmoothScroll() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            if (href === '#') return;
+            if (href === '#' || href.length <= 1) return;
             
             e.preventDefault();
             const target = document.querySelector(href);
@@ -223,15 +189,17 @@ function initSmoothScroll() {
                 
                 window.scrollTo({
                     top: targetPosition,
-                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
+                    behavior: 'smooth'
                 });
                 
                 if (window.history.pushState) {
                     window.history.pushState(null, null, href);
                 }
                 
-                target.setAttribute('tabindex', '-1');
-                target.focus();
+                if (!target.hasAttribute('tabindex')) {
+                    target.setAttribute('tabindex', '-1');
+                }
+                target.focus({ preventScroll: true });
             }
         });
     });

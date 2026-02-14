@@ -74,57 +74,66 @@
     'use strict';
     
     (function initTableOfContents() {
-        const toc = document.querySelector('.table-of-contents');
-        const links = document.querySelectorAll('.toc-link');
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupTOC);
+        } else {
+            setupTOC();
+        }
         
-        if (!links.length) return;
+        function setupTOC() {
+            const toc = document.querySelector('.table-of-contents');
+            const links = document.querySelectorAll('.toc-link');
+            
+            if (!links.length || !toc) return;
 
-        requestAnimationFrame(() => {
-            toc.classList.add('visible');
-        });
+            requestAnimationFrame(() => {
+                toc.classList.add('visible');
+            });
 
-        const headingMap = new Map();
-        links.forEach(link => {
-            const targetId = link.dataset.target;
-            const heading = document.getElementById(targetId);
-            if (heading) {
-                headingMap.set(targetId, { link, heading });
-            }
-        });
-
-        const observerOptions = {
-            rootMargin: '-40% 0px -50% 0px',
-            threshold: 0
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    links.forEach(link => link.classList.remove('toc-link--active'));
-                    
-                    const targetId = entry.target.id;
-                    const item = headingMap.get(targetId);
-                    if (item) {
-                        item.link.classList.add('toc-link--active');
-                        
-                        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                        item.link.scrollIntoView({ 
-                            behavior: prefersReducedMotion ? 'auto' : 'smooth',
-                            block: 'nearest',
-                            inline: 'nearest'
-                        });
-                    }
+            const headingMap = new Map();
+            let observerInstance = null;
+            
+            links.forEach(link => {
+                const targetId = link.dataset.target;
+                const heading = document.getElementById(targetId);
+                if (heading) {
+                    headingMap.set(targetId, { link, heading });
                 }
             });
-        }, observerOptions);
 
-        headingMap.forEach(({ heading }) => {
-            observer.observe(heading);
-        });
+            const observerOptions = {
+                rootMargin: '-40% 0px -50% 0px',
+                threshold: 0
+            };
 
-        window.addEventListener('beforeunload', () => {
-            observer.disconnect();
-        });
+            observerInstance = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => link.classList.remove('toc-link--active'));
+                        
+                        const targetId = entry.target.id;
+                        const item = headingMap.get(targetId);
+                        if (item) {
+                            item.link.classList.add('toc-link--active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            headingMap.forEach(({ heading }) => {
+                observerInstance.observe(heading);
+            });
+
+            const cleanup = () => {
+                if (observerInstance) {
+                    observerInstance.disconnect();
+                    observerInstance = null;
+                }
+            };
+
+            window.addEventListener('beforeunload', cleanup);
+            window.addEventListener('pagehide', cleanup);
+        }
     })();
     </script>
     {% endif %}

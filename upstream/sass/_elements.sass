@@ -9,7 +9,6 @@
 html
     overflow-x: hidden
     max-width: 100vw
-    scroll-behavior: smooth
     
     +reduce-motion
         scroll-behavior: auto
@@ -94,13 +93,13 @@ body
     background: var(--text-primary)
     opacity: 0.3
     z-index: var(--z-progress)
-    +transition(width)
+    +transition-fast(width)
     pointer-events: none
 
 a
     color: var(--text-primary)
     text-decoration: none
-    transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)
+    +transition-fast(color)
     +focus-visible
     
     &:hover
@@ -127,7 +126,7 @@ header
 #home-link
     display: inline-flex
     align-items: center
-    gap: 0.4rem
+    gap: 0.5rem
     padding: 0.6rem 1.5rem
     +glass(hover)
     border-radius: var(--radius-pill)
@@ -135,16 +134,24 @@ header
     font-family: var(--font-heading)
     font-size: 0.85rem
     font-weight: 600
-    +transition(background, border-color, color, transform, box-shadow)
+    +transition-fast(background, border-color, color, transform, box-shadow)
     letter-spacing: 1px
     +focus-visible
     
     #back-icon
-        font-size: 1rem
-        line-height: 1
-        +transition(transform)
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        width: 1.1rem
+        height: 1.1rem
+        +transition-fast(transform)
+        
+        svg
+            width: 100%
+            height: 100%
+            stroke: currentColor
     
-    &:hover:not([aria-disabled="true"])
+    &:hover
         background: var(--glass-active)
         border-color: var(--glass-border)
         color: var(--text-primary)
@@ -153,10 +160,6 @@ header
         
         #back-icon
             transform: translateX(-2px)
-    
-    &[aria-disabled="true"]
-        cursor: default
-        opacity: 0.5
 
 .btn
     display: inline-block
@@ -166,7 +169,7 @@ header
     color: var(--text-primary)
     font-family: var(--font-heading)
     font-weight: 600
-    +transition(background, border-color, transform, box-shadow)
+    +transition-fast(background, border-color, transform, box-shadow)
     letter-spacing: 1px
     cursor: pointer
     +focus-visible
@@ -232,7 +235,7 @@ header
 =base-card
     +glass(hover)
     border-radius: var(--radius-xl)
-    +transition(transform, background, box-shadow)
+    +transition-fast(transform, background, box-shadow)
     display: flex
     flex-direction: column
     position: relative
@@ -246,7 +249,7 @@ header
     padding: var(--space-lg) var(--space-md)
     align-items: center
     justify-content: center
-    min-height: 44px
+    min-height: 120px
 
     .tile-title
         font-family: var(--font-heading)
@@ -299,7 +302,7 @@ header
     align-items: center
     justify-content: center
     text-align: center
-    min-height: 44px
+    min-height: 100px
     
     &:hover
         transform: translateY(-4px)
@@ -329,11 +332,11 @@ header
     box-sizing: border-box
     overflow: hidden
     
-    @supports (backdrop-filter: blur(20px))
+    @supports (backdrop-filter: blur(12px))
         backdrop-filter: var(--blur-strength)
         -webkit-backdrop-filter: var(--blur-strength)
     
-    @supports not (backdrop-filter: blur(20px))
+    @supports not (backdrop-filter: blur(12px))
         background: rgba(255, 255, 255, 0.12)
     
     article
@@ -357,31 +360,28 @@ header
         a
             color: var(--text-primary)
             text-decoration: none
-            border-bottom: 1px solid var(--glass-border)
-            +transition(opacity, background, padding)
-            padding-bottom: 2px
+            border-bottom: 1px solid var(--text-secondary)
+            +transition-fast(border-color, color)
             +focus-visible
             
             &:hover
-                opacity: 0.8
-                background: var(--glass-hover)
-                padding-left: 2px
-                padding-right: 2px
-        
-        a[target="_blank"]
-            &::after
-                content: " ↗"
-                font-size: 0.85em
-                opacity: 0.6
-        
+                border-bottom-color: var(--text-primary)
+                color: var(--text-primary)
+
+        a[target="_blank"]::after
+            content: " ↗"
+            font-size: 0.85em
+            opacity: 0.7
+            margin-left: 0.2em
+
         strong, b
             color: var(--text-primary)
             font-weight: 700
-        
+
         em, i
             color: var(--text-primary)
             font-style: italic
-        
+
         mark
             background: var(--glass-hover)
             color: var(--text-primary)
@@ -458,7 +458,7 @@ header
         .author-link
             color: var(--text-primary)
             border-bottom: 1px solid var(--glass-border)
-            +transition(opacity, border-color)
+            +transition-fast(opacity, border-color)
             
             &:hover
                 opacity: 0.8
@@ -476,7 +476,8 @@ header
     margin: var(--space-md) 0
 
 .tag
-    display: inline-block
+    display: inline-flex
+    align-items: center
     padding: 8px 20px
     border-radius: var(--radius-pill)
     background: var(--glass-hover)
@@ -485,13 +486,17 @@ header
     font-size: 0.85rem
     font-weight: 500
     font-family: var(--font-heading)
-    +transition(background, color, transform, box-shadow)
-    backdrop-filter: var(--blur-light)
-    -webkit-backdrop-filter: var(--blur-light)
-    +focus-visible
+    +transition-fast(background, color, transform, box-shadow)
     min-height: 44px
-    display: inline-flex
-    align-items: center
+    
+    @supports (backdrop-filter: blur(10px))
+        backdrop-filter: var(--blur-light)
+        -webkit-backdrop-filter: var(--blur-light)
+    
+    @supports not (backdrop-filter: blur(10px))
+        background: rgba(255, 255, 255, 0.12)
+    
+    +focus-visible
     
     &:hover
         background: var(--glass-active)
@@ -522,10 +527,17 @@ footer
     opacity: 0
     visibility: hidden
     transform: translateY(100px)
-    +transition(opacity, visibility, transform, background, box-shadow)
+    +transition-fast(opacity, visibility, transform, background, box-shadow)
     z-index: var(--z-scroll-button)
     box-shadow: var(--shadow-medium)
     +focus-visible
+    
+    @supports (backdrop-filter: blur(10px))
+        backdrop-filter: var(--blur-light)
+        -webkit-backdrop-filter: var(--blur-light)
+    
+    @supports not (backdrop-filter: blur(10px))
+        background: rgba(255, 255, 255, 0.12)
     
     &.visible
         opacity: 0.8
@@ -541,7 +553,7 @@ footer
         width: 1.5rem
         height: 1.5rem
         stroke: var(--text-secondary)
-        +transition(stroke)
+        +transition-fast(stroke)
     
     &:hover svg
         stroke: var(--text-primary)
@@ -569,10 +581,17 @@ footer
             font-family: var(--font-heading)
             font-size: 0.85rem
             font-weight: 600
-            +transition(background, color, transform, box-shadow)
+            +transition-fast(background, color, transform, box-shadow)
             letter-spacing: 0.5px
             +focus-visible
             min-height: 44px
+            
+            @supports (backdrop-filter: blur(10px))
+                backdrop-filter: var(--blur-light)
+                -webkit-backdrop-filter: var(--blur-light)
+            
+            @supports not (backdrop-filter: blur(10px))
+                background: rgba(255, 255, 255, 0.10)
             
             &:hover
                 background: var(--glass-active)
@@ -596,9 +615,7 @@ footer
     border-radius: 4px
     color: var(--text-secondary)
     cursor: pointer
-    +transition(background, color)
-    backdrop-filter: var(--blur-light)
-    -webkit-backdrop-filter: var(--blur-light)
+    +transition-fast(background, color)
     display: flex
     align-items: center
     justify-content: center
@@ -607,11 +624,18 @@ footer
     min-width: 44px
     min-height: 44px
     
+    @supports (backdrop-filter: blur(10px))
+        backdrop-filter: var(--blur-light)
+        -webkit-backdrop-filter: var(--blur-light)
+    
+    @supports not (backdrop-filter: blur(10px))
+        background: rgba(255, 255, 255, 0.10)
+    
     svg
         width: 1rem
         height: 1rem
         stroke: currentColor
-        +transition(stroke)
+        +transition-fast(stroke)
     
     &:hover
         background: var(--glass-active)
@@ -634,9 +658,12 @@ pre
     box-shadow: var(--shadow-subtle)
     max-width: 100%
     
-    @supports (backdrop-filter: blur(20px))
+    @supports (backdrop-filter: blur(12px))
         backdrop-filter: var(--blur-strength)
         -webkit-backdrop-filter: var(--blur-strength)
+    
+    @supports not (backdrop-filter: blur(12px))
+        background: rgba(255, 255, 255, 0.14)
     
     code
         font-family: var(--font-mono)
@@ -678,9 +705,12 @@ blockquote
         overflow: hidden
         border: 1px solid var(--glass-border)
         
-        @supports (backdrop-filter: blur(20px))
+        @supports (backdrop-filter: blur(12px))
             backdrop-filter: var(--blur-strength)
             -webkit-backdrop-filter: var(--blur-strength)
+        
+        @supports not (backdrop-filter: blur(12px))
+            background: rgba(255, 255, 255, 0.12)
         
     th
         padding: var(--space-sm)
@@ -697,7 +727,7 @@ blockquote
         color: var(--text-primary)
         
     tbody tr
-        +transition(background)
+        +transition-fast(background)
         
         &:hover
             background: var(--glass-hover)
@@ -715,7 +745,7 @@ img:not(.background-image), video, iframe
 
 +mobile
     html
-        font-size: 14px
+        font-size: 16px
     
     .wrap
         padding: 0 1rem
@@ -728,6 +758,10 @@ img:not(.background-image), video, iframe
         padding: 0.5rem 1rem
         font-size: 0.8rem
         gap: 0.3rem
+        
+        #back-icon
+            width: 1rem
+            height: 1rem
     
     #title
         font-size: clamp(1.5rem, 8vw, 2.2rem)
@@ -736,36 +770,34 @@ img:not(.background-image), video, iframe
         line-height: 1.2
     
     .site-description
-        font-size: 0.85rem
+        font-size: 0.9rem
         margin-bottom: 1.5rem
         padding: 0 0.5rem
     
     .tile-grid
-        grid-template-columns: repeat(2, 1fr)
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr))
         gap: 0.75rem
         max-width: 100%
     
     .tile
-        padding: 0.75rem 0.5rem
-        min-height: auto
+        padding: 1.2rem 1rem
+        min-height: 100px
         
         .tile-title
-            font-size: 0.95rem
+            font-size: 1.1rem
             margin-bottom: 0.25rem
-            word-break: break-word
-            hyphens: auto
         
         .tile-desc
-            font-size: 0.75rem
+            font-size: 0.8rem
     
     #content
-        padding: 1rem
+        padding: 1.25rem
         margin-top: 1rem
-        border-radius: 12px
+        border-radius: 16px
         
         article
-            font-size: 0.95rem
-            line-height: 1.6
+            font-size: 1rem
+            line-height: 1.65
             
             p
                 margin-bottom: 0.8rem
@@ -777,24 +809,24 @@ img:not(.background-image), video, iframe
                 margin-bottom: 0.25rem
         
         h1
-            font-size: 1.4rem
+            font-size: 1.5rem
             line-height: 1.3
             margin-bottom: 0.75rem
             letter-spacing: -0.3px
         
         h2
-            font-size: 1.2rem
+            font-size: 1.3rem
             margin-top: 1.5rem
             margin-bottom: 0.6rem
             letter-spacing: -0.2px
         
         h3
-            font-size: 1.05rem
+            font-size: 1.15rem
             margin-top: 1.25rem
             margin-bottom: 0.5rem
         
         h4
-            font-size: 0.95rem
+            font-size: 1.05rem
             margin-top: 1rem
             margin-bottom: 0.4rem
         
@@ -803,11 +835,11 @@ img:not(.background-image), video, iframe
             padding-bottom: 1rem
             
             h1
-                font-size: 1.5rem
+                font-size: 1.6rem
                 margin-bottom: 0.5rem
             
             .hero-meta
-                font-size: 0.85rem
+                font-size: 0.9rem
                 margin-top: 0.5rem
                 
                 span
@@ -817,10 +849,10 @@ img:not(.background-image), video, iframe
             display: block
             overflow-x: auto
             white-space: nowrap
-            font-size: 0.85rem
+            font-size: 0.9rem
             
         th, td
-            padding: 0.5rem
+            padding: 0.6rem
     
     .post-grid
         grid-template-columns: 1fr
@@ -828,20 +860,20 @@ img:not(.background-image), video, iframe
         margin: 1rem 0
     
     .card
-        padding: 1.25rem
+        padding: 1.5rem
         
         h3
-            font-size: 1.1rem
+            font-size: 1.2rem
             line-height: 1.3
             margin-bottom: 0.5rem
         
         p
-            font-size: 0.85rem
+            font-size: 0.9rem
             line-height: 1.5
             margin-bottom: 0.75rem
         
         .meta
-            font-size: 0.8rem
+            font-size: 0.85rem
             padding-top: 0.75rem
             margin-top: 0.75rem
     
@@ -851,52 +883,53 @@ img:not(.background-image), video, iframe
         margin-top: 1rem
     
     .taxonomy-item
-        padding: 1rem
+        padding: 1.2rem
+        min-height: 90px
         
         h3
-            font-size: 1.1rem
+            font-size: 1.2rem
             margin-bottom: 0.5rem
         
         .count
-            font-size: 0.8rem
+            font-size: 0.85rem
     
     .tag
-        padding: 0.5rem 1rem
-        font-size: 0.8rem
-        min-height: auto
+        padding: 0.6rem 1.2rem
+        font-size: 0.85rem
+        min-height: 44px
     
     .tags-cloud
-        gap: 0.4rem
+        gap: 0.5rem
         margin: 0.75rem 0
     
     pre
-        padding: 0.75rem
+        padding: 1rem
         margin: 1rem 0
-        font-size: 0.8rem
+        font-size: 0.85rem
         border-radius: 8px
         overflow-x: auto
         
         code
-            font-size: 0.8rem
+            font-size: 0.85rem
             line-height: 1.5
     
     code
-        font-size: 0.85em
+        font-size: 0.88em
         padding: 0.15rem 0.4rem
     
     .copy-code-button
-        padding: 0.35rem
-        min-width: 36px
-        min-height: 36px
+        padding: 0.4rem
+        min-width: 44px
+        min-height: 44px
         
         svg
-            width: 0.9rem
-            height: 0.9rem
+            width: 1rem
+            height: 1rem
     
     blockquote
         padding-left: 0.75rem
         margin: 1rem 0
-        font-size: 0.9rem
+        font-size: 0.95rem
     
     .table-of-contents
         position: static
@@ -910,17 +943,17 @@ img:not(.background-image), video, iframe
             display: none
     
     .toc-title
-        font-size: 0.7rem
+        font-size: 0.75rem
     
     .toc-link
-        font-size: 0.85rem
-        padding: 0.3rem 0.75rem
+        font-size: 0.9rem
+        padding: 0.4rem 0.75rem
         border-left: 2px solid var(--glass-border)
         margin-left: 0
         
         &.toc-link--nested
-            font-size: 0.8rem
-            padding-left: 1rem
+            font-size: 0.85rem
+            padding-left: 1.2rem
     
     .bottom-menu
         margin-top: 2rem
@@ -930,14 +963,14 @@ img:not(.background-image), video, iframe
             gap: 0.5rem
             
             a
-                padding: 0.5rem 1rem
-                font-size: 0.8rem
-                min-height: auto
+                padding: 0.6rem 1.2rem
+                font-size: 0.85rem
+                min-height: 44px
     
     footer
         margin-top: 2rem
         padding: 1rem 0
-        font-size: 0.8rem
+        font-size: 0.85rem
     
     .reading-progress
         height: 3px
@@ -946,21 +979,21 @@ img:not(.background-image), video, iframe
     #scroll-to-top
         bottom: 1rem
         right: 1rem
-        width: 2.5rem
-        height: 2.5rem
+        width: 2.8rem
+        height: 2.8rem
         
         svg
-            width: 1.2rem
-            height: 1.2rem
+            width: 1.3rem
+            height: 1.3rem
     
     #splash
         min-height: 100vh
         padding-bottom: 2rem
     
     .btn
-        padding: 0.6rem 1.2rem
-        font-size: 0.85rem
-        min-height: auto
+        padding: 0.7rem 1.4rem
+        font-size: 0.9rem
+        min-height: 44px
     
     img:not(.background-image), video, iframe
         border-radius: 6px
@@ -971,7 +1004,7 @@ img:not(.background-image), video, iframe
         padding: 0 var(--space-lg)
     
     #title
-        font-size: 3.5rem
+        font-size: 3.2rem
 
 +wide
     .wrap

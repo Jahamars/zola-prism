@@ -2,7 +2,7 @@
 // Mixins - Reusable Style Patterns
 // ============================================
 
-// Glass morphism effect
+// Glass morphism effect with fallback
 =glass($opacity: 'hover')
     @if $opacity == 'base'
         background: var(--glass-base)
@@ -11,22 +11,41 @@
     @else if $opacity == 'active'
         background: var(--glass-active)
     border: 1px solid var(--glass-border)
-    backdrop-filter: var(--blur-strength)
-    -webkit-backdrop-filter: var(--blur-strength)
-    transition: background 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)
+    
+    @supports (backdrop-filter: blur(12px))
+        backdrop-filter: var(--blur-strength)
+        -webkit-backdrop-filter: var(--blur-strength)
+    
+    @supports not (backdrop-filter: blur(12px))
+        @if $opacity == 'base'
+            background: rgba(255, 255, 255, 0.08)
+        @else if $opacity == 'hover'
+            background: rgba(255, 255, 255, 0.12)
+        @else if $opacity == 'active'
+            background: rgba(255, 255, 255, 0.16)
+    
+    transition: background var(--transition-base) cubic-bezier(0.25, 0.1, 0.25, 1), border-color var(--transition-base) cubic-bezier(0.25, 0.1, 0.25, 1)
 
 // Smooth transitions (specify properties instead of 'all')
 =transition($properties...)
     $transition-list: ()
     @each $property in $properties
-        $transition-list: append($transition-list, #{$property} 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), comma)
+        $transition-list: append($transition-list, #{$property} var(--transition-base) cubic-bezier(0.25, 0.1, 0.25, 1), comma)
+    transition: $transition-list
+
+// Fast transitions for hover effects
+=transition-fast($properties...)
+    $transition-list: ()
+    @each $property in $properties
+        $transition-list: append($transition-list, #{$property} var(--transition-fast) cubic-bezier(0.25, 0.1, 0.25, 1), comma)
     transition: $transition-list
 
 // Focus visible styles for accessibility
 =focus-visible
     &:focus-visible
         outline: 2px solid var(--text-primary)
-        outline-offset: 2px
+        outline-offset: 3px
+        border-radius: 3px
 
 // Card hover effect
 =card-hover
