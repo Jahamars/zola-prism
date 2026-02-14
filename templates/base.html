@@ -2,6 +2,18 @@
 {% block body %}
 <a href="#content" class="skip-to-content">Skip to content</a>
 
+<div class="background-container">
+    {% if config.extra.background_image %}
+    <img src="{{ config.extra.background_image }}" alt="" class="background-image">
+    {% else %}
+    <div class="background-gradient" style="background: #000000;"></div>
+    {% endif %}
+</div>
+
+{% if config.extra.features.reading_progress_bar %}
+<div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+{% endif %}
+
 <div class="wrap">
     <header>
         <a href="{{ config.base_url }}" id="home-link">
