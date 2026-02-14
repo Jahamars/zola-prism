@@ -714,56 +714,255 @@ img:not(.background-image), video, iframe
     border-radius: 8px
 
 +mobile
+    html
+        font-size: 14px
+    
     .wrap
-        padding: 0 var(--space-md)
+        padding: 0 1rem
+        max-width: 100%
     
     header
-        padding: var(--space-sm) 0
+        padding: 0.75rem 0
+    
+    #home-link
+        padding: 0.5rem 1rem
+        font-size: 0.8rem
+        gap: 0.3rem
     
     #title
-        margin-bottom: var(--space-sm)
+        font-size: clamp(1.5rem, 8vw, 2.2rem)
+        margin-bottom: 1rem
+        letter-spacing: 1px
+        line-height: 1.2
+    
+    .site-description
+        font-size: 0.85rem
+        margin-bottom: 1.5rem
+        padding: 0 0.5rem
     
     .tile-grid
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr))
-        gap: var(--space-sm)
+        grid-template-columns: 1fr
+        gap: 0.75rem
+        max-width: 100%
     
     .tile
-        padding: var(--space-md) var(--space-sm)
+        padding: 1rem
+        min-height: auto
         
         .tile-title
-            font-size: 1.4rem
+            font-size: 1.1rem
+            margin-bottom: 0.25rem
+        
+        .tile-desc
+            font-size: 0.8rem
     
     #content
-        padding: var(--space-md)
+        padding: 1rem
+        margin-top: 1rem
+        border-radius: 12px
+        
+        article
+            font-size: 0.95rem
+            line-height: 1.6
+            
+            p
+                margin-bottom: 0.8rem
+            
+            ul, ol
+                margin: 0.4rem 0 0.8rem 1rem
+            
+            li
+                margin-bottom: 0.25rem
         
         h1
-            font-size: 1.6rem
-            line-height: 1.2
-            word-break: break-word
+            font-size: 1.4rem
+            line-height: 1.3
+            margin-bottom: 0.75rem
+            letter-spacing: -0.3px
         
         h2
-            font-size: 1.3rem
-            margin-top: var(--space-lg)
+            font-size: 1.2rem
+            margin-top: 1.5rem
+            margin-bottom: 0.6rem
+            letter-spacing: -0.2px
+        
+        h3
+            font-size: 1.05rem
+            margin-top: 1.25rem
+            margin-bottom: 0.5rem
+        
+        h4
+            font-size: 0.95rem
+            margin-top: 1rem
+            margin-bottom: 0.4rem
+        
+        .hero
+            margin-bottom: 1.5rem
+            padding-bottom: 1rem
             
+            h1
+                font-size: 1.5rem
+                margin-bottom: 0.5rem
+            
+            .hero-meta
+                font-size: 0.85rem
+                margin-top: 0.5rem
+                
+                span
+                    margin: 0 0.4rem
+        
         table
             display: block
             overflow-x: auto
             white-space: nowrap
-            max-width: 100%
+            font-size: 0.85rem
             
+        th, td
+            padding: 0.5rem
+    
     .post-grid
         grid-template-columns: 1fr
-        gap: var(--space-md)
+        gap: 1rem
+        margin: 1rem 0
+    
+    .card
+        padding: 1.25rem
         
+        h3
+            font-size: 1.1rem
+            line-height: 1.3
+            margin-bottom: 0.5rem
+        
+        p
+            font-size: 0.85rem
+            line-height: 1.5
+            margin-bottom: 0.75rem
+        
+        .meta
+            font-size: 0.8rem
+            padding-top: 0.75rem
+            margin-top: 0.75rem
+    
+    .taxonomy-grid
+        grid-template-columns: 1fr
+        gap: 0.75rem
+        margin-top: 1rem
+    
+    .taxonomy-item
+        padding: 1rem
+        
+        h3
+            font-size: 1.1rem
+            margin-bottom: 0.5rem
+        
+        .count
+            font-size: 0.8rem
+    
+    .tag
+        padding: 0.5rem 1rem
+        font-size: 0.8rem
+        min-height: auto
+    
+    .tags-cloud
+        gap: 0.4rem
+        margin: 0.75rem 0
+    
+    pre
+        padding: 0.75rem
+        margin: 1rem 0
+        font-size: 0.8rem
+        border-radius: 8px
+        overflow-x: auto
+        
+        code
+            font-size: 0.8rem
+            line-height: 1.5
+    
+    code
+        font-size: 0.85em
+        padding: 0.15rem 0.4rem
+    
+    .copy-code-button
+        padding: 0.35rem
+        min-width: 36px
+        min-height: 36px
+        
+        svg
+            width: 0.9rem
+            height: 0.9rem
+    
+    blockquote
+        padding-left: 0.75rem
+        margin: 1rem 0
+        font-size: 0.9rem
+    
+    .table-of-contents
+        position: static
+        top: auto
+        max-height: none
+        margin: 1rem 0
+        padding-left: 0
+        border-left: none
+        
+        .toc-list::before
+            display: none
+    
+    .toc-title
+        font-size: 0.7rem
+    
+    .toc-link
+        font-size: 0.85rem
+        padding: 0.3rem 0.75rem
+        border-left: 2px solid var(--glass-border)
+        margin-left: 0
+        
+        &.toc-link--nested
+            font-size: 0.8rem
+            padding-left: 1rem
+    
+    .bottom-menu
+        margin-top: 2rem
+        padding: 1rem 0
+        
+        p
+            gap: 0.5rem
+            
+            a
+                padding: 0.5rem 1rem
+                font-size: 0.8rem
+                min-height: auto
+    
+    footer
+        margin-top: 2rem
+        padding: 1rem 0
+        font-size: 0.8rem
+    
     .reading-progress
-        height: 4px
+        height: 3px
         opacity: 0.8
-        
+    
     #scroll-to-top
-        bottom: var(--space-md)
-        right: var(--space-md)
+        bottom: 1rem
+        right: 1rem
         width: 2.5rem
         height: 2.5rem
+        
+        svg
+            width: 1.2rem
+            height: 1.2rem
+    
+    #splash
+        min-height: 100vh
+        padding-bottom: 2rem
+    
+    .btn
+        padding: 0.6rem 1.2rem
+        font-size: 0.85rem
+        min-height: auto
+    
+    img:not(.background-image), video, iframe
+        border-radius: 6px
+        margin: 0.75rem 0
 
 +tablet
     .wrap
