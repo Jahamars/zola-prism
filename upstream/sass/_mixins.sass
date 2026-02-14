@@ -1,8 +1,5 @@
-// ============================================
-// Mixins - Reusable Style Patterns
-// ============================================
+@import "vars"
 
-// Glass morphism effect with fallback
 =glass($opacity: 'hover')
     @if $opacity == 'base'
         background: var(--glass-base)
@@ -11,62 +8,49 @@
     @else if $opacity == 'active'
         background: var(--glass-active)
     border: 1px solid var(--glass-border)
-    
-    @supports (backdrop-filter: blur(12px))
-        backdrop-filter: var(--blur-strength)
-        -webkit-backdrop-filter: var(--blur-strength)
-    
-    @supports not (backdrop-filter: blur(12px))
-        @if $opacity == 'base'
-            background: rgba(255, 255, 255, 0.08)
-        @else if $opacity == 'hover'
-            background: rgba(255, 255, 255, 0.12)
-        @else if $opacity == 'active'
-            background: rgba(255, 255, 255, 0.16)
-    
     transition: background var(--transition-base) cubic-bezier(0.25, 0.1, 0.25, 1), border-color var(--transition-base) cubic-bezier(0.25, 0.1, 0.25, 1)
 
-// Smooth transitions (specify properties instead of 'all')
+=backdrop-blur($strength: 'normal')
+    @if $strength == 'light'
+        @supports (backdrop-filter: blur(10px))
+            backdrop-filter: var(--blur-light)
+            -webkit-backdrop-filter: var(--blur-light)
+        @supports not (backdrop-filter: blur(10px))
+            background: rgba(255, 255, 255, 0.10)
+    @else
+        @supports (backdrop-filter: blur(12px))
+            backdrop-filter: var(--blur-strength)
+            -webkit-backdrop-filter: var(--blur-strength)
+        @supports not (backdrop-filter: blur(12px))
+            background: rgba(255, 255, 255, 0.14)
+
 =transition($properties...)
     $transition-list: ()
     @each $property in $properties
         $transition-list: append($transition-list, #{$property} var(--transition-base) cubic-bezier(0.25, 0.1, 0.25, 1), comma)
     transition: $transition-list
 
-// Fast transitions for hover effects
 =transition-fast($properties...)
     $transition-list: ()
     @each $property in $properties
         $transition-list: append($transition-list, #{$property} var(--transition-fast) cubic-bezier(0.25, 0.1, 0.25, 1), comma)
     transition: $transition-list
 
-// Focus visible styles for accessibility
 =focus-visible
     &:focus-visible
         outline: 2px solid var(--text-primary)
         outline-offset: 3px
         border-radius: 3px
 
-// Card hover effect
 =card-hover
     &:hover
         transform: translateY(-4px)
         background: var(--glass-active)
         box-shadow: var(--shadow-medium)
 
-// Responsive typography
 =responsive-text($min-size, $max-size)
     font-size: clamp(#{$min-size}, 2vw + 0.5rem, #{$max-size})
 
-// Skinny HR (from original)
-=skinny-hr
-    margin: var(--space-sm) 0
-    background-color: transparent
-    width: 50%
-    border-style: solid
-    border-width: 1px
-
-// Media queries
 =mobile
     @media (max-width: 767px)
         @content
@@ -83,7 +67,6 @@
     @media (min-width: 1440px)
         @content
 
-// Reduced motion support
 =reduce-motion
     @media (prefers-reduced-motion: reduce)
         @content

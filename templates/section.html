@@ -14,7 +14,7 @@
     <div class="hero">
         <h1>{{ section.title | default(value="Posts") }}</h1>
         {% if section.description %}
-        <p style="color: var(--text-muted); margin-top: 1rem;">{{ section.description }}</p>
+        <p style="color: var(--text-secondary); margin-top: 1rem;">{{ section.description }}</p>
         {% endif %}
     </div>
 
@@ -45,7 +45,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
+    <p style="text-align: center; color: var(--text-secondary); margin-top: 3rem;">
         No posts yet. Start writing! ✍️
     </p>
     {% endif %}

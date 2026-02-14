@@ -73,18 +73,14 @@
     <script>
     'use strict';
     
-    (function initTableOfContents() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', setupTOC);
-        } else {
-            setupTOC();
-        }
+    (function() {
+        const toc = document.querySelector('.table-of-contents');
+        if (!toc) return;
         
-        function setupTOC() {
-            const toc = document.querySelector('.table-of-contents');
+        function initTableOfContents() {
             const links = document.querySelectorAll('.toc-link');
             
-            if (!links.length || !toc) return;
+            if (!links.length) return;
 
             requestAnimationFrame(() => {
                 toc.classList.add('visible');
@@ -133,6 +129,12 @@
 
             window.addEventListener('beforeunload', cleanup);
             window.addEventListener('pagehide', cleanup);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initTableOfContents);
+        } else {
+            initTableOfContents();
         }
     })();
     </script>

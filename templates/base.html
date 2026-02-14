@@ -10,7 +10,7 @@
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </span>
-            <span id="back-text">{{ config.extra.home | default(value="Back") }}</span>
+            <span id="back-text">{{ config.extra.home | default(value="Home") }}</span>
         </a>
     </header>
     
@@ -56,208 +56,244 @@
 <script>
 'use strict';
 
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+(function() {
+    const SVG_ICONS = {
+        copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>',
+        check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+        error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
     };
-}
 
-function initNavigation() {
-    const homeLink = document.getElementById('home-link');
-    const backIcon = document.getElementById('back-icon');
-    const backText = document.getElementById('back-text');
-    
-    if (!homeLink) return;
-    
-    // Всегда показываем как Home, всегда ведёт на главную
-    if (backIcon) backIcon.style.display = 'none';
-    if (backText) backText.textContent = 'Home';
-    homeLink.setAttribute('aria-label', 'Go to home page');
-}
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+        };
+    }
 
-function initScrollToTop() {
-    const scrollToTopBtn = document.getElementById('scroll-to-top');
-    if (!scrollToTopBtn) return;
-    
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    const toggleVisibility = debounce(() => {
-        if (window.scrollY > 300) {
-            scrollToTopBtn.classList.add('visible');
-        } else {
-            scrollToTopBtn.classList.remove('visible');
-        }
-    }, 100);
-    
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    toggleVisibility();
-    
-    scrollToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: prefersReducedMotion ? 'auto' : 'smooth'
-        });
-    });
-}
-
-{% if config.extra.features.copy_code_button %}
-function initCopyCodeButtons() {
-    const codeBlocks = document.querySelectorAll('pre code');
-    
-    codeBlocks.forEach((codeBlock) => {
-        const pre = codeBlock.parentElement;
-        
-        const wrapper = document.createElement('div');
-        wrapper.className = 'code-block-wrapper';
-        pre.parentNode.insertBefore(wrapper, pre);
-        wrapper.appendChild(pre);
-        
-        const copyButton = document.createElement('button');
-        copyButton.className = 'copy-code-button';
-        copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-        copyButton.setAttribute('aria-label', 'Copy code to clipboard');
-        copyButton.setAttribute('title', 'Copy code');
-        
-        wrapper.appendChild(copyButton);
-        
-        copyButton.addEventListener('click', async () => {
-            const code = codeBlock.textContent;
+    function initNavigation() {
+        try {
+            const homeLink = document.getElementById('home-link');
+            const backIcon = document.getElementById('back-icon');
+            const backText = document.getElementById('back-text');
             
-            try {
-                if (navigator.clipboard && window.isSecureContext) {
-                    await navigator.clipboard.writeText(code);
+            if (!homeLink) return;
+            
+            const homeText = '{{ config.extra.home | default(value="Home") }}';
+            const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+            
+            if (backIcon && isHomePage) {
+                backIcon.style.display = 'none';
+            }
+            
+            if (backText) {
+                backText.textContent = homeText;
+            }
+            
+            homeLink.setAttribute('aria-label', `Go to ${homeText.toLowerCase()} page`);
+        } catch (error) {
+            console.error('Navigation init failed:', error);
+        }
+    }
+
+    function initScrollToTop() {
+        try {
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            if (!scrollToTopBtn) return;
+            
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
+            const toggleVisibility = debounce(() => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.add('visible');
                 } else {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = code;
-                    textArea.style.position = 'fixed';
-                    textArea.style.left = '-999999px';
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
+                    scrollToTopBtn.classList.remove('visible');
                 }
-                
-                copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                copyButton.classList.add('copied');
-                copyButton.setAttribute('aria-label', 'Code copied');
-                
-                setTimeout(() => {
-                    copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                    copyButton.classList.remove('copied');
-                    copyButton.setAttribute('aria-label', 'Copy code to clipboard');
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy code:', err);
-                
-                copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-                copyButton.classList.add('error');
-                copyButton.setAttribute('aria-label', 'Copy failed');
-                
-                setTimeout(() => {
-                    copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-                    copyButton.classList.remove('error');
-                    copyButton.setAttribute('aria-label', 'Copy code to clipboard');
-                }, 2000);
-            }
-        });
-    });
-}
-{% endif %}
-
-{% if config.extra.features.smooth_scroll %}
-function initSmoothScroll() {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-    
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href === '#' || href.length <= 1) return;
+            }, 100);
             
-            e.preventDefault();
-            const target = document.querySelector(href);
+            window.addEventListener('scroll', toggleVisibility, { passive: true });
+            toggleVisibility();
             
-            if (target) {
-                const offset = 80;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                
+            scrollToTopBtn.addEventListener('click', () => {
                 window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
+                    top: 0,
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
                 });
-                
-                if (window.history.pushState) {
-                    window.history.pushState(null, null, href);
-                }
-                
-                if (!target.hasAttribute('tabindex')) {
-                    target.setAttribute('tabindex', '-1');
-                }
-                target.focus({ preventScroll: true });
-            }
-        });
-    });
-}
-{% endif %}
-
-{% if config.extra.features.reading_progress_bar %}
-function initReadingProgress() {
-    const progressBar = document.getElementById('reading-progress');
-    if (!progressBar) return;
-    
-    const updateProgressBar = debounce(() => {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-        progressBar.style.width = scrolled + '%';
-    }, 16);
-    
-    window.addEventListener('scroll', updateProgressBar, { passive: true });
-    updateProgressBar();
-}
-{% endif %}
-
-function initPageLoadingState() {
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href^="/"], a[href^="{{ config.base_url }}"]');
-        if (link && !link.target && !link.getAttribute('download')) {
-            document.body.classList.add('page-loading');
+            });
+        } catch (error) {
+            console.error('Scroll to top init failed:', error);
         }
-    });
-    
-    window.addEventListener('pageshow', () => {
-        document.body.classList.remove('page-loading');
-    });
-}
+    }
 
-function init() {
-    initNavigation();
-    initScrollToTop();
-    initPageLoadingState();
-    
     {% if config.extra.features.copy_code_button %}
-    initCopyCodeButtons();
+    function initCopyCodeButtons() {
+        try {
+            const codeBlocks = document.querySelectorAll('pre code');
+            
+            codeBlocks.forEach((codeBlock) => {
+                const pre = codeBlock.parentElement;
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
+                
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-code-button';
+                copyButton.innerHTML = SVG_ICONS.copy;
+                copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+                copyButton.setAttribute('title', 'Copy code');
+                
+                wrapper.appendChild(copyButton);
+                
+                copyButton.addEventListener('click', async () => {
+                    const code = codeBlock.textContent;
+                    
+                    try {
+                        if (navigator.clipboard && window.isSecureContext) {
+                            await navigator.clipboard.writeText(code);
+                        } else {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = code;
+                            textArea.style.position = 'fixed';
+                            textArea.style.left = '-999999px';
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                        }
+                        
+                        copyButton.innerHTML = SVG_ICONS.check;
+                        copyButton.classList.add('copied');
+                        copyButton.setAttribute('aria-label', 'Code copied');
+                        
+                        setTimeout(() => {
+                            copyButton.innerHTML = SVG_ICONS.copy;
+                            copyButton.classList.remove('copied');
+                            copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy code:', err);
+                        
+                        copyButton.innerHTML = SVG_ICONS.error;
+                        copyButton.classList.add('error');
+                        copyButton.setAttribute('aria-label', 'Copy failed');
+                        
+                        setTimeout(() => {
+                            copyButton.innerHTML = SVG_ICONS.copy;
+                            copyButton.classList.remove('error');
+                            copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+                        }, 2000);
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Copy code buttons init failed:', error);
+        }
+    }
     {% endif %}
-    
-    {% if config.extra.features.smooth_scroll %}
-    initSmoothScroll();
-    {% endif %}
-    
-    {% if config.extra.features.reading_progress_bar %}
-    initReadingProgress();
-    {% endif %}
-}
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
+    {% if config.extra.features.smooth_scroll %}
+    function initSmoothScroll() {
+        try {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) return;
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#' || href.length <= 1) return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    
+                    if (target) {
+                        const offset = 80;
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        if (window.history.pushState) {
+                            window.history.pushState(null, null, href);
+                        }
+                        
+                        if (!target.hasAttribute('tabindex')) {
+                            target.setAttribute('tabindex', '-1');
+                        }
+                        target.focus({ preventScroll: true });
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Smooth scroll init failed:', error);
+        }
+    }
+    {% endif %}
+
+    {% if config.extra.features.reading_progress_bar %}
+    function initReadingProgress() {
+        try {
+            const progressBar = document.getElementById('reading-progress');
+            if (!progressBar) return;
+            
+            const updateProgressBar = debounce(() => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+                progressBar.style.width = scrolled + '%';
+            }, 16);
+            
+            window.addEventListener('scroll', updateProgressBar, { passive: true });
+            updateProgressBar();
+        } catch (error) {
+            console.error('Reading progress init failed:', error);
+        }
+    }
+    {% endif %}
+
+    function initPageLoadingState() {
+        try {
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a[href^="/"], a[href^="{{ config.base_url }}"]');
+                if (link && !link.target && !link.getAttribute('download')) {
+                    document.body.classList.add('page-loading');
+                }
+            });
+            
+            window.addEventListener('pageshow', () => {
+                document.body.classList.remove('page-loading');
+            });
+        } catch (error) {
+            console.error('Page loading state init failed:', error);
+        }
+    }
+
+    function init() {
+        initNavigation();
+        initScrollToTop();
+        initPageLoadingState();
+        
+        {% if config.extra.features.copy_code_button %}
+        initCopyCodeButtons();
+        {% endif %}
+        
+        {% if config.extra.features.smooth_scroll %}
+        initSmoothScroll();
+        {% endif %}
+        
+        {% if config.extra.features.reading_progress_bar %}
+        initReadingProgress();
+        {% endif %}
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
 </script>
 {% endblock body %}

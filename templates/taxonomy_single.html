@@ -13,7 +13,7 @@
 <div id="content">
     <div class="hero">
         <h1>{{ term.name }}</h1>
-        <p style="color: var(--text-muted); margin-top: 1rem;">
+        <p style="color: var(--text-secondary); margin-top: 1rem;">
             {{ term.pages | length }} {% if term.pages | length == 1 %}post{% else %}posts{% endif %} 
             in {{ taxonomy.name | title }}
         </p>
