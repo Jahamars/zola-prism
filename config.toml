@@ -24,7 +24,7 @@ highlighting = { theme = "github-dark" }
 [extra]
 home = "back"
 
-background_image = "https://raw.githubusercontent.com/Jahamars/zola-prism/refs/heads/main/static/bg.jpg"
+background_image = "https://raw.githubusercontent.com/Jahamars/zola-prism/refs/heads/main/static/bg3.jpg"
 
 show_toc = true
 
