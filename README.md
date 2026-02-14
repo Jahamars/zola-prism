@@ -19,10 +19,8 @@ theme = "prism"
 ## Configuration
 
 ```toml
-# PRISM THEME - COMPLETE CONFIGURATION OPTIONS
 
 # CORE ZOLA SETTINGS
-
 base_url = "https://your-site.com/"          # Your site URL
 title = "Your Site Title"                     # Site title (shown in header)
 description = "Your site description"         # Meta description for SEO
@@ -33,7 +31,6 @@ build_search_index = true                     # Enable search functionality
 minify_html = true                            # Minify HTML output for performance
 
 # TAXONOMIES - Categories, tags, authors
-
 taxonomies = [
     { name = "tags", feed = true },           # Enable tags with RSS feed
     { name = "authors", feed = true },        # Enable authors with RSS feed
@@ -41,7 +38,6 @@ taxonomies = [
 ]
 
 # MARKDOWN SETTINGS
-
 [markdown]
 render_emoji = true                           # Convert :smile: to 😊
 external_links_target_blank = true            # Open external links in new tab
@@ -55,7 +51,6 @@ smart_punctuation = true                      # Convert -- to em-dash, etc
 highlighting = { theme = "github-dark" }
 
 # THEME SETTINGS [extra]
-
 [extra]
 
 # Navigation
@@ -100,7 +95,6 @@ banner = "static/banner.png"                  # OG:image for social media (optio
 theme_color = "#1e3a8a"                       # Browser theme color (optional, default: #1e3a8a)
 
 # GISCUS COMMENTS - GitHub-based comments system
-
 [extra.giscus]
 enabled = true                                # Enable Giscus comments
 repo = "username/repo"                        # GitHub repo for comments
@@ -116,35 +110,29 @@ theme = "catppuccin_frappe"                   # Giscus theme (see giscus.app for
 lang = "en"                                   # Language code
 
 # FOOTER
-
 [extra.sam_footer]
 text = "Built using Zola & Prism theme"       # Footer text (supports HTML)
 
 # AUTHOR INFO - Used in meta tags and structured data
-
 [extra.author]
 name = "Your Name"                            # Author name
 email = "your@email.com"                      # Author email (optional)
 url = "https://yoursite.com"                  # Author website (optional)
 
 # FEATURES - Toggle theme features on/off
-
 [extra.features]
 copy_code_button = true                       # Show copy button on code blocks
 reading_progress_bar = true                   # Show reading progress bar at top
 smooth_scroll = true                          # Enable smooth scrolling for anchor links
 
 # ANALYTICS (optional) - Add if needed
-
 [extra.analytics]
-google_analytics_id = "G-XXXXXXXXXX"          # Google Analytics 4 ID (optional)
-
-# +++
+google_analytics_id = "G-XXXXXXXXXX"          # Google Analytics 
 
 ```
 
 
-Page level settings (in front matter of .md files)
+### Page level settings (in front matter of .md files)
 
 ```md 
 +++
