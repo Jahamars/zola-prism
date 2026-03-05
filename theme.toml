@@ -3,6 +3,8 @@ description = "A modern Zola theme featuring glassmorphism design"
 license = "AGPL-3.0"
 homepage = "https://github.com/jahamars/zola-prism"
 demo = "https://xpltt.vercel.app/"
+min_version = "0.19.0"
+
 
 [extra]
 show_word_count = true
