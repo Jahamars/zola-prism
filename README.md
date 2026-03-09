@@ -77,11 +77,6 @@ sam_bottom_menu = true                        # Show navigation menu at page bot
 show_word_count = true                        # Display word count on posts
 show_reading_time = true                      # Display estimated reading time
 
-# Date format options:
-# "%b %d, %Y" = Jan 15, 2024
-# "%Y-%m-%d" = 2024-01-15
-# "%d.%m.%Y" = 15.01.2024
-
 # Comments
 comments = true                               # Enable/disable Giscus comments globally
 
