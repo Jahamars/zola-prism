@@ -1,14 +1,15 @@
-# Prism
-A modern Zola theme featuring glassmorphism design
+# prism 
+a modern Zola theme featuring glassmorphism design
+
 [demo](https://xpltt.vercel.app/)
 
-![Screenshot](./static/screenshot.png)
+![screenshot](./static/screenshot.png)
 
-## Installation
+## installation
 
-Clone the theme into your `themes` directory:
+clone the theme into your themes directory:
 ```bash
-git submodule add https://github.com/jahamars/prism themes/prism
+git submodule add https://github.com/j4hongir/prism themes/prism
 ```
 
 Enable the theme in your `config.toml`:
@@ -16,7 +17,7 @@ Enable the theme in your `config.toml`:
 theme = "prism"
 ```
 
-## Configuration
+## configuration
 
 ```toml
 
@@ -122,8 +123,7 @@ google_analytics_id = "G-XXXXXXXXXX"          # Google Analytics
 ```
 
 
-### Page level settings (in front matter of .md files)
-
+### page level settings (front matter of .md files)
 ```md 
 +++
 title = "Post Title"
@@ -139,13 +139,10 @@ no_comments = false            # Disable comments on this page
 +++
 ```
 
+### additional notes
+- get giscus settings from: https://giscus.app/
+- syntax highlighting themes list: https://www.getzola.org/documentation/getting-started/configuration/#syntax-highlighting
+- date format guide: https://docs.rs/chrono/latest/chrono/format/strftime/index.html
 
-### Additional notes
-Get Giscus settings from: https://giscus.app/
-Syntax highlighting themes list: https://www.getzola.org/documentation/getting-started/configuration/#syntax-highlighting
-Date format guide: https://docs.rs/chrono/latest/chrono/format/strftime/index.html
-
-
-## License
-
+## license
 AGPL-3.0
