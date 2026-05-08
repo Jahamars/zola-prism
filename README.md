@@ -3,7 +3,7 @@ a modern Zola theme featuring glassmorphism design
 
 [demo](https://xpltt.vercel.app/)
 
-![screenshot](./static/screenshot.png)
+![screenshot](./screenshot.png)
 
 ## installation
 
