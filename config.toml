@@ -6,6 +6,9 @@ compile_sass = true
 build_search_index = true
 minify_html = true
 
+generate_feed = true
+feed_filenames = ["atom.xml", "rss.xml"]
+
 taxonomies = [
     { name = "tags", feed = true },
     { name = "authors", feed = true },

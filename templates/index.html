@@ -90,7 +90,8 @@
     }
     </script>
 
-    <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
+    <link rel="alternate" type="application/atom+xml" title="atom feed for {{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
+    <link rel="alternate" type="application/rss+xml" title="rss feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
