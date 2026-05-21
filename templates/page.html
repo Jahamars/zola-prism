@@ -7,36 +7,9 @@
 {% block og_title %}{{ page.title }}{% endblock og_title %}
 {% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
 
-
-{% block og_description %}
-  {%- if page.description -%}
-    {{ page.description }}
-  {%- elif page.summary -%}
-    {{ page.summary | striptags | truncate(length=160) }}
-  {%- else -%}
-    {{ page.content | striptags | truncate(length=160) }}
-  {%- endif -%}
-{% endblock og_description %}
-
-{% block meta_description %}
-  {%- if page.description -%}
-    {{ page.description }}
-  {%- elif page.summary -%}
-    {{ page.summary | striptags | truncate(length=160) }}
-  {%- else -%}
-    {{ page.content | striptags | truncate(length=160) }}
-  {%- endif -%}
-{% endblock meta_description %}
-
-{% block twitter_description %}
-  {%- if page.description -%}
-    {{ page.description }}
-  {%- elif page.summary -%}
-    {{ page.summary | striptags | truncate(length=160) }}
-  {%- else -%}
-    {{ page.content | striptags | truncate(length=160) }}
-  {%- endif -%}
-{% endblock twitter_description %}
+{% block og_description %}{{ macros::page_description(page=page) }}{% endblock og_description %}
+{% block meta_description %}{{ macros::page_description(page=page) }}{% endblock meta_description %}
+{% block twitter_description %}{{ macros::page_description(page=page) }}{% endblock twitter_description %}
 
 {% block head %}
 <script type="application/ld+json">
@@ -73,7 +46,7 @@
         <div class="hero-meta">
 
             {% if page.date %}
-            <span>{{ page.date | date(format="%b %d, %Y") }}</span>
+            <span>{{ macros::format_date(date=page.date) }}</span>
             {% endif %}
 
             {% if page.reading_time and config.extra.show_reading_time %}

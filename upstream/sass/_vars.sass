@@ -1,25 +1,22 @@
+// _vars.sass design tokens
+
 :root
     --glass-base: rgba(255, 255, 255, 0.03)
     --glass-hover: rgba(255, 255, 255, 0.06)
     --glass-active: rgba(255, 255, 255, 0.09)
     --glass-border: rgba(255, 255, 255, 0.1)
-    
+    --glass-border-hover: rgba(255, 255, 255, 0.18)
+
     --blur-light: blur(10px)
     --blur-strength: blur(12px)
-    
-    --text-primary: rgba(255, 255, 255, 0.98)
-    --text-secondary: rgba(255, 255, 255, 0.80)
-    
+
+    --text-primary: rgba(245, 243, 240, 0.96)
+    --text-secondary: rgba(245, 243, 240, 0.65)
+
     --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.1)
     --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.15)
     --shadow-strong: 0 12px 28px rgba(0, 0, 0, 0.18)
-    
-    // --radius-sm: 8px
-    // --radius-md: 12px
-    // --radius-lg: 16px
-    // --radius-xl: 20px
-    // --radius-pill: 50px
-    
+
     --radius-sm: 4px
     --radius-md: 6px
     --radius-lg: 8px
@@ -27,17 +24,25 @@
     --radius-pill: 20px
 
     --font-heading: 'Science Gothic', 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif
-    --font-body: 'Science Gothic', -apple-system, BlinkMacSystemFont, sans-serif
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace
-    
-    --space-xs: 0.5rem
-    --space-sm: 1rem
-    --space-md: 1.5rem
-    --space-lg: 2rem
-    --space-xl: 3rem
-    --space-2xl: 4rem
-    --space-3xl: 6rem
-    
+
+    --space-xs: clamp(0.35rem, 0.25rem + 0.5vw, 0.5rem)
+    --space-sm: clamp(0.65rem, 0.4rem + 0.8vw, 1rem)
+    --space-md: clamp(0.85rem, 0.5rem + 1vw, 1.5rem)
+    --space-lg: clamp(1.25rem, 0.8rem + 1.2vw, 2rem)
+    --space-xl: clamp(1.75rem, 1rem + 1.8vw, 3rem)
+    --space-2xl: clamp(2rem, 1.2rem + 2.2vw, 4rem)
+    --space-3xl: clamp(2.5rem, 1.5rem + 3vw, 6rem)
+
+    --text-base: clamp(0.9rem, 0.8rem + 0.25vw, 1rem)
+    --text-sm: clamp(0.78rem, 0.7rem + 0.2vw, 0.85rem)
+    --text-xs: clamp(0.68rem, 0.6rem + 0.2vw, 0.75rem)
+
+    --wrap-padding: clamp(1rem, 0.5rem + 2vw, 2rem)
+    --card-padding: clamp(1.25rem, 0.8rem + 1.2vw, 2rem)
+    --grid-gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem)
+    --card-min-width: clamp(200px, 40vw, 320px)
+    --tile-min-width: clamp(130px, 25vw, 280px)
+
     --z-background: -1
     --z-base: 1
     --z-header: 10
@@ -45,12 +50,9 @@
     --z-progress: 30
     --z-modal: 100
     --z-tooltip: 200
-    
+
     --transition-fast: 0.2s
     --transition-base: 0.3s
     --transition-slow: 0.4s
-    
-    --breakpoint-mobile: 375px
-    --breakpoint-tablet: 768px
-    --breakpoint-desktop: 1024px
-    --breakpoint-wide: 1440px
+
+    --bg-body: #0a0a0a

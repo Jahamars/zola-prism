@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros.html" as macros %}
 
 {% block htmltitle %}
 authors - {{ config.title }}
@@ -6,26 +7,19 @@ authors - {{ config.title }}
 
 {% block content %}
 <div id="content">
-    <div class="hero">
-        <h1>authors</h1>
-        <p style="color: var(--text-muted); margin-top: 1rem;">contributors</p>
-    </div>
+    {{ macros::page_hero(title="Authors", description="contributors") }}
 
     {% if terms %}
-    <div class="post-grid" style="margin-top: 3rem;">
+    <div class="taxonomy-grid">
         {% for author in terms %}
-        <a href="{{ author.permalink }}" class="card">
+        <a href="{{ author.permalink }}" class="taxonomy-item">
             <h3>{{ author.name }}</h3>
-            <p style="color: var(--text-muted);">
-                {{ author.pages | length }} post{% if author.pages | length != 1 %}s{% endif %}
-            </p>
+            <span class="count">{{ author.pages | length }} {% if author.pages | length == 1 %}post{% else %}posts{% endif %}</span>
         </a>
         {% endfor %}
     </div>
     {% else %}
-    <p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
-        No authors listed yet.
-    </p>
+    <p class="empty-state">No authors listed yet.</p>
     {% endif %}
 </div>
 {% endblock content %}

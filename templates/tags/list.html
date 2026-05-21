@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros.html" as macros %}
 
 {% block htmltitle %}
 tags - {{ config.title }}
@@ -6,24 +7,19 @@ tags - {{ config.title }}
 
 {% block content %}
 <div id="content">
-    <div class="hero">
-        <h1>All Tags</h1>
-        <p style="color: var(--text-muted); margin-top: 1rem;">explore posts by topic</p>
-    </div>
+    {{ macros::page_hero(title="All Tags", description="explore posts by topic") }}
 
     {% if terms %}
-    <div class="tags-cloud" style="margin-top: 3rem;">
+    <div class="tags-cloud tags-cloud--page">
         {% for term in terms %}
         <a href="{{ term.permalink }}" class="tag">
             #{{ term.name }}
-            <span style="opacity: 0.6; font-size: 0.85em;">({{ term.pages | length }})</span>
+            <span class="tag-count">({{ term.pages | length }})</span>
         </a>
         {% endfor %}
     </div>
     {% else %}
-    <p style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
-        no tags yet
-    </p>
+    <p class="empty-state">no tags yet</p>
     {% endif %}
 </div>
 {% endblock content %}

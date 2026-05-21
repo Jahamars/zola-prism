@@ -1,3 +1,5 @@
+// table of contents styles
+
 @import "vars"
 @import "mixins"
 
@@ -25,7 +27,7 @@
     &::-webkit-scrollbar-thumb
         background: var(--glass-border)
         border-radius: 4px
-        
+
         &:hover
             background: var(--text-secondary)
 
@@ -36,10 +38,10 @@
 .toc-header
     margin-bottom: 0.75rem
     padding-left: var(--space-sm)
-    
+
 .toc-title
     font-family: var(--font-heading)
-    font-size: 0.75rem
+    font-size: var(--text-xs)
     font-weight: 600
     text-transform: uppercase
     letter-spacing: 1.2px
@@ -51,7 +53,7 @@
     padding: 0
     margin: 0
     position: relative
-    
+
     &::before
         content: ''
         position: absolute
@@ -64,7 +66,7 @@
 
 .toc-item
     margin: 0
-    
+
     &.toc-item--nested
         margin-left: 0
 
@@ -95,29 +97,7 @@
         padding-top: 0.25rem
         padding-bottom: 0.25rem
         padding-left: var(--space-md)
-        
+
         &.toc-link--active
             color: var(--text-primary)
             border-left-color: var(--text-primary)
-
-+mobile
-    .table-of-contents
-        position: static
-        top: auto
-        max-height: none
-        margin: var(--space-md) 0
-        padding-left: 0
-        border-left: none
-        
-        .toc-list::before
-            display: none
-
-    .toc-link
-        border-left: 2px solid var(--glass-border)
-        margin-left: 0
-        font-size: 0.85rem
-        padding: 0.35rem 0.65rem
-        
-        &.toc-link--nested
-            font-size: 0.8rem
-            padding-left: 1rem

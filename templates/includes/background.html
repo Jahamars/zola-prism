@@ -1,0 +1,9 @@
+<div class="background-container">
+    {% if config.extra.background_image %}
+    <img src="{{ config.extra.background_image }}" alt="" class="background-image">
+    {% elif config.extra.background_gradient %}
+    <div class="background-gradient" style="background: {{ config.extra.background_gradient }};"></div>
+    {% else %}
+    <div class="background-gradient" style="background: #0a0a0a;"></div>
+    {% endif %}
+</div>

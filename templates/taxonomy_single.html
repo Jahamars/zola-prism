@@ -11,38 +11,18 @@
 
 {% block content %}
 <div id="content">
-    <div class="hero">
-        <h1>{{ term.name }}</h1>
-        <p style="color: var(--text-secondary); margin-top: 1rem;">
-            {{ term.pages | length }} {% if term.pages | length == 1 %}post{% else %}posts{% endif %} 
-            in {{ taxonomy.name | title }}
-        </p>
-    </div>
+    {% set count = term.pages | length %}
+    {% set count_label = count ~ " " ~ "post" %}
+    {% if count != 1 %}{% set count_label = count ~ " posts" %}{% endif %}
+    {{ macros::page_hero(
+        title=term.name,
+        description=count_label ~ " in " ~ taxonomy.name | title
+    ) }}
 
     {% if term.pages %}
     <div class="post-grid">
         {% for page in term.pages %}
-        <a href="{{ page.permalink }}" class="card">
-            <h3>{{ page.title }}</h3>
-
-            {% if page.description %}
-            <p>{{ page.description }}</p>
-            {% elif page.summary %}
-            <p>{{ page.summary | striptags | truncate(length=150) }}</p>
-            {% else %}
-            <p>{{ page.content | striptags | truncate(length=150) }}</p>
-            {% endif %}
-
-            <div class="meta">
-                {% if page.date %}
-                <span>{{ page.date | date(format="%b %d, %Y") }}</span>
-                {% endif %}
-                
-                {% if page.reading_time and config.extra.show_reading_time %}
-                <span>{{ page.reading_time }} min read</span>
-                {% endif %}
-            </div>
-        </a>
+        {{ macros::post_card(page=page) }}
         {% endfor %}
     </div>
     {% endif %}

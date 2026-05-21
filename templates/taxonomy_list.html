@@ -11,20 +11,16 @@
 
 {% block content %}
 <div id="content">
-    <div class="hero">
-        <h1>{{ taxonomy.name | title }}</h1>
-        <p style="color: var(--text-secondary); margin-top: 1rem;">
-            {% if taxonomy.name == "tags" %}
-            all blog tags
-            {% elif taxonomy.name == "categories" %}
-            blog categories
-            {% elif taxonomy.name == "authors" %}
-            blog authors
-            {% else %}
-            browse by {{ taxonomy.name }}
-            {% endif %}
-        </p>
-    </div>
+    {% if taxonomy.name == "tags" %}
+        {% set desc = "all blog tags" %}
+    {% elif taxonomy.name == "categories" %}
+        {% set desc = "blog categories" %}
+    {% elif taxonomy.name == "authors" %}
+        {% set desc = "blog authors" %}
+    {% else %}
+        {% set desc = "browse by " ~ taxonomy.name %}
+    {% endif %}
+    {{ macros::page_hero(title=taxonomy.name | title, description=desc) }}
 
     <div class="taxonomy-grid">
         {% for term in terms %}

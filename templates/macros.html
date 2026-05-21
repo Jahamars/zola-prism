@@ -9,6 +9,43 @@
     {{ date | date(format=date_format) }}
 {% endmacro format_date %}
 
+{% macro page_description(page, length=160) %}
+    {%- if page.description -%}
+        {{ page.description | truncate(length=length) }}
+    {%- elif page.summary -%}
+        {{ page.summary | striptags | truncate(length=length) }}
+    {%- else -%}
+        {{ page.content | striptags | truncate(length=length) }}
+    {%- endif -%}
+{% endmacro page_description %}
+
+{% macro page_hero(title, description="") %}
+<div class="hero">
+    <h1>{{ title }}</h1>
+    {% if description %}
+    <p class="hero-description">{{ description }}</p>
+    {% endif %}
+</div>
+{% endmacro page_hero %}
+
+{% macro post_card(page) %}
+<a href="{{ page.permalink }}" class="card">
+    <h3>{{ page.title }}</h3>
+
+    <p>{{ macros::page_description(page=page, length=150) }}</p>
+
+    <div class="meta">
+        {% if page.date %}
+        <span>{{ macros::format_date(date=page.date) }}</span>
+        {% endif %}
+
+        {% if page.reading_time and config.extra.show_reading_time %}
+        <span>{{ page.reading_time }} min read</span>
+        {% endif %}
+    </div>
+</a>
+{% endmacro post_card %}
+
 {% macro section_menu(path) %}
     <p>
         {% set index = get_section(path=path) %}
