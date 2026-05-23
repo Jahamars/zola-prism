@@ -31,8 +31,6 @@
 
 
 
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     {% if config.extra.analytics.google_analytics_id %}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.extra.analytics.google_analytics_id }}"></script>
@@ -93,9 +91,6 @@
     <link rel="alternate" type="application/atom+xml" title="atom feed for {{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
     <link rel="alternate" type="application/rss+xml" title="rss feed for {{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
 
